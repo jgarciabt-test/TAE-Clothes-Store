@@ -31,12 +31,25 @@ public class MainActivity extends SherlockFragmentActivity  {
     private String[] first = {"Lorem", "impsum", "dos", "tres", "cuatro"};
     private String[] second = {"one", "two", "three", "for", "five"};
     
+
+    
+
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        // Instantiate a ViewPager and a PagerAdapter.
+//        mPager = (ViewPager) findViewById(R.id.pager);
+//        mPager2 = (ViewPager) findViewById(R.id.pager2);
+//        mPagerAdapter = new SlidePagerAdapter(getSupportFragmentManager(), first);
+//        mPagerAdapter2 = new SlidePagerAdapter(getSupportFragmentManager(),second);
+//        mPager.setAdapter(mPagerAdapter);
+//        mPager2.setAdapter(mPagerAdapter2);
+//        
+//        mIndicator = (CirclePageIndicator)findViewById(R.id.indicator);
+//        mIndicator.setViewPager(mPager);
         
         mAdapter1 = new SlidePagerAdapter(getSupportFragmentManager(), first);
 
