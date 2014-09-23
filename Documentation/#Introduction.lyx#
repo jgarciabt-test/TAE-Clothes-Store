@@ -1,0 +1,994 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass report
+\use_default_options true
+\maintain_unincluded_children false
+\language british
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_amsmath 1
+\use_esint 1
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 4cm
+\topmargin 2.5cm
+\rightmargin 2.4cm
+\bottommargin 2.5cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+To design and develop Android based application for a physical cloth store
+ where the main functions will be expose the products and allow the purchase
+ process.
+ This application will be developed for both smartphones and tablets devices.
+ Wi-Fi or 3G connections will be required.
+ 
+\end_layout
+
+\begin_layout Section*
+Design Approach
+\end_layout
+
+\begin_layout Subsection*
+Assumptions and Constraints
+\end_layout
+
+\begin_layout Standard
+Assumptions:
+\end_layout
+
+\begin_layout Itemize
+.
+\end_layout
+
+\begin_layout Standard
+Constraints;
+\end_layout
+
+\begin_layout Itemize
+Application has to be developed for Android using Java.
+\end_layout
+
+\begin_layout Itemize
+Application requires internet connection (Wi-Fi or 3G) to work.
+\end_layout
+
+\begin_layout Itemize
+The user has to be registered to use some features.
+\end_layout
+
+\begin_layout Subsection*
+Requirements Omitted
+\end_layout
+
+\begin_layout Standard
+No.
+\end_layout
+
+\begin_layout Subsection*
+Design Principles
+\end_layout
+
+\begin_layout Standard
+This application is divided mainly in three modules: 
+\series bold
+Model
+\series default
+, 
+\series bold
+View
+\series default
+ and 
+\series bold
+Controller
+\series default
+.
+ Application design follows a modular approach to make the components reusable.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+Model This module includes a MySQL database on the server side and a SQLite
+ database in the app to store local information.
+ 
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+View In this module are defined all the layouts related with the UI.
+ The files to define the UI are developed in XML for both smartphone and
+ tablet device.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+Controller This is the module in charge of connect the Model and the View.
+ To do that, the Controller make queries, process the data and give it to
+ the View.
+ It also handle any kind of events like exceptions and check all the necessary
+ requirements.
+\end_layout
+
+\begin_layout Section*
+System Architecture
+\end_layout
+
+\begin_layout Subsection*
+System structure
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename cloth_store.jpg
+	width 90col%
+
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "Scheme"
+
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
+Edit Internet Request, Data Request
+\end_layout
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+System Structure.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "Scheme"
+
+\end_inset
+
+ shows the structure of the system, based in the modules model, view and
+ controller.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\series bold
+View
+\series default
+ This module will have all screens needed to build the User Interface.
+ It is developed in XML and Java using Android Fragments and will be responsible
+ for displaying the information and to handle all the events related with
+ the touch screen.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\series bold
+Controller
+\series default
+ This module is developed totally in Java.
+ Inside this module we can find three main components:
+\begin_inset Newline newline
+\end_inset
+
+- 
+\bar under
+Connection Listener
+\bar default
+: This module will be continuously checking if the device has internet connectio
+n.
+ In case that the device hasn't internet connection will be report the pertinent
+ error.
+\begin_inset Newline newline
+\end_inset
+
+-
+\bar under
+Data Request
+\bar default
+: This module will request information to the remote database asynchronously
+ if there is internet connection.
+ It is responsible of handling the possible errors generated by this task.
+\begin_inset Newline newline
+\end_inset
+
+-
+\bar under
+JSON Parser
+\bar default
+: This module will be responsible for parsing the information received from
+ the database.
+ 
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\series bold
+Model
+\series default
+ This module is used to store the information related with the app.
+ It is developed using a mixture of Java, SQLite, MYSQL and PHP.
+ We can find two different modules:
+\begin_inset Newline newline
+\end_inset
+
+-
+\bar under
+Shared Preferences
+\bar default
+: Android Shared Preferences where will be stored the shopping bag, favourite
+ products and user preferences .
+\begin_inset Newline newline
+\end_inset
+
+-
+\bar under
+Remote Database
+\bar default
+: Side-server database where the client has all the data that want to show
+ in the app.
+\end_layout
+
+\begin_layout Section*
+High-Level Design
+\end_layout
+
+\begin_layout Subsection*
+Data Model
+\end_layout
+
+\begin_layout Standard
+All data related with products, categories or stores information will be
+ saved in the side-server database.
+ All user preferences will be saved using Android Shared Preferences.
+\end_layout
+
+\begin_layout Subsection*
+Database Design
+\end_layout
+
+\begin_layout Standard
+The side-server database will have the following tables:
+\end_layout
+
+\begin_layout Itemize
+Category Table.
+\end_layout
+
+\begin_layout Itemize
+Products Table.
+\end_layout
+
+\begin_layout Itemize
+Cat_Prod Table.
+\end_layout
+
+\begin_layout Itemize
+Picture Table.
+\end_layout
+
+\begin_layout Itemize
+Cat_Pic Table.
+\end_layout
+
+\begin_layout Itemize
+Prod_Pic Table.
+\end_layout
+
+\begin_layout Itemize
+Stores Table.
+\end_layout
+
+\begin_layout Itemize
+Users Table.
+\end_layout
+
+\begin_layout Subsubsection*
+Categories Table
+\end_layout
+
+\begin_layout Standard
+This table will be used to store the categories.
+\end_layout
+
+\begin_layout Itemize
+Cat_name: It will store the name of the category.
+ The input type will be varchar with a length of 25 characters.
+\end_layout
+
+\begin_layout Itemize
+Cat_lowest_price: It will store the lowest price of any product inside this
+ category.
+ The input type will be a integer.
+\end_layout
+
+\begin_layout Itemize
+Cat_main_cat: It will store the main category of the category (e.g.: men,
+ women, etc.).
+ The input type will be varchar with a length of 25 characters.
+\end_layout
+
+\begin_layout Itemize
+Cat_picture: It will store the foreign key needed to link the category with
+ its image.
+ The input type will be integer.
+\end_layout
+
+\begin_layout Subsubsection*
+Products Table
+\end_layout
+
+\begin_layout Standard
+This table will be used to store all the information about the products.
+ 
+\end_layout
+
+\begin_layout Itemize
+Prod_name: It will store the name of the product.
+ The input type will be varchar with a length of 25 characters.
+\end_layout
+
+\begin_layout Itemize
+Prod_desc: It will store the description of the product.
+ The input type will be text.
+\end_layout
+
+\begin_layout Itemize
+Prod_detail: It will store the details of the product.
+ The input type will be text.
+\end_layout
+
+\begin_layout Itemize
+Prod_price: It will store the price of the product.
+ The input type will be integer.
+\end_layout
+
+\begin_layout Itemize
+Prod_offer: It will store if the product is in offer.
+ The input type will be boolean.
+\end_layout
+
+\begin_layout Subsubsection*
+Cat_Prod Table
+\end_layout
+
+\begin_layout Standard
+This table will be used to store the relationship between products and its
+ categories.
+\end_layout
+
+\begin_layout Itemize
+Prod: It will store the foreign key of the product that is related with
+ the category.
+ The input type will be integer.
+\end_layout
+
+\begin_layout Itemize
+Cat: It will store the foreign key of the category that is related with
+ the product.
+ The input type will be integer.
+\end_layout
+
+\begin_layout Subsubsection*
+Picture Table
+\end_layout
+
+\begin_layout Standard
+This table will be used to store the path of the images located on the server.
+\end_layout
+
+\begin_layout Itemize
+URL: It will store the URL where the picture is located.
+ The input type will be varchar with a length of 250 characters.
+\end_layout
+
+\begin_layout Subsubsection*
+Cat_Pic Table
+\end_layout
+
+\begin_layout Standard
+This table will be used to store the relationship between categories and
+ its pictures.
+\end_layout
+
+\begin_layout Itemize
+Cat: It will store the foreign key of the category that is related with
+ the picture.
+ The input type will be integer.
+\end_layout
+
+\begin_layout Itemize
+Pic: It will store the foreign key of the picture that is related with the
+ category.
+ The input type will be integer.
+\end_layout
+
+\begin_layout Subsubsection*
+Prod_Pic Table
+\end_layout
+
+\begin_layout Standard
+This table will be used to store the relationship between products and its
+ pictures.
+\end_layout
+
+\begin_layout Itemize
+Prod: It will store the foreign key of the product that is related with
+ the picture.
+ The input type will be integer.
+\end_layout
+
+\begin_layout Itemize
+Pic: It will store the foreign key of the picture that is related with the
+ product.
+ The input type will be integer.
+\end_layout
+
+\begin_layout Subsubsection*
+Stores Table
+\end_layout
+
+\begin_layout Standard
+This table will be used to store all the data about the stores.
+\end_layout
+
+\begin_layout Itemize
+Sto_name: It will store the name of the store.
+ The input type will be varchar with a length of 40 characters.
+\end_layout
+
+\begin_layout Itemize
+Sto_address: It will store the address of the store.
+ The input type will be varchar with a length of 200 characters.
+\end_layout
+
+\begin_layout Itemize
+Sto_pc: It will store the post code of the store.
+ The input type will be varchar with a length of 10 characters.
+\end_layout
+
+\begin_layout Itemize
+Sto_city: It will store the city of the store.
+ The input type will be varchar with a length of 20 characters.
+\end_layout
+
+\begin_layout Itemize
+Sto_phone: It will store the phone number of the store.
+ The input type will be a varchar with a length of 15 characters.
+\end_layout
+
+\begin_layout Itemize
+Sto_lat: It will store the latitude of the store.
+ The input type will be double.
+\end_layout
+
+\begin_layout Itemize
+Sto_long: It will store the longitude of the store.
+ The input type will be double.
+\end_layout
+
+\begin_layout Standard
+Users Table
+\end_layout
+
+\begin_layout Standard
+This table will be used to store all the data about the users.
+\end_layout
+
+\begin_layout Itemize
+Usr_name: It will store the name of the user.
+ The input type will be varchar with a length of 40 characters.
+\end_layout
+
+\begin_layout Itemize
+Usr_last_name: It will store the last name of the user.
+ The input type will be varchar with a length of 50 characters.
+\end_layout
+
+\begin_layout Itemize
+Usr_gender: It will store the gender of the user.
+ The input type will be varchar with a length of 20 characters.
+\end_layout
+
+\begin_layout Itemize
+Usr_email: It will store the email of the user.
+ The input type will be a varchar with a length of 40 characters.
+\end_layout
+
+\begin_layout Itemize
+Usr_address: It will store the address of the user.
+ The input type will be varchar with a length of 200 characters.
+\end_layout
+
+\begin_layout Itemize
+Usr_pc: It will store the post code of the user.
+ The input type will be varchar with a length of 10 characters.
+\end_layout
+
+\begin_layout Itemize
+Usr_city: It will store the city of the user.
+ The input type will be varchar with a length of 20 characters.
+\end_layout
+
+\begin_layout Section*
+User Interface Design
+\end_layout
+
+\begin_layout Standard
+The following list describes the different screens of the application.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\series bold
+Figure
+\begin_inset space ~
+\end_inset
+
+1
+\begin_inset space ~
+\end_inset
+
+and
+\begin_inset space ~
+\end_inset
+
+2
+\series default
+ Home screen.
+ There are different areas where the user can swipe, allowing him or her
+ to navigate through the categories friendly.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\series bold
+Figure
+\begin_inset space ~
+\end_inset
+
+3
+\series default
+ List all cloth categories inside a root category (e.g.
+ men, women, etc.).
+ 
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\series bold
+Figure
+\begin_inset space ~
+\end_inset
+
+4
+\series default
+ List all the product of the same category.
+ The following info will be showed: Picture, name and price.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\series bold
+Figure
+\begin_inset space ~
+\end_inset
+
+5
+\series default
+ Product information.
+ The user can see different images of the same product swiping horizontally
+ and change between different products swiping vertically.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\series bold
+Figure
+\begin_inset space ~
+\end_inset
+
+5
+\series default
+ Product details.
+ The user can see additional information of a product.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\series bold
+Figure
+\begin_inset space ~
+\end_inset
+
+6
+\series default
+ Store finder.
+ Put the result of the query on a map.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\series bold
+Figure
+\begin_inset space ~
+\end_inset
+
+7
+\series default
+ Store finder.
+ Put the result of the query in a list.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+
+\series bold
+Figure
+\begin_inset space ~
+\end_inset
+
+8
+\series default
+ Store Information.
+ The user can mark a store as favourite and/or get the route to the store
+ using Google Maps.
+ The following information will be showed: store name, address, opening
+ hours and phone.
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="8cm">
+<column alignment="center" valignment="top" width="8cm">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /Users/josemanuelgarciag/Documents/TAE Final Project/Screens/Home.png
+	width 40col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /Users/josemanuelgarciag/Documents/TAE Final Project/Screens/Home 2.png
+	width 40col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Figure 1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Figure 2
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /Users/josemanuelgarciag/Documents/TAE Final Project/Screens/Category List.png
+	width 40col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /Users/josemanuelgarciag/Documents/TAE Final Project/Screens/Item List.png
+	width 40col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Figure 3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Figure 4
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /Users/josemanuelgarciag/Documents/TAE Final Project/Screens/Item.png
+	width 40col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /Users/josemanuelgarciag/Documents/TAE Final Project/Screens/Item Details.png
+	width 40col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Figure 5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Figure 6
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Labeling
+\labelwidthstring 00.00.0000
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top" width="0">
+<column alignment="center" valignment="top" width="0">
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /Users/josemanuelgarciag/Documents/TAE Final Project/Screens/Store Map.png
+	width 40col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename /Users/josemanuelgarciag/Documents/TAE Final Project/Screens/Store List.png
+	width 40col%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Figure 7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Figure 8
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
