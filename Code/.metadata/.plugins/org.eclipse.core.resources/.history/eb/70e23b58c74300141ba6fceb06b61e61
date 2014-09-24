@@ -1,0 +1,7 @@
+package com.tae.store.fragments;
+
+import com.actionbarsherlock.app.SherlockFragment;
+
+public class HomeFragment extends SherlockFragment {
+
+}
