@@ -34,7 +34,7 @@ public class HomeFragment extends SherlockFragment {
 	
     
     //TODO only for testing
-    private String[] first = {"Lorem", "impsum", "dos", "tres", "cuatro"};
+    private String[] first = {"http://s3.amazonaws.com/spf_images/banners/springfield-man-en1.jpg", "http://s3.amazonaws.com/spf_images/banners/springfield-man-en4.jpg", "http://s3.amazonaws.com/spf_images/banners/springfield-man-en3.jpg"};
     private String[] second = {"one", "two", "three", "for", "five"};
     private String[] otro = {"one", "two"};
     
@@ -45,7 +45,7 @@ public class HomeFragment extends SherlockFragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_home, container, false);
         
-        mAdapter1 = new SlidePagerAdapter(getChildFragmentManager(), first, "#FF0000");
+        mAdapter1 = new SlidePagerAdapter(getChildFragmentManager(), first);
 
         mPager1 = (ViewPager)rootView.findViewById(R.id.vp1);
         mPager1.setAdapter(mAdapter1);
@@ -53,21 +53,21 @@ public class HomeFragment extends SherlockFragment {
         mIndicator1 = (CirclePageIndicator)rootView.findViewById(R.id.indicator1);
         mIndicator1.setViewPager(mPager1);
         
-        mAdapter2 = new SlidePagerAdapter(getChildFragmentManager(), second, "#AA2200");
+        mAdapter2 = new SlidePagerAdapter(getChildFragmentManager(), second);
         mPager2 = (ViewPager) rootView.findViewById(R.id.vp2);
         mPager2.setAdapter(mAdapter2);
         
         mIndicator2 = (CirclePageIndicator)rootView.findViewById(R.id.indicator2);
         mIndicator2.setViewPager(mPager2);
         
-        mAdapter3 = new SlidePagerAdapter(getChildFragmentManager(), first, "#FF5511");
+        mAdapter3 = new SlidePagerAdapter(getChildFragmentManager(), first);
         mPager3 = (ViewPager) rootView.findViewById(R.id.vp3);
         mPager3.setAdapter(mAdapter3);
         
         mIndicator3 = (CirclePageIndicator)rootView.findViewById(R.id.indicator3);
         mIndicator3.setViewPager(mPager3);
         
-        mAdapter4 = new SlidePagerAdapter(getChildFragmentManager(), otro, "#FF00AA");
+        mAdapter4 = new SlidePagerAdapter(getChildFragmentManager(), otro);
         mPager4 = (ViewPager) rootView.findViewById(R.id.vp4);
         mPager4.setAdapter(mAdapter4);
         

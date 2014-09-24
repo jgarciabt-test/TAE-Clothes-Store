@@ -19,17 +19,15 @@ public class SlidePagerAdapter extends FragmentStatePagerAdapter {
 	private String [] data;
 	private ArrayList<SlidePageFragment> list;
 	
-    public SlidePagerAdapter(FragmentManager fragmentManager, String[] array, String color) {
+    public SlidePagerAdapter(FragmentManager fragmentManager, String[] array) {
         super(fragmentManager);
         
         data = array;
         num_pages = data.length;
         list = new ArrayList<SlidePageFragment>();
         for(int i=0;i<num_pages;i++){
-        	list.add(new SlidePageFragment(data[i],color));
+        	list.add(new SlidePageFragment(data[i]));
         }
-        
-    	
     }
 
     @Override

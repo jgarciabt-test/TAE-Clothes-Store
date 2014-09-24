@@ -1,0 +1,45 @@
+package com.tae.store.fragments;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.tae.store.R;
+
+public class CategoryFragment extends SherlockListFragment {
+
+	private String[] cat_name;
+	private String[] pic_url;
+	private String[] lower_price;
+	
+	public CategoryFragment(){
+		super();
+	}
+	
+	public CategoryFragment(String []cat_name, String[]pic_url, String[] lower_price){
+		this.cat_name = cat_name;
+		this.pic_url = pic_url;
+		this.lower_price = lower_price;
+	}
+	
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		
+		ViewGroup rootView = (ViewGroup) inflater.inflate(
+                R.layout.category_list, null, false);
+		
+		
+		return rootView;
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+	}
+
+}

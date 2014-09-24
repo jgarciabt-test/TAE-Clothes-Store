@@ -20,6 +20,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.tae.store.adapters.NavDrawerListAdapter;
+import com.tae.store.fragments.CategoryFragment;
 import com.tae.store.fragments.HomeFragment;
 import com.tae.store.model.NavDrawerItem;
 
@@ -102,9 +103,14 @@ public class MainActivity extends SherlockFragmentActivity {
         //    selectItem(0);
         //}
 
+		
+		String[] name = {"Jeans","shoes"};
+		String[] pic = {"http://s3.amazonaws.com/springfield-shop/public/system/products/79878/small/P_033470746FM.jpg?1405422824","http://s3.amazonaws.com/springfield-shop/public/system/products/79878/small/P_033470746FM.jpg?1405422824"};
+		String[] price = {"22.55","15.99"};
 		// Load fragment
 		fragmentManager = getSupportFragmentManager();
-		Fragment fragment = new HomeFragment();
+		//Fragment fragment = new HomeFragment();
+		Fragment fragment = new CategoryFragment(name,pic,price);
 		addFragment(fragment);
 
 	}
