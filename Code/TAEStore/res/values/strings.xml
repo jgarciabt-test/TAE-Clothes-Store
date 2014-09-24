@@ -4,5 +4,26 @@
     <string name="app_name">TAE Store</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="main_menu">Menu</string>
 
+    
+    
+        <!-- Right Menu elements -->
+    <array name="nav_drawer_items">
+        <item> Home1</item>
+        <item> Home2</item>
+        <item> Home3</item>
+        <item> Home4</item>
+        <item> Home5</item>
+        <item> Home6</item>
+    </array>
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_launcher</item>
+    </array>
+    
 </resources>
