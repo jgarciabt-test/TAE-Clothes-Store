@@ -1496,13 +1496,14 @@ containing a value of this type.
         public static final int abs__textButton=0x7f04001b;
         public static final int abs__title=0x7f040023;
         public static final int abs__up=0x7f040013;
-        public static final int action_settings=0x7f040051;
+        public static final int action_settings=0x7f040055;
         public static final int bottom=0x7f040003;
         public static final int counter=0x7f04003f;
         public static final int disableHome=0x7f040011;
         public static final int drawer_layout=0x7f04004e;
         public static final int edit_query=0x7f04002e;
         public static final int frame_container=0x7f04004f;
+        public static final int grid=0x7f040054;
         public static final int homeAsUp=0x7f04000e;
         public static final int hybrid=0x7f040008;
         public static final int icon=0x7f04003d;
@@ -1511,6 +1512,7 @@ containing a value of this type.
         public static final int indicator3=0x7f040048;
         public static final int indicator4=0x7f04004b;
         public static final int iv_category=0x7f04003a;
+        public static final int iv_product=0x7f040051;
         public static final int iv_slide_pager=0x7f04004d;
         public static final int listMode=0x7f04000a;
         public static final int list_slidermenu=0x7f040050;
@@ -1532,6 +1534,8 @@ containing a value of this type.
         public static final int triangle=0x7f040001;
         public static final int txt_catName=0x7f04003b;
         public static final int txt_catPrice=0x7f04003c;
+        public static final int txt_prodName=0x7f040052;
+        public static final int txt_prodPrice=0x7f040053;
         public static final int underline=0x7f040002;
         public static final int useLogo=0x7f04000c;
         public static final int vp1=0x7f040041;
@@ -1577,8 +1581,10 @@ containing a value of this type.
         public static final int fragment_home=0x7f030018;
         public static final int fragment_slide_page=0x7f030019;
         public static final int main=0x7f03001a;
-        public static final int sherlock_spinner_dropdown_item=0x7f03001b;
-        public static final int sherlock_spinner_item=0x7f03001c;
+        public static final int product_item=0x7f03001b;
+        public static final int product_list=0x7f03001c;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001d;
+        public static final int sherlock_spinner_item=0x7f03001e;
     }
     public static final class menu {
         public static final int main=0x7f0c0000;

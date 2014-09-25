@@ -1,7 +1,6 @@
 package com.tae.store.adapters;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,10 +19,13 @@ public class CategoryListAdapter extends BaseAdapter {
 
     Context context;
     ArrayList<Category> categoryList;
+    private LayoutInflater mInflater;
 
     public CategoryListAdapter(Context context, ArrayList<Category> rowItem) {
         this.context = context;
         this.categoryList = rowItem;
+        mInflater = (LayoutInflater) context
+                .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -45,8 +47,6 @@ public class CategoryListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
-            LayoutInflater mInflater = (LayoutInflater) context
-                    .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
             convertView = mInflater.inflate(R.layout.category_item, null);
         }
 

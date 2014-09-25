@@ -33,6 +33,7 @@
         android:layout_toRightOf="@+id/iv_category"
         android:layout_marginLeft="27dp"
         android:layout_marginTop="10dp"
-        android:text="From 25" />
+        android:text="From 25" 
+        android:textColor="#888888"/>
 
 </RelativeLayout>

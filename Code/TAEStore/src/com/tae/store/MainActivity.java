@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -22,6 +23,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.tae.store.adapters.NavDrawerListAdapter;
 import com.tae.store.fragments.CategoryFragment;
 import com.tae.store.fragments.HomeFragment;
+import com.tae.store.fragments.ProductListFragment;
 import com.tae.store.model.NavDrawerItem;
 
 @SuppressLint({ "InlinedApi", "NewApi" })
@@ -43,11 +45,30 @@ public class MainActivity extends SherlockFragmentActivity {
 	private TypedArray navMenuIcons;
 	private ArrayList<NavDrawerItem> navDrawerItems;
 
-	// nav drawer title
-	// private CharSequence mDrawerTitle;
+	private Fragment fragment;
 
-	// used to store app title
-	// private CharSequence mTitle;
+	
+	//TODO Just for testing
+	String[] name = { "Jeans", "shoes" };
+	String[] pic = {
+			"http://s3.amazonaws.com/springfield-shop/public/system/products/79878/small/P_033470746FM.jpg?1405422824",
+			"http://s3.amazonaws.com/springfield-shop/public/system/products/79878/small/P_033470746FM.jpg?1405422824" };
+	String[] price = { "22.55", "15.99" };
+	
+	// TODO Just for testing, to populate ImageViews
+	static private ArrayList<String> generateData() {
+		ArrayList<String> listData = new ArrayList<String>();
+		listData.add("http://i62.tinypic.com/2iitkhx.jpg");
+		listData.add("http://i61.tinypic.com/w0omeb.jpg");
+		listData.add("http://i60.tinypic.com/w9iu1d.jpg");
+		listData.add("http://i60.tinypic.com/iw6kh2.jpg");
+		listData.add("http://i57.tinypic.com/ru08c8.jpg");
+		listData.add("http://i60.tinypic.com/k12r10.jpg");
+		listData.add("http://i58.tinypic.com/2e3daug.jpg");
+		listData.add("http://i59.tinypic.com/2igznfr.jpg");
+
+		return listData;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +100,8 @@ public class MainActivity extends SherlockFragmentActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setIcon(R.drawable.ic_drawer);
-		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FF0000")));
-
+		getSupportActionBar().setBackgroundDrawable(
+				new ColorDrawable(Color.parseColor("#FF0000")));
 
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
 				R.drawable.ic_drawer, R.string.app_name, R.string.main_menu) {
@@ -95,42 +116,38 @@ public class MainActivity extends SherlockFragmentActivity {
 				// calling onPrepareOptionsMenu() to hide action bar icons
 				invalidateOptionsMenu();
 			}
-			
 
 		};
-		
-        //if (savedInstanceState == null) {
-        //    selectItem(0);
-        //}
 
-		
-		String[] name = {"Jeans","shoes"};
-		String[] pic = {"http://s3.amazonaws.com/springfield-shop/public/system/products/79878/small/P_033470746FM.jpg?1405422824","http://s3.amazonaws.com/springfield-shop/public/system/products/79878/small/P_033470746FM.jpg?1405422824"};
-		String[] price = {"22.55","15.99"};
+		// if (savedInstanceState == null) {
+		// selectItem(0);
+		// }
+
+
 		// Load fragment
 		fragmentManager = getSupportFragmentManager();
-		//Fragment fragment = new HomeFragment();
-		Fragment fragment = new CategoryFragment(name,pic,price);
+		// Fragment fragment = new HomeFragment();
+		// Fragment fragment = new CategoryFragment(name,pic,price);
+		Fragment fragment = new ProductListFragment();
 		addFragment(fragment);
 
 	}
-	
-	
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
- 
-        if (item.getItemId() == android.R.id.home) {
- 
-            if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
-                mDrawerLayout.closeDrawer(mDrawerList);
-            } else {
-                mDrawerLayout.openDrawer(mDrawerList);
-            }
-        }
- 
-        return super.onOptionsItemSelected(item);
-    }
-	
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		if (item.getItemId() == android.R.id.home) {
+
+			if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
+				mDrawerLayout.closeDrawer(mDrawerList);
+			} else {
+				mDrawerLayout.openDrawer(mDrawerList);
+			}
+		}
+
+		return super.onOptionsItemSelected(item);
+	}
+
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// if nav drawer is opened, hide the action items
@@ -139,20 +156,19 @@ public class MainActivity extends SherlockFragmentActivity {
 		return super.onPrepareOptionsMenu(menu);
 	}
 
-	
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
-    }
- 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggles
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		mDrawerToggle.syncState();
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		// Pass any configuration change to the drawer toggles
+		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
 
 	private void addFragment(Fragment fragment) {
 		if (fragment != null) {
@@ -169,18 +185,26 @@ public class MainActivity extends SherlockFragmentActivity {
 
 	}
 
+	private void displayView(int position) {
+		switch (position) {
+		case 0:
+			fragment = new HomeFragment();
+			break;
+		case 1:
+			fragment = new CategoryFragment(name,pic,price);
+			break;
+		default:
+			break;
+		}
+	}
 
-	// private void displayView(int position){
-	//
-	// }
-	//
-	// private class SlideMenuClickListener implements
-	// ListView.OnItemClickListener {
-	// @Override
-	// public void onItemClick(AdapterView<?> parent, View view, int position,
-	// long id) {
-	// // display view for selected nav drawer item
-	// displayView(position);
-	// }
-	// }
+	private class SlideMenuClickListener implements
+			ListView.OnItemClickListener {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+			// display view for selected nav drawer item
+			displayView(position);
+		}
+	}
 }

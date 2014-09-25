@@ -10,12 +10,12 @@
     
         <!-- Right Menu elements -->
     <array name="nav_drawer_items">
-        <item> Home1</item>
-        <item> Home2</item>
-        <item> Home3</item>
-        <item> Home4</item>
-        <item> Home5</item>
-        <item> Home6</item>
+        <item> Home</item>
+        <item> Men</item>
+        <item> Women</item>
+        <item> Store Locator</item>
+        <item> My TAE</item>
+        <item> About</item>
     </array>
     <array name="nav_drawer_icons">
         <item>@drawable/ic_launcher</item>
