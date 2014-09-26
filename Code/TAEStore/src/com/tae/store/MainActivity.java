@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -13,10 +17,12 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -24,8 +30,9 @@ import com.actionbarsherlock.view.MenuItem;
 import com.tae.store.adapters.NavDrawerListAdapter;
 import com.tae.store.fragments.CategoryFragment;
 import com.tae.store.fragments.HomeFragment;
-import com.tae.store.fragments.ProductListFragment;
+import com.tae.store.fragments.NoConnectionFragment;
 import com.tae.store.model.NavDrawerItem;
+import com.tae.store.utilities.NetworkCheckService;
 
 @SuppressLint({ "InlinedApi", "NewApi" })
 public class MainActivity extends SherlockFragmentActivity {
@@ -40,6 +47,8 @@ public class MainActivity extends SherlockFragmentActivity {
 	// Slide Pager
 	static public HashMap<String, Fragment> fragmentMap;
 
+	private NetworkCheckReceiver netReceiver;
+
 	// Slide Menu
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
@@ -48,8 +57,6 @@ public class MainActivity extends SherlockFragmentActivity {
 	private String[] navMenuTitles;
 	private TypedArray navMenuIcons;
 	private ArrayList<NavDrawerItem> navDrawerItems;
-
-	
 
 	// TODO Just for testing, to populate ImageViews
 	static public ArrayList<String> generateData() {
@@ -120,22 +127,27 @@ public class MainActivity extends SherlockFragmentActivity {
 
 		mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
 
-
 		fragmentManager = getSupportFragmentManager();
 		if (savedInstanceState != null) {
 			// Restore the fragment's instance
 			currentFragment = savedInstanceState.getString("currentFragment");
 			fragment = fragmentManager.getFragment(savedInstanceState,
 					currentFragment);
-			replaceFragment(fragment, currentFragment);
-		} else{
+			replaceFragment(fragment, currentFragment, true);
+		} else {
 			// Load first fragment
-			
 			fragment = new HomeFragment(this);
-			// Fragment fragment = new CategoryFragment(name,pic,price);
-			// Fragment fragment = new ProductListFragment();
 			addFragment(fragment);
 		}
+
+		netReceiver = new NetworkCheckReceiver();
+		IntentFilter filter = new IntentFilter();
+		filter.addAction("statusUpdate");
+		this.registerReceiver(netReceiver, filter);
+
+		Intent intent = new Intent(getApplicationContext(),
+				NetworkCheckService.class);
+		startService(intent);
 
 	}
 
@@ -143,14 +155,12 @@ public class MainActivity extends SherlockFragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 
 		if (item.getItemId() == android.R.id.home) {
-
 			if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
 				mDrawerLayout.closeDrawer(mDrawerList);
 			} else {
 				mDrawerLayout.openDrawer(mDrawerList);
 			}
 		}
-
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -183,19 +193,27 @@ public class MainActivity extends SherlockFragmentActivity {
 		}
 	}
 
-	static public void replaceFragment(Fragment fragment, String tag) {
+	static public void replaceFragment(Fragment fragment, String tag,
+			boolean backStack) {
 		if (fragment != null) {
-			MainActivity.fragment = fragment;
-			fragmentManager.beginTransaction()
-					.replace(R.id.frame_container, fragment, tag).addToBackStack(null).commit();
 			currentFragment = tag;
+			MainActivity.fragment = fragment;
+			if (backStack) {
+				fragmentManager.beginTransaction()
+						.replace(R.id.frame_container, fragment, tag)
+						.addToBackStack(null).commit();
+
+			} else {
+				fragmentManager.beginTransaction()
+						.replace(R.id.frame_container, fragment, tag).commit();
+			}
 		}
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		// outState.putString("CurrentFragment", currentFragment);
+
 		outState.putString("currentFragment", currentFragment);
 		fragmentManager.putFragment(outState, currentFragment, fragment);
 	}
@@ -216,7 +234,7 @@ public class MainActivity extends SherlockFragmentActivity {
 			break;
 		}
 
-		replaceFragment(fragment, fragmentName);
+		replaceFragment(fragment, fragmentName, true);
 		mDrawerList.setItemChecked(position, true);
 		mDrawerList.setSelection(position);
 		mDrawerLayout.closeDrawer(mDrawerList);
@@ -230,5 +248,41 @@ public class MainActivity extends SherlockFragmentActivity {
 			// display view for selected nav drawer item
 			displayView(position);
 		}
+	}
+
+	@Override
+	protected void onDestroy() {
+		this.unregisterReceiver(netReceiver);
+		super.onDestroy();
+	}
+
+	class NetworkCheckReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context arg0, Intent arg1) {
+			try {
+				// limiting the double value to four decimal places for
+				// consistent display
+				String st = arg1.getStringExtra("networkstatus");
+				if (st.equals("Not connected to Internet")
+						&& (currentFragment != "NO_CONNECTION")) {
+					replaceFragment(new NoConnectionFragment(currentFragment,
+							fragment), "NO_CONNECTION", false);
+				}
+			}
+
+			catch (Exception e) {
+				Log.e("error", e.toString());
+				Toast.makeText(getApplicationContext(),
+						"Exception in reading status data", Toast.LENGTH_SHORT)
+						.show();
+			}
+
+		}
+	}
+
+	public void makeToast(String text) {
+		Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT)
+				.show();
 	}
 }

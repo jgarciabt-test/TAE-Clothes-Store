@@ -1,0 +1,128 @@
+/*
+ * Copyright (C) 2013 Andreas Stuetz <andreas.stuetz@gmail.com>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.astuetz.viewpager.extensions.sample;
+
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
+import com.astuetz.viewpager.extensions.PagerSlidingTabStrip.IconTabProvider;
+
+public class MainActivity extends FragmentActivity {
+
+	private PagerSlidingTabStrip tabs;
+	private ViewPager pager;
+	private ContactPagerAdapter adapter;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+
+		tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+		pager = (ViewPager) findViewById(R.id.pager);
+		adapter = new ContactPagerAdapter();
+
+		pager.setAdapter(adapter);
+
+		final int pageMargin = (int) TypedValue.applyDimension(
+				TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
+						.getDisplayMetrics());
+		pager.setPageMargin(pageMargin);
+
+		tabs.setViewPager(pager);
+
+		// changeColor(currentColor);
+	}
+
+	// @Override
+	// public boolean onCreateOptionsMenu(Menu menu) {
+	// // getMenuInflater().inflate(R.menu.main, menu);
+	// return true;
+	// }
+	//
+	// @Override
+	// public boolean onOptionsItemSelected(MenuItem item) {
+	//
+	// switch (item.getItemId()) {
+	//
+	// case R.id.action_contact:
+	// // QuickContactFragment dialog = new QuickContactFragment();
+	// // dialog.show(getSupportFragmentManager(), "QuickContactFragment");
+	// return true;
+	//
+	// }
+	//
+	// return super.onOptionsItemSelected(item);
+	// }
+
+	public class ContactPagerAdapter extends PagerAdapter implements
+			IconTabProvider {
+
+		private final int[] ICONS = { R.drawable.ic_launcher_gplus,
+				R.drawable.ic_launcher_gmail, R.drawable.ic_launcher_gmaps,
+				R.drawable.ic_launcher_chrome };
+
+		public ContactPagerAdapter() {
+			super();
+		}
+
+		@Override
+		public int getCount() {
+			return ICONS.length;
+		}
+
+		@Override
+		public int getPageIconResId(int position) {
+			return ICONS[position];
+		}
+
+		@Override
+		public Object instantiateItem(ViewGroup container, int position) {
+			// looks a little bit messy here
+			TextView v = new TextView(getApplicationContext());
+			v.setBackgroundResource(R.color.background_window);
+			v.setText("PAGE " + (position + 1));
+			final int padding = (int) TypedValue.applyDimension(
+					TypedValue.COMPLEX_UNIT_DIP, 16, getResources()
+							.getDisplayMetrics());
+			v.setPadding(padding, padding, padding, padding);
+			v.setGravity(Gravity.CENTER);
+			container.addView(v, 0);
+			return v;
+		}
+
+		@Override
+		public void destroyItem(ViewGroup container, int position, Object view) {
+			container.removeView((View) view);
+		}
+
+		@Override
+		public boolean isViewFromObject(View v, Object o) {
+			return v == ((View) o);
+		}
+
+	}
+
+}

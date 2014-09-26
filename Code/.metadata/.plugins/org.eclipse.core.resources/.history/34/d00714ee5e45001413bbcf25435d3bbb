@@ -1,0 +1,5 @@
+package com.tae.store.utilities;
+
+public class NetworkCheckService {
+
+}

@@ -106,7 +106,7 @@ public class HomeFragment extends SherlockFragment implements
 				getActivity(), new GestureDetector.SimpleOnGestureListener() {
 					@Override
 					public boolean onSingleTapConfirmed(MotionEvent e) {
-						MainActivity.replaceFragment(new CategoryFragment(name, pic, price),"CATEGORY_FRAGMENT");
+						MainActivity.replaceFragment(new CategoryFragment(name, pic, price),"CATEGORY_FRAGMENT",true);
 						return false;
 					}
 				});
@@ -121,18 +121,7 @@ public class HomeFragment extends SherlockFragment implements
 
 		return rootView;
 	}
-	
-	
 
-//	@Override
-//	public void onSaveInstanceState(Bundle outState) {
-//		
-//	
-//		MainActivity.fragmentManager
-//        .putFragment(outState, HomeFragment.class.getName(), new HomeFragment());
-//		super.onSaveInstanceState(outState);
-//
-//	}
 
 	@Override
 	public void onPageScrollStateChanged(int arg0) {

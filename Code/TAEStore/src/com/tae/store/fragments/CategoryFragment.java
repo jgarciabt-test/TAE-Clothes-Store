@@ -66,7 +66,7 @@ public class CategoryFragment extends SherlockListFragment {
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		
-		MainActivity.replaceFragment(new ProductListFragment(),"PRODUCT_LIST_FRAGMENT");
+		MainActivity.replaceFragment(new ProductListFragment(),"PRODUCT_LIST_FRAGMENT",true);
 	}
 	
 
