@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
+import com.tae.store.MainActivity;
 import com.tae.store.R;
 import com.tae.store.adapters.CategoryListAdapter;
 import com.tae.store.model.Category;
@@ -59,5 +61,13 @@ public class CategoryFragment extends SherlockListFragment {
 		outState.putParcelableArrayList("list", list);
 		
 	}
+
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		
+		MainActivity.replaceFragment(new ProductListFragment(),"PRODUCT_LIST_FRAGMENT");
+	}
+	
 
 }

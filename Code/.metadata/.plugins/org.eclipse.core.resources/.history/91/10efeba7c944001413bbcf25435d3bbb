@@ -1,0 +1,63 @@
+package com.tae.store.fragments;
+
+import java.util.ArrayList;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.tae.store.R;
+import com.tae.store.adapters.CategoryListAdapter;
+import com.tae.store.model.Category;
+
+public class CategoryFragment extends SherlockListFragment {
+
+	private String[] cat_name;
+	private String[] pic_url;
+	private String[] lower_price;
+	private ArrayList<Category> list;
+	
+	public CategoryFragment(){
+		super();
+	}
+	
+	public CategoryFragment(String []cat_name, String[]pic_url, String[] lower_price){
+		this.cat_name = cat_name;
+		this.pic_url = pic_url;
+		this.lower_price = lower_price;
+	}
+	
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		
+		ViewGroup rootView = (ViewGroup) inflater.inflate(
+                R.layout.category_list, null, false);
+		
+		if(savedInstanceState == null || !savedInstanceState.containsKey("list")){
+			list = new ArrayList<Category>();
+			for(int i=0;i<cat_name.length;i++){
+				list.add(new Category(cat_name[i], pic_url[i], lower_price[i]));
+			}	
+		}else{
+			list = savedInstanceState.getParcelableArrayList("list");
+		}
+		
+		CategoryListAdapter adapter = new CategoryListAdapter(getActivity(), list);
+		setListAdapter(adapter);
+		
+		return rootView;
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		
+		outState.putParcelableArrayList("list", list);
+		
+	}
+
+}

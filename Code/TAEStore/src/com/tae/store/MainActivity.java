@@ -1,6 +1,7 @@
 package com.tae.store;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.annotation.SuppressLint;
 import android.content.res.Configuration;
@@ -32,9 +33,12 @@ public class MainActivity extends SherlockFragmentActivity {
 	private static final int NUM_PAGES = 5;
 
 	// Fragments
-	private FragmentManager fragmentManager;
+	static public FragmentManager fragmentManager;
+	static private String currentFragment;
+	static public Fragment fragment;
 
 	// Slide Pager
+	static public HashMap<String, Fragment> fragmentMap;
 
 	// Slide Menu
 	private DrawerLayout mDrawerLayout;
@@ -45,18 +49,10 @@ public class MainActivity extends SherlockFragmentActivity {
 	private TypedArray navMenuIcons;
 	private ArrayList<NavDrawerItem> navDrawerItems;
 
-	private Fragment fragment;
+	
 
-	
-	//TODO Just for testing
-	String[] name = { "Jeans", "shoes" };
-	String[] pic = {
-			"http://s3.amazonaws.com/springfield-shop/public/system/products/79878/small/P_033470746FM.jpg?1405422824",
-			"http://s3.amazonaws.com/springfield-shop/public/system/products/79878/small/P_033470746FM.jpg?1405422824" };
-	String[] price = { "22.55", "15.99" };
-	
 	// TODO Just for testing, to populate ImageViews
-	static private ArrayList<String> generateData() {
+	static public ArrayList<String> generateData() {
 		ArrayList<String> listData = new ArrayList<String>();
 		listData.add("http://i62.tinypic.com/2iitkhx.jpg");
 		listData.add("http://i61.tinypic.com/w0omeb.jpg");
@@ -74,6 +70,8 @@ public class MainActivity extends SherlockFragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+
+		fragmentMap = new HashMap<String, Fragment>();
 
 		// Slide menu
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -111,6 +109,7 @@ public class MainActivity extends SherlockFragmentActivity {
 				invalidateOptionsMenu();
 			}
 
+			// TODO check
 			public void onDrawerOpened(View drawerView) {
 				getActionBar().setTitle("Cadena 2");
 				// calling onPrepareOptionsMenu() to hide action bar icons
@@ -119,17 +118,24 @@ public class MainActivity extends SherlockFragmentActivity {
 
 		};
 
-		// if (savedInstanceState == null) {
-		// selectItem(0);
-		// }
+		mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
 
 
-		// Load fragment
 		fragmentManager = getSupportFragmentManager();
-		// Fragment fragment = new HomeFragment();
-		// Fragment fragment = new CategoryFragment(name,pic,price);
-		Fragment fragment = new ProductListFragment();
-		addFragment(fragment);
+		if (savedInstanceState != null) {
+			// Restore the fragment's instance
+			currentFragment = savedInstanceState.getString("currentFragment");
+			fragment = fragmentManager.getFragment(savedInstanceState,
+					currentFragment);
+			replaceFragment(fragment, currentFragment);
+		} else{
+			// Load first fragment
+			
+			fragment = new HomeFragment(this);
+			// Fragment fragment = new CategoryFragment(name,pic,price);
+			// Fragment fragment = new ProductListFragment();
+			addFragment(fragment);
+		}
 
 	}
 
@@ -177,25 +183,43 @@ public class MainActivity extends SherlockFragmentActivity {
 		}
 	}
 
-	private void replaceFragment(Fragment fragment) {
+	static public void replaceFragment(Fragment fragment, String tag) {
 		if (fragment != null) {
+			MainActivity.fragment = fragment;
 			fragmentManager.beginTransaction()
-					.replace(R.id.frame_container, fragment).commit();
+					.replace(R.id.frame_container, fragment, tag).addToBackStack(null).commit();
+			currentFragment = tag;
 		}
+	}
 
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		// outState.putString("CurrentFragment", currentFragment);
+		outState.putString("currentFragment", currentFragment);
+		fragmentManager.putFragment(outState, currentFragment, fragment);
 	}
 
 	private void displayView(int position) {
+		String fragmentName = null;
 		switch (position) {
 		case 0:
-			fragment = new HomeFragment();
+			fragment = new HomeFragment(this);
+			fragmentName = "HOME_FRAGMENT";
 			break;
 		case 1:
-			fragment = new CategoryFragment(name,pic,price);
+			fragment = new CategoryFragment(HomeFragment.name,
+					HomeFragment.pic, HomeFragment.price);
+			fragmentName = "CATEGORY_FRAGMENT";
 			break;
 		default:
 			break;
 		}
+
+		replaceFragment(fragment, fragmentName);
+		mDrawerList.setItemChecked(position, true);
+		mDrawerList.setSelection(position);
+		mDrawerLayout.closeDrawer(mDrawerList);
 	}
 
 	private class SlideMenuClickListener implements

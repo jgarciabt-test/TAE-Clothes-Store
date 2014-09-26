@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
+        android:contentDescription="@string/app_name"
         android:src="@drawable/ic_launcher" />
 
     <TextView
@@ -19,9 +20,8 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical"
         android:paddingRight="40dp"
-        android:text="Home"
         android:textColor="@color/list_item_title"
-        android:textSize="12sp" />
+        android:textSize="18sp" />
     
     <TextView android:id="@+id/counter"
         android:layout_width="wrap_content"
