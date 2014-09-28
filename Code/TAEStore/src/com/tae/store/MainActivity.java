@@ -30,7 +30,9 @@ import com.actionbarsherlock.view.MenuItem;
 import com.tae.store.adapters.NavDrawerListAdapter;
 import com.tae.store.fragments.CategoryFragment;
 import com.tae.store.fragments.HomeFragment;
+import com.tae.store.fragments.MapFragment;
 import com.tae.store.fragments.NoConnectionFragment;
+import com.tae.store.fragments.StoreListFragment;
 import com.tae.store.model.NavDrawerItem;
 import com.tae.store.utilities.NetworkCheckService;
 
@@ -106,7 +108,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setIcon(R.drawable.ic_drawer);
 		getSupportActionBar().setBackgroundDrawable(
-				new ColorDrawable(Color.parseColor("#FF0000")));
+				new ColorDrawable(Color.parseColor("#b40909")));
 
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
 				R.drawable.ic_drawer, R.string.app_name, R.string.main_menu) {
@@ -137,6 +139,8 @@ public class MainActivity extends SherlockFragmentActivity {
 		} else {
 			// Load first fragment
 			fragment = new HomeFragment(this);
+			// fragment = new MapFragment();
+			//fragment = new StoreListFragment();
 			addFragment(fragment);
 		}
 
@@ -226,9 +230,14 @@ public class MainActivity extends SherlockFragmentActivity {
 			fragmentName = "HOME_FRAGMENT";
 			break;
 		case 1:
-			fragment = new CategoryFragment(HomeFragment.name,
+			fragment = new CategoryFragment("Men",HomeFragment.name,
 					HomeFragment.pic, HomeFragment.price);
 			fragmentName = "CATEGORY_FRAGMENT";
+			break;
+
+		case 3:
+			fragment = new MapFragment();
+			fragmentName = "MAP_FRAGMENT";
 			break;
 		default:
 			break;

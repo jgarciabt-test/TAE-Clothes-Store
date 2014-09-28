@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.tae.store.R;
@@ -16,6 +17,7 @@ import com.tae.store.model.Product;
 public class ProductListFragment extends SherlockFragment {
 
 	private ArrayList<Product> list;
+	private String category;
 
 	private String[] url = { "http://i62.tinypic.com/2iitkhx.jpg",
 			"http://i61.tinypic.com/w0omeb.jpg",
@@ -36,6 +38,13 @@ public class ProductListFragment extends SherlockFragment {
 			list.add(new Product("", "Product " + i, "", "", false, i, url[i]));
 		}
 	}
+	
+	public ProductListFragment(){
+	}
+	
+	public ProductListFragment(String category){
+		this.category = category;
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,7 +60,8 @@ public class ProductListFragment extends SherlockFragment {
 			list = savedInstanceState.getParcelableArrayList("list");
 		}
 
-		
+		TextView txtCategory = (TextView)rootView.findViewById(R.id.txt_product_list_title);
+		txtCategory.setText(category);
 		ProductListAdapter adapter = new ProductListAdapter(getActivity(),android.R.layout.simple_list_item_1, list);
 		GridView grid=(GridView) rootView.findViewById(R.id.grid);
         grid.setAdapter(adapter);

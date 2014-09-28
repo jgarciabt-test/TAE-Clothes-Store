@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.tae.store.MainActivity;
@@ -16,6 +17,8 @@ import com.tae.store.model.Category;
 
 public class CategoryFragment extends SherlockListFragment {
 
+	private String rootCategory;
+	
 	private String[] cat_name;
 	private String[] pic_url;
 	private String[] lower_price;
@@ -25,7 +28,8 @@ public class CategoryFragment extends SherlockListFragment {
 		super();
 	}
 	
-	public CategoryFragment(String []cat_name, String[]pic_url, String[] lower_price){
+	public CategoryFragment(String rootCategory,String []cat_name, String[]pic_url, String[] lower_price){
+		this.rootCategory = rootCategory;
 		this.cat_name = cat_name;
 		this.pic_url = pic_url;
 		this.lower_price = lower_price;
@@ -48,6 +52,8 @@ public class CategoryFragment extends SherlockListFragment {
 			list = savedInstanceState.getParcelableArrayList("list");
 		}
 		
+		TextView rootCat = (TextView) rootView.findViewById(R.id.txt_category_list_title);
+		rootCat.setText(rootCategory);
 		CategoryListAdapter adapter = new CategoryListAdapter(getActivity(), list);
 		setListAdapter(adapter);
 		
@@ -65,8 +71,8 @@ public class CategoryFragment extends SherlockListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		
-		MainActivity.replaceFragment(new ProductListFragment(),"PRODUCT_LIST_FRAGMENT",true);
+		String title = list.get(position).getName();
+		MainActivity.replaceFragment(new ProductListFragment(title),"PRODUCT_LIST_FRAGMENT",true);
 	}
 	
 

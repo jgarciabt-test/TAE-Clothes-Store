@@ -1,2 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.actionbarsherlock.app.SherlockListFragment"/>
+<fullyQualifiedTypeName name="android.os.Parcelable"/>
+<fullyQualifiedTypeName name="android.os.Parcel"/>
+<fullyQualifiedTypeName name="com.google.android.gms.internal.ci"/>
+<fullyQualifiedTypeName name="android.widget.BaseAdapter"/>
+<fullyQualifiedTypeName name="android.view.LayoutInflater"/>
+<fullyQualifiedTypeName name="com.tae.store.adapters.StoreListAdapter"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="com.tae.store.model.Store"/>
+<fullyQualifiedTypeName name="com.tae.store.fragments.MapFragment"/>
+<fullyQualifiedTypeName name="android.widget.ImageButton"/>
+<fullyQualifiedTypeName name="com.tae.store.fragments.StoreListFragment"/>
+<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
+<fullyQualifiedTypeName name="com.actionbarsherlock.app.SherlockFragment"/>
+<fullyQualifiedTypeName name="android.view.ViewGroup"/>
+<fullyQualifiedTypeName name="android.R"/>
+<fullyQualifiedTypeName name="android.R.layout"/>
+<fullyQualifiedTypeName name="com.tae.store.R"/>
+<fullyQualifiedTypeName name="com.tae.store.R.layout"/>
+<fullyQualifiedTypeName name="android.widget.Button"/>
+<fullyQualifiedTypeName name="com.tae.store.MainActivity"/>
+<fullyQualifiedTypeName name="com.tae.store.fragments.StoreFragment"/>
+<fullyQualifiedTypeName name="com.tae.store.fragments.ProductListFragment"/>
+<fullyQualifiedTypeName name="android.widget.TextView"/>
+<fullyQualifiedTypeName name="com.tae.store.R.id"/>
+</qualifiedTypeNameHistroy>

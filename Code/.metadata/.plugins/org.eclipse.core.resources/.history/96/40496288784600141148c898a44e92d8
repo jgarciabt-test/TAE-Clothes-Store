@@ -1,0 +1,61 @@
+package com.tae.store.adapters;
+
+import java.util.ArrayList;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+import com.tae.store.R;
+import com.tae.store.model.Category;
+import com.tae.store.model.Store;
+
+public class StoreListAdapter extends BaseAdapter {
+
+	//TODO pendiente de comprobar si metemos la distancia en la clase Store
+	private Context context;
+	private ArrayList<Store> storeList;
+	private LayoutInflater mInflater;
+	
+	@Override
+	public int getCount() {
+		return storeList.size();
+	}
+
+	@Override
+	public Object getItem(int position) {
+		return storeList.get(position);
+	}
+
+	@Override
+	public long getItemId(int position) {
+		return storeList.indexOf(getItem(position));
+	}
+
+	@Override
+	public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.store_item, null);
+        }
+
+        
+        TextView txtName = (TextView) convertView.findViewById(R.id.txt_store_name);
+        TextView txtAddress = (TextView) convertView.findViewById(R.id.txt_store_address);
+        TextView txtOpening = (TextView) convertView.findViewById(R.id.txt_store_open);
+        TextView txtDistance = (TextView) convertView.findViewById(R.id.txt_store_distance);
+
+        Store store = storeList.get(position);      
+        txtName.setText(store.getName());
+        txtAddress.setText(store.getAddress());
+        txtOpening.setText(store.getOpeningHours());
+        txtDistance.setText("1 mile");
+
+        return convertView;
+
+	}
+
+}

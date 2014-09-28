@@ -8,6 +8,12 @@
     <string name="no_connection">You don\'t seem to have an internet connection at the moment, please try again later.</string>
     <string name="btn_retry">Retry</string>
     <string name="btn_add">Add</string>
+    <string name="change_list">Change to list</string>
+    <string name="opening_hours">Opening Hours</string>
+    <string name="directions">Directions</string>
+    
+    <!-- Screen Titles -->
+    <string name="screen_store">Store Info</string>
 
     
     

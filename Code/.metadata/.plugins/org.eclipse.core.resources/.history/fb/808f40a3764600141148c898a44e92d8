@@ -1,0 +1,30 @@
+package com.tae.store.model;
+
+import android.os.Parcelable;
+
+public class Store implements Parcelable{
+	
+	private String name;
+	private String address;
+	private String postCode;
+	private String city;
+	private String phone;
+	private String openingHours;
+	private double latitude;
+	private double longitude;
+	
+	public Store(){
+	}
+	
+	public Store(String name, String address, String postCode, String city, String phone, String openingHours, double lat, double lng){
+		this.name = name;
+		this.address = address;
+		this.postCode = postCode;
+		this.city = city;
+		this.phone = phone;
+		this.openingHours = openingHours;
+		this.latitude = lat;
+		this.longitude = lng;
+	}
+	
+}

@@ -106,7 +106,7 @@ public class HomeFragment extends SherlockFragment implements
 				getActivity(), new GestureDetector.SimpleOnGestureListener() {
 					@Override
 					public boolean onSingleTapConfirmed(MotionEvent e) {
-						MainActivity.replaceFragment(new CategoryFragment(name, pic, price),"CATEGORY_FRAGMENT",true);
+						MainActivity.replaceFragment(new CategoryFragment("Men",name, pic, price),"CATEGORY_FRAGMENT",true);
 						return false;
 					}
 				});

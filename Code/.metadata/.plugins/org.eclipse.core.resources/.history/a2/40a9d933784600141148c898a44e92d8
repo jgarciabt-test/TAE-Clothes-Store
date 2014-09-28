@@ -1,0 +1,12 @@
+package com.tae.store.fragments;
+
+import java.util.ArrayList;
+
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.tae.store.model.Store;
+
+public class StoreListFragment extends SherlockListFragment {
+	
+	private ArrayList<Store> list;
+
+}

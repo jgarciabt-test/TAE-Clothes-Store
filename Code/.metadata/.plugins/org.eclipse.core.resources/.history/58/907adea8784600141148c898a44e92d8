@@ -1,0 +1,51 @@
+package com.tae.store.fragments;
+
+import java.util.ArrayList;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.GridView;
+
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.tae.store.R;
+import com.tae.store.adapters.StoreListAdapter;
+import com.tae.store.model.Store;
+
+public class StoreListFragment extends SherlockListFragment {
+	
+	private ArrayList<Store> list;
+	
+	public StoreListFragment(){
+		list = new ArrayList<Store>();
+	}
+	
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+
+		ViewGroup rootView = (ViewGroup) inflater.inflate(
+				R.layout.store_list, null, false);
+
+		if (savedInstanceState == null
+				|| !savedInstanceState.containsKey("list")) {
+			//populate();
+		} else {
+			list = savedInstanceState.getParcelableArrayList("list");
+		}
+
+		
+		StoreListAdapter adapter = new StoreListAdapter(getActivity(), list);
+		setListAdapter(adapter);
+		return rootView;
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		
+		outState.putParcelableArrayList("list", list);
+	}
+}
