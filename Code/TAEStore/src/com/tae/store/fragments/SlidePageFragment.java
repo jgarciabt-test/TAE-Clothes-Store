@@ -12,11 +12,13 @@ import android.widget.ImageView;
 import com.actionbarsherlock.app.SherlockFragment;
 import com.squareup.picasso.Picasso;
 import com.tae.store.R;
+import com.tae.store.utilities.ServerUrl;
 
 @SuppressLint("NewApi")
 public class SlidePageFragment extends SherlockFragment {
 
-	private String color;
+	private boolean mainPic;
+	private int resourceId;
 	private String url;
 	private ImageView picture;
 	
@@ -24,23 +26,37 @@ public class SlidePageFragment extends SherlockFragment {
 		super();
 	}
 	
-	public SlidePageFragment(String url){
-		this. url = url;
+	public SlidePageFragment(int resourceId, boolean mainPic){
+		this.resourceId = resourceId;;
+		this.mainPic = mainPic;
+	}
+	
+	public SlidePageFragment(String url, boolean mainPic){
+		this.url = url;
+		this.mainPic = mainPic;
 	}
 	
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
     	if(savedInstanceState != null){
-    		url = savedInstanceState.getString("url");
+    		mainPic = savedInstanceState.getBoolean("mainPic");
+    		if(mainPic){
+    			resourceId = savedInstanceState.getInt("resourceId");
+    		}else{
+    			url = savedInstanceState.getString("url");
+    		}
     	}
     	
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.fragment_slide_page, null, false);
         
         picture = (ImageView) rootView.findViewById(R.id.iv_slide_pager);
-        
-        Picasso.with(getActivity().getApplicationContext()).load(url).placeholder(R.drawable.ic_launcher).into(picture);
+        if(mainPic){
+        	picture.setImageDrawable(getResources().getDrawable(resourceId));
+        } else{
+        	Picasso.with(getActivity().getApplicationContext()).load(ServerUrl.BASE_URL+ServerUrl.IMG+url).placeholder(R.drawable.ic_launcher).into(picture);
+        }
 
         return rootView;
     }
@@ -49,6 +65,8 @@ public class SlidePageFragment extends SherlockFragment {
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		
+		outState.putBoolean("mainPic", mainPic);
+		outState.putInt("resourceId", resourceId);
 		outState.putString("url", url);
 	}
     

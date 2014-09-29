@@ -33,6 +33,7 @@ import com.tae.store.fragments.HomeFragment;
 import com.tae.store.fragments.MapFragment;
 import com.tae.store.fragments.NoConnectionFragment;
 import com.tae.store.fragments.StoreListFragment;
+import com.tae.store.model.Category;
 import com.tae.store.model.NavDrawerItem;
 import com.tae.store.utilities.NetworkCheckService;
 
@@ -40,7 +41,6 @@ import com.tae.store.utilities.NetworkCheckService;
 public class MainActivity extends SherlockFragmentActivity {
 
 	private static final int NUM_PAGES = 5;
-
 	// Fragments
 	static public FragmentManager fragmentManager;
 	static private String currentFragment;
@@ -80,7 +80,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		fragmentMap = new HashMap<String, Fragment>();
+		Intent prev_screen = getIntent();
 
 		// Slide menu
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -104,6 +104,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		mDrawerList.setAdapter(adapter);
 
 		// Enabling action bar app icon and behaving it as toggle button
+		getSupportActionBar().show();
 		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setIcon(R.drawable.ic_drawer);
@@ -138,9 +139,10 @@ public class MainActivity extends SherlockFragmentActivity {
 			replaceFragment(fragment, currentFragment, true);
 		} else {
 			// Load first fragment
-			fragment = new HomeFragment(this);
-			// fragment = new MapFragment();
-			//fragment = new StoreListFragment();
+			ArrayList<Category> men = prev_screen.getParcelableArrayListExtra("men");
+			ArrayList<Category> women = prev_screen.getParcelableArrayListExtra("women");
+
+			fragment = new HomeFragment(this, men, women);
 			addFragment(fragment);
 		}
 
@@ -226,12 +228,14 @@ public class MainActivity extends SherlockFragmentActivity {
 		String fragmentName = null;
 		switch (position) {
 		case 0:
-			fragment = new HomeFragment(this);
+			ArrayList<Category> men = getIntent().getParcelableArrayListExtra("men");
+			ArrayList<Category> women = getIntent().getParcelableArrayListExtra("women");
+
+			fragment = new HomeFragment(this, men, women);
 			fragmentName = "HOME_FRAGMENT";
 			break;
 		case 1:
-			fragment = new CategoryFragment("Men",HomeFragment.name,
-					HomeFragment.pic, HomeFragment.price);
+			fragment = new CategoryFragment("Men",this);
 			fragmentName = "CATEGORY_FRAGMENT";
 			break;
 

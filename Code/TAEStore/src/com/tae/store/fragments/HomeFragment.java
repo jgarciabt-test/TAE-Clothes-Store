@@ -1,10 +1,12 @@
 package com.tae.store.fragments;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -16,6 +18,8 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.tae.store.MainActivity;
 import com.tae.store.R;
 import com.tae.store.adapters.SlidePagerAdapter;
+import com.tae.store.model.Category;
+import com.tae.store.utilities.MainCategories;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.PageIndicator;
 
@@ -25,41 +29,95 @@ public class HomeFragment extends SherlockFragment implements
 	private Context context;
 	private int currentSelectedFragmentPosition = 0;
 
-	private PageIndicator mIndicator1;
-	private PageIndicator mIndicator2;
-	private ViewPager mPager1;
-	private ViewPager mPager2;
-	private SlidePagerAdapter mAdapter1;
-	private SlidePagerAdapter mAdapter2;
+	// Offers
+	private PageIndicator mIndicatorOffers;
+	private ViewPager mPagerOffers;
+	// TODO customize
+	private SlidePagerAdapter mAdapterOffers;
 
-	// TODO just for testing
-	private PageIndicator mIndicator3;
-	private PageIndicator mIndicator4;
-	private ViewPager mPager3;
-	private ViewPager mPager4;
-	private SlidePagerAdapter mAdapter3;
-	private SlidePagerAdapter mAdapter4;
+	// Men
+	private PageIndicator mIndicatorMen;
+	private ViewPager mPagerMen;
+	private SlidePagerAdapter mAdapterMen;
+	private ArrayList<Category> menCategories;
 
-	static public String[] name = { "Jeans", "shoes" };
-	static public String[] pic = {
-			"http://s3.amazonaws.com/springfield-shop/public/system/products/79878/small/P_033470746FM.jpg?1405422824",
-			"http://s3.amazonaws.com/springfield-shop/public/system/products/79878/small/P_033470746FM.jpg?1405422824" };
-	static public String[] price = { "22.55", "15.99" };
-	
-	
-	// TODO only for testing
-	private String[] first = {
-			"http://s3.amazonaws.com/spf_images/banners/springfield-man-en1.jpg",
-			"http://s3.amazonaws.com/spf_images/banners/springfield-man-en4.jpg",
-			"http://s3.amazonaws.com/spf_images/banners/springfield-man-en3.jpg" };
-	private String[] second = { "one", "two", "three", "for", "five" };
-	private String[] otro = { "one", "two" };
+	// Women
+	private PageIndicator mIndicatorWomen;
+	private ViewPager mPagerWomen;
+	private SlidePagerAdapter mAdapterWomen;
+	private ArrayList<Category> womenCategories;
 
-	public HomeFragment(){
+	// Gesture detector to determine with screen has been tapped
+	final GestureDetector tapGestureDetectorOffer = new GestureDetector(
+			getActivity(), new GestureDetector.SimpleOnGestureListener() {
+				@Override
+				public boolean onSingleTapConfirmed(MotionEvent e) {
+					Log.v("PAGER", "Men - Pressed: "
+							+ currentSelectedFragmentPosition);
+					MainActivity.replaceFragment(new CategoryFragment("Men",
+							context), "CATEGORY_FRAGMENT", true);
+					return false;
+				}
+			});
+
+	// Gesture detector to determine with screen has been tapped
+	final GestureDetector tapGestureDetectorMen = new GestureDetector(
+			getActivity(), new GestureDetector.SimpleOnGestureListener() {
+				@Override
+				public boolean onSingleTapConfirmed(MotionEvent e) {
+
+					int i = mPagerMen.getCurrentItem();
+					Log.v("PAGER", "Men - Pressed: " + i);
+					switch (i) {
+					case 0:
+						MainActivity.replaceFragment(new CategoryFragment(
+								"Men", context), "CATEGORY_FRAGMENT", true);
+						break;
+					default:
+						MainActivity.replaceFragment(new ProductListFragment(
+								menCategories.get(i - 1).getId(), menCategories
+										.get(i - 1).getName(), context),
+								"PRODUCT_LIST_FRAGMENT", true);
+						break;
+					}
+
+					return false;
+				}
+			});
+
+	final GestureDetector tapGestureDetectorWomen = new GestureDetector(
+			getActivity(), new GestureDetector.SimpleOnGestureListener() {
+				@Override
+				public boolean onSingleTapConfirmed(MotionEvent e) {
+
+					int i = mPagerWomen.getCurrentItem();
+					Log.v("PAGER", "Women - Pressed: " + i);
+					switch (i) {
+					case 0:
+						MainActivity.replaceFragment(new CategoryFragment(
+								"Women", context), "CATEGORY_FRAGMENT", true);
+						break;
+					default:
+						MainActivity.replaceFragment(new ProductListFragment(
+								menCategories.get(i - 1).getId(), menCategories
+										.get(i - 1).getName(), context),
+								"PRODUCT_LIST_FRAGMENT", true);
+						break;
+					}
+
+					return false;
+				}
+			});
+
+	public HomeFragment() {
+		context = getActivity();
 	}
-	
-	public HomeFragment(Context context) {
+
+	public HomeFragment(Context context, ArrayList<Category> menCategories,
+			ArrayList<Category> womenCategories) {
 		this.context = context;
+		this.menCategories = menCategories;
+		this.womenCategories = womenCategories;
 	}
 
 	@Override
@@ -69,59 +127,61 @@ public class HomeFragment extends SherlockFragment implements
 		ViewGroup rootView = (ViewGroup) inflater.inflate(
 				R.layout.fragment_home, container, false);
 
-		mAdapter1 = new SlidePagerAdapter(getChildFragmentManager(), first);
+		mAdapterOffers = new SlidePagerAdapter(getChildFragmentManager(),
+				MainCategories.OFFERS, menCategories);
 
-		mPager1 = (ViewPager) rootView.findViewById(R.id.vp1);
-		mPager1.setAdapter(mAdapter1);
+		mPagerOffers = (ViewPager) rootView.findViewById(R.id.vp1);
+		mPagerOffers.setAdapter(mAdapterOffers);
 
-		mIndicator1 = (CirclePageIndicator) rootView
+		mIndicatorOffers = (CirclePageIndicator) rootView
 				.findViewById(R.id.indicator1);
-		mIndicator1.setViewPager(mPager1);
+		mIndicatorOffers.setViewPager(mPagerOffers);
 
-		mAdapter2 = new SlidePagerAdapter(getChildFragmentManager(), second);
-		mPager2 = (ViewPager) rootView.findViewById(R.id.vp2);
-		mPager2.setAdapter(mAdapter2);
+		mAdapterMen = new SlidePagerAdapter(getChildFragmentManager(),
+				MainCategories.MEN, menCategories);
+		mPagerMen = (ViewPager) rootView.findViewById(R.id.vp2);
+		mPagerMen.setAdapter(mAdapterMen);
 
-		mIndicator2 = (CirclePageIndicator) rootView
+		mIndicatorMen = (CirclePageIndicator) rootView
 				.findViewById(R.id.indicator2);
-		mIndicator2.setViewPager(mPager2);
+		mIndicatorMen.setViewPager(mPagerMen);
 
-		mAdapter3 = new SlidePagerAdapter(getChildFragmentManager(), first);
-		mPager3 = (ViewPager) rootView.findViewById(R.id.vp3);
-		mPager3.setAdapter(mAdapter3);
+		mAdapterWomen = new SlidePagerAdapter(getChildFragmentManager(),
+				MainCategories.WOMEN, womenCategories);
+		mPagerWomen = (ViewPager) rootView.findViewById(R.id.vp3);
+		mPagerWomen.setAdapter(mAdapterWomen);
 
-		mIndicator3 = (CirclePageIndicator) rootView
+		mIndicatorWomen = (CirclePageIndicator) rootView
 				.findViewById(R.id.indicator3);
-		mIndicator3.setViewPager(mPager3);
+		mIndicatorWomen.setViewPager(mPagerWomen);
 
-		mAdapter4 = new SlidePagerAdapter(getChildFragmentManager(), otro);
-		mPager4 = (ViewPager) rootView.findViewById(R.id.vp4);
-		mPager4.setAdapter(mAdapter4);
-
-		mIndicator4 = (CirclePageIndicator) rootView
-				.findViewById(R.id.indicator4);
-		mIndicator4.setViewPager(mPager4);
-
-		final GestureDetector tapGestureDetector = new GestureDetector(
-				getActivity(), new GestureDetector.SimpleOnGestureListener() {
-					@Override
-					public boolean onSingleTapConfirmed(MotionEvent e) {
-						MainActivity.replaceFragment(new CategoryFragment("Men",name, pic, price),"CATEGORY_FRAGMENT",true);
-						return false;
-					}
-				});
-
-		mPager1.setOnTouchListener(new OnTouchListener() {
+		mPagerOffers.setOnTouchListener(new OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
-				tapGestureDetector.onTouchEvent(event);
+				tapGestureDetectorOffer.onTouchEvent(event);
 				return false;
 			}
 		});
-		mIndicator1.setOnPageChangeListener(this);
+
+		mIndicatorOffers.setOnPageChangeListener(this);
+
+		mPagerMen.setOnTouchListener(new OnTouchListener() {
+			public boolean onTouch(View v, MotionEvent event) {
+				tapGestureDetectorMen.onTouchEvent(event);
+				return false;
+			}
+		});
+		
+		mPagerWomen.setOnTouchListener(new OnTouchListener() {
+			public boolean onTouch(View v, MotionEvent event) {
+				tapGestureDetectorWomen.onTouchEvent(event);
+				return false;
+			}
+		});
+
+		//mIndicatorMen.setOnPageChangeListener(this);
 
 		return rootView;
 	}
-
 
 	@Override
 	public void onPageScrollStateChanged(int arg0) {

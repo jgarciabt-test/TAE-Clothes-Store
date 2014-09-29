@@ -1,0 +1,143 @@
+package com.tae.store.fragments;
+
+import org.json.JSONArray;
+
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
+
+import com.actionbarsherlock.app.SherlockFragment;
+import com.tae.store.MainActivity;
+import com.tae.store.R;
+import com.tae.store.adapters.SlidePagerAdapter;
+import com.tae.store.helpers.NetworkRequest;
+import com.viewpagerindicator.CirclePageIndicator;
+import com.viewpagerindicator.PageIndicator;
+
+public class HomeFragment extends SherlockFragment implements
+		OnPageChangeListener {
+
+	private Context context;
+	private int currentSelectedFragmentPosition = 0;
+
+	private PageIndicator mIndicatorOffers;
+	private PageIndicator mIndicatorMen;
+	private ViewPager mPagerOffers;
+	private ViewPager mPagerMen;
+	private SlidePagerAdapter mAdapterOffers;
+	private SlidePagerAdapter mAdapter2;
+
+	// TODO just for testing
+	private PageIndicator mIndicator3;
+	private PageIndicator mIndicator4;
+	private ViewPager mPager3;
+	private ViewPager mPager4;
+	private SlidePagerAdapter mAdapter3;
+	private SlidePagerAdapter mAdapter4;
+	
+	// TODO only for testing
+	private String[] first = {
+			"http://s3.amazonaws.com/spf_images/banners/springfield-man-en1.jpg",
+			"http://s3.amazonaws.com/spf_images/banners/springfield-man-en4.jpg",
+			"http://s3.amazonaws.com/spf_images/banners/springfield-man-en3.jpg" };
+	private String[] second = { "one", "two", "three", "for", "five" };
+	private String[] otro = { "one", "two" };
+
+	public HomeFragment(){
+	}
+	
+	public HomeFragment(Context context) {
+		this.context = context;
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+
+		if(context == null){
+			context = getActivity();
+		}
+		
+		ViewGroup rootView = (ViewGroup) inflater.inflate(
+				R.layout.fragment_home, container, false);
+
+		mAdapterOffers = new SlidePagerAdapter(getChildFragmentManager(), first);
+
+		mPagerOffers = (ViewPager) rootView.findViewById(R.id.vp1);
+		mPagerOffers.setAdapter(mAdapterOffers);
+
+		mIndicatorOffers = (CirclePageIndicator) rootView
+				.findViewById(R.id.indicator1);
+		mIndicatorOffers.setViewPager(mPagerOffers);
+
+		mAdapter2 = new SlidePagerAdapter(getChildFragmentManager(), second);
+		mPagerMen = (ViewPager) rootView.findViewById(R.id.vp2);
+		mPagerMen.setAdapter(mAdapter2);
+
+		mIndicatorMen = (CirclePageIndicator) rootView
+				.findViewById(R.id.indicator2);
+		mIndicatorMen.setViewPager(mPagerMen);
+
+		mAdapter3 = new SlidePagerAdapter(getChildFragmentManager(), first);
+		mPager3 = (ViewPager) rootView.findViewById(R.id.vp3);
+		mPager3.setAdapter(mAdapter3);
+
+		mIndicator3 = (CirclePageIndicator) rootView
+				.findViewById(R.id.indicator3);
+		mIndicator3.setViewPager(mPager3);
+
+		mAdapter4 = new SlidePagerAdapter(getChildFragmentManager(), otro);
+		mPager4 = (ViewPager) rootView.findViewById(R.id.vp4);
+		mPager4.setAdapter(mAdapter4);
+
+		mIndicator4 = (CirclePageIndicator) rootView
+				.findViewById(R.id.indicator4);
+		mIndicator4.setViewPager(mPager4);
+
+		final GestureDetector tapGestureDetector = new GestureDetector(
+				getActivity(), new GestureDetector.SimpleOnGestureListener() {
+					@Override
+					public boolean onSingleTapConfirmed(MotionEvent e) {
+						MainActivity.replaceFragment(new CategoryFragment("Men",context),"CATEGORY_FRAGMENT",true);
+						return false;
+					}
+				});
+
+		mPagerOffers.setOnTouchListener(new OnTouchListener() {
+			public boolean onTouch(View v, MotionEvent event) {
+				tapGestureDetector.onTouchEvent(event);
+				return false;
+			}
+		});
+		mIndicatorOffers.setOnPageChangeListener(this);
+
+		return rootView;
+	}
+
+
+	@Override
+	public void onPageScrollStateChanged(int arg0) {
+	}
+
+	@Override
+	public void onPageScrolled(int arg0, float arg1, int arg2) {
+	}
+
+	@Override
+	public void onPageSelected(int arg0) {
+		currentSelectedFragmentPosition = arg0;
+	}
+
+	public int getCurrentSelectedFragmentPosition() {
+		return currentSelectedFragmentPosition;
+	}
+
+}

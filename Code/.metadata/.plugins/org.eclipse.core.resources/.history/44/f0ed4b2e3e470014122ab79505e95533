@@ -1,0 +1,16 @@
+package com.tae.store.helpers;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+public static class NetworkRequest {
+
+	public JSONArray makeRequest(String url, String method, JSONObject parameters){
+		
+		JSONArray response = new JSONArray();
+		
+		
+		return response;
+	}
+	
+}

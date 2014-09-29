@@ -1,0 +1,29 @@
+package com.tae.store.helpers;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+public class NetworkRequest {
+
+	private static NetworkRequest instance = null;
+
+	protected public NetworkRequest() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static NetworkRequest getInstance() {
+		if (instance == null) {
+			instance = new nerworkRequest();
+		}
+		return instance;
+	}
+
+	public JSONArray makeRequest(String url, String method,
+			JSONObject parameters) {
+
+		JSONArray response = new JSONArray();
+
+		return response;
+	}
+
+}

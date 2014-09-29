@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.tae.store.R;
 import com.tae.store.model.Product;
+import com.tae.store.utilities.ServerUrl;
 
 public class ProductListAdapter extends ArrayAdapter<Product> {
 
@@ -60,7 +61,7 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 		Product prod = productList.get(position);
 		txtName.setText(prod.getName());
 		txtPrice.setText(String.valueOf(prod.getPrice()));
-		Picasso.with(context).load(prod.getUrl_pic())
+		Picasso.with(context).load(ServerUrl.BASE_URL+ServerUrl.IMG+prod.getUrl_pic())
 				.placeholder(R.drawable.ic_launcher).into(imgIcon);
 
 		return convertView;

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.tae.store.R;
 import com.tae.store.model.Category;
+import com.tae.store.utilities.ServerUrl;
 
 public class CategoryListAdapter extends BaseAdapter {
 
@@ -56,12 +57,17 @@ public class CategoryListAdapter extends BaseAdapter {
 
         Category cat = categoryList.get(position);      
         txtName.setText(cat.getName());
-        txtPrice.setText(cat.getLower_price());
-        Picasso.with(context).load(cat.getUrl_pic()).placeholder(R.drawable.ic_launcher).into(imgIcon);
+        txtPrice.setText("From "+cat.getLower_price());
+        Picasso.with(context).load(ServerUrl.BASE_URL+ServerUrl.IMG+cat.getUrl_pic()).placeholder(R.drawable.ic_launcher).into(imgIcon);
 
         return convertView;
 
     }
-
+   
+    public void clearAdapter()
+    {
+        categoryList.clear();
+        notifyDataSetChanged();
+    }
 }
 

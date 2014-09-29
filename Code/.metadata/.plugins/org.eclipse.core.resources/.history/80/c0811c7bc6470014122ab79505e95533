@@ -1,0 +1,7 @@
+package com.tae.store;
+
+import com.actionbarsherlock.app.SherlockActivity;
+
+public class SplashScreen extends SherlockActivity {
+
+}

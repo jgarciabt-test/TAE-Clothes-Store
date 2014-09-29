@@ -32,15 +32,16 @@
             android:text="@string/app_name"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <ImageButton
+        <ToggleButton
             android:id="@+id/ib_store_favourite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginRight="40dp"
             android:layout_marginLeft="150dp"
-            
             android:layout_marginTop="18dp"
-            android:background="#00ffffff"
+            android:background="@drawable/ic_action_favorite"
+            android:textOn=""
+            android:textOff=""
             android:contentDescription="@string/app_name"
             android:src="@drawable/star" />
 

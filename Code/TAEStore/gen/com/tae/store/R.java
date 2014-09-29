@@ -1459,14 +1459,16 @@ containing a value of this type.
         public static final int list_item_bg_normal=0x7f02009b;
         public static final int list_item_bg_pressed=0x7f02009c;
         public static final int list_selector=0x7f02009d;
-        public static final int star=0x7f02009e;
-        public static final int vpi__tab_indicator=0x7f02009f;
-        public static final int vpi__tab_selected_focused_holo=0x7f0200a0;
-        public static final int vpi__tab_selected_holo=0x7f0200a1;
-        public static final int vpi__tab_selected_pressed_holo=0x7f0200a2;
-        public static final int vpi__tab_unselected_focused_holo=0x7f0200a3;
-        public static final int vpi__tab_unselected_holo=0x7f0200a4;
-        public static final int vpi__tab_unselected_pressed_holo=0x7f0200a5;
+        public static final int men=0x7f02009e;
+        public static final int star=0x7f02009f;
+        public static final int vpi__tab_indicator=0x7f0200a0;
+        public static final int vpi__tab_selected_focused_holo=0x7f0200a1;
+        public static final int vpi__tab_selected_holo=0x7f0200a2;
+        public static final int vpi__tab_selected_pressed_holo=0x7f0200a3;
+        public static final int vpi__tab_unselected_focused_holo=0x7f0200a4;
+        public static final int vpi__tab_unselected_holo=0x7f0200a5;
+        public static final int vpi__tab_unselected_pressed_holo=0x7f0200a6;
+        public static final int women=0x7f0200a7;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f040028;
@@ -1508,12 +1510,12 @@ containing a value of this type.
         public static final int abs__textButton=0x7f04001b;
         public static final int abs__title=0x7f040023;
         public static final int abs__up=0x7f040013;
-        public static final int action_settings=0x7f040073;
+        public static final int action_settings=0x7f040074;
         public static final int bottom=0x7f040003;
         public static final int bottom_bar=0x7f04004e;
         public static final int btn_add=0x7f040050;
         public static final int btn_directions=0x7f040062;
-        public static final int btn_info=0x7f04006d;
+        public static final int btn_info=0x7f04006e;
         public static final int btn_location=0x7f040055;
         public static final int btn_retry=0x7f040067;
         public static final int btn_search=0x7f040054;
@@ -1532,6 +1534,7 @@ containing a value of this type.
         public static final int hybrid=0x7f040008;
         public static final int ib_store_favourite=0x7f04005c;
         public static final int icon=0x7f04003e;
+        public static final int imageView1=0x7f04006d;
         public static final int indicator1=0x7f040043;
         public static final int indicator2=0x7f040046;
         public static final int indicator3=0x7f040049;
@@ -1549,7 +1552,7 @@ containing a value of this type.
         public static final int pager3=0x7f040047;
         public static final int pager4=0x7f04004a;
         public static final int rel1=0x7f040058;
-        public static final int rl_info=0x7f04006e;
+        public static final int rl_info=0x7f04006f;
         public static final int satellite=0x7f040006;
         public static final int selected_imageview=0x7f040051;
         public static final int showCustom=0x7f040010;
@@ -1568,16 +1571,16 @@ containing a value of this type.
         public static final int txt_prodName=0x7f040069;
         public static final int txt_prodPrice=0x7f04006a;
         public static final int txt_product_list_title=0x7f04006b;
-        public static final int txt_store_address=0x7f040070;
+        public static final int txt_store_address=0x7f040071;
         public static final int txt_store_default=0x7f04005f;
         public static final int txt_store_detail_address=0x7f04005d;
         public static final int txt_store_detail_name=0x7f04005b;
         public static final int txt_store_detail_opening=0x7f040060;
         public static final int txt_store_detail_post_city=0x7f04005e;
         public static final int txt_store_detail_title=0x7f04005a;
-        public static final int txt_store_distance=0x7f040072;
-        public static final int txt_store_name=0x7f04006f;
-        public static final int txt_store_open=0x7f040071;
+        public static final int txt_store_distance=0x7f040073;
+        public static final int txt_store_name=0x7f040070;
+        public static final int txt_store_open=0x7f040072;
         public static final int underline=0x7f040002;
         public static final int useLogo=0x7f04000c;
         public static final int vp1=0x7f040042;
@@ -1631,8 +1634,9 @@ containing a value of this type.
         public static final int product_list=0x7f030020;
         public static final int sherlock_spinner_dropdown_item=0x7f030021;
         public static final int sherlock_spinner_item=0x7f030022;
-        public static final int store_item=0x7f030023;
-        public static final int store_list=0x7f030024;
+        public static final int splashscreen=0x7f030023;
+        public static final int store_item=0x7f030024;
+        public static final int store_list=0x7f030025;
     }
     public static final class menu {
         public static final int main=0x7f0c0000;
@@ -1777,7 +1781,9 @@ containing a value of this type.
          */
         public static final int common_signin_button_text_long=0x7f0a0013;
         public static final int directions=0x7f0a0031;
+        public static final int error_loading=0x7f0a0033;
         public static final int hello_world=0x7f0a0029;
+        public static final int loading=0x7f0a0032;
         /**  Location client code resources (prefix with location_client) 
          */
         public static final int location_client_powered_by_google=0x7f0a001a;
@@ -1786,7 +1792,7 @@ containing a value of this type.
         public static final int opening_hours=0x7f0a0030;
         /**  Screen Titles 
          */
-        public static final int screen_store=0x7f0a0032;
+        public static final int screen_store=0x7f0a0034;
     }
     public static final class style {
         public static final int Sherlock___TextAppearance_Small=0x7f09004a;

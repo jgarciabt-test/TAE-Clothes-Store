@@ -11,6 +11,8 @@
     <string name="change_list">Change to list</string>
     <string name="opening_hours">Opening Hours</string>
     <string name="directions">Directions</string>
+    <string name="loading">Loading...</string>
+    <string name="error_loading">Unable connect to the server. Please try again later.</string>
     
     <!-- Screen Titles -->
     <string name="screen_store">Store Info</string>

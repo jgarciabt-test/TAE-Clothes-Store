@@ -10,7 +10,7 @@ public class Product implements Parcelable {
 	private String description;
 	private String details;
 	private Boolean promoted;
-	private int price;
+	private float price;
 	private String url_pic;
 
 	public Product() {
@@ -67,11 +67,11 @@ public class Product implements Parcelable {
 		this.promoted = promoted;
 	}
 
-	public int getPrice() {
+	public float getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(float price) {
 		this.price = price;
 	}
 
@@ -89,7 +89,7 @@ public class Product implements Parcelable {
 		description = in.readString();
 		details = in.readString();
 		promoted = in.readByte() != 0;
-		price = in.readInt();
+		price = in.readFloat();
 		url_pic = in.readString();
 	}
 
@@ -105,7 +105,7 @@ public class Product implements Parcelable {
 		out.writeString(description);
 		out.writeString(details);
 		out.writeByte((byte) (promoted ? 1 : 0));
-		out.writeInt(price);
+		out.writeFloat(price);
 		out.writeString(url_pic);
 
 	}

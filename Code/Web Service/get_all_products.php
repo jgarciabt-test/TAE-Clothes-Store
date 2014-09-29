@@ -18,7 +18,7 @@ if (!$db_selected) {
 if(isset($_GET["category"])){
 	
 	$category = $_GET["category"];
-	$result = mysql_query("SELECT * FROM `products` WHERE `prod_cat` = '$category'");
+	$result = mysql_query("SELECT * FROM TAE_STORE.products JOIN TAE_STORE.picture ON (prod_main_pic = pic_id) WHERE `prod_cat` = '$category'");
 	
 	if(mysql_num_rows($result) > 0){
 		$response["products"] = array();
@@ -31,7 +31,7 @@ if(isset($_GET["category"])){
 			$element["prod_detail"] = $row["prod_detail"];
 			$element["prod_price"] = $row["prod_price"];
 			$element["prod_offer"] = $row["prod_offer"];
-			$element["prod_main_pic"] = $row["prod_main_pic"];
+			$element["pic_url"] = $row["pic_url"];
 			$element["prod_cat"] = $row["prod_cat"];
 			
 			array_push($response["products"],$element);
@@ -44,7 +44,7 @@ if(isset($_GET["category"])){
 		$response["message"] = "No elements found";
 	}
 	
-	echo json_encode($response);
+	echo "[",json_encode($response),"]";
 }
 
 ?>
