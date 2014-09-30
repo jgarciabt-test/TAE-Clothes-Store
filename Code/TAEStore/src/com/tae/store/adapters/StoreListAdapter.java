@@ -1,5 +1,6 @@
 package com.tae.store.adapters;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -10,9 +11,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 import com.tae.store.R;
-import com.tae.store.model.Category;
 import com.tae.store.model.Store;
 
 public class StoreListAdapter extends BaseAdapter {
@@ -59,7 +58,7 @@ public class StoreListAdapter extends BaseAdapter {
         txtName.setText(store.getName());
         txtAddress.setText(store.getAddress()+","+store.getPostCode());
         txtOpening.setText(store.getOpeningHours());
-        txtDistance.setText("1 mile");
+        txtDistance.setText(new DecimalFormat("##.##").format(store.getDistance())+" Mi");
 
         return convertView;
 

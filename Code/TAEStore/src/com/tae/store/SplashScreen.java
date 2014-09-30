@@ -66,7 +66,6 @@ public class SplashScreen extends SherlockActivity {
 				Intent i = new Intent(SplashScreen.this, MainActivity.class);
 				i.putParcelableArrayListExtra("men", menCategories);
 				i.putParcelableArrayListExtra("women", womenCategories);
-				i.putExtra("test", "Test");
 
 				startActivity(i);
 				finish();

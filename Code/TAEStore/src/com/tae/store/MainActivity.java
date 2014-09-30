@@ -30,9 +30,8 @@ import com.actionbarsherlock.view.MenuItem;
 import com.tae.store.adapters.NavDrawerListAdapter;
 import com.tae.store.fragments.CategoryFragment;
 import com.tae.store.fragments.HomeFragment;
-import com.tae.store.fragments.MapFragment;
+import com.tae.store.fragments.CustomMapFragment;
 import com.tae.store.fragments.NoConnectionFragment;
-import com.tae.store.fragments.StoreListFragment;
 import com.tae.store.model.Category;
 import com.tae.store.model.NavDrawerItem;
 import com.tae.store.utilities.NetworkCheckService;
@@ -45,6 +44,7 @@ public class MainActivity extends SherlockFragmentActivity {
 	static public FragmentManager fragmentManager;
 	static private String currentFragment;
 	static public Fragment fragment;
+	static public ArrayList<String> backStackFragment;
 
 	// Slide Pager
 	static public HashMap<String, Fragment> fragmentMap;
@@ -59,21 +59,6 @@ public class MainActivity extends SherlockFragmentActivity {
 	private String[] navMenuTitles;
 	private TypedArray navMenuIcons;
 	private ArrayList<NavDrawerItem> navDrawerItems;
-
-	// TODO Just for testing, to populate ImageViews
-	static public ArrayList<String> generateData() {
-		ArrayList<String> listData = new ArrayList<String>();
-		listData.add("http://i62.tinypic.com/2iitkhx.jpg");
-		listData.add("http://i61.tinypic.com/w0omeb.jpg");
-		listData.add("http://i60.tinypic.com/w9iu1d.jpg");
-		listData.add("http://i60.tinypic.com/iw6kh2.jpg");
-		listData.add("http://i57.tinypic.com/ru08c8.jpg");
-		listData.add("http://i60.tinypic.com/k12r10.jpg");
-		listData.add("http://i58.tinypic.com/2e3daug.jpg");
-		listData.add("http://i59.tinypic.com/2igznfr.jpg");
-
-		return listData;
-	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -134,16 +119,24 @@ public class MainActivity extends SherlockFragmentActivity {
 		if (savedInstanceState != null) {
 			// Restore the fragment's instance
 			currentFragment = savedInstanceState.getString("currentFragment");
+			Log.v("ACTIVITY SAVED", "Current fragment: "+currentFragment);
 			fragment = fragmentManager.getFragment(savedInstanceState,
 					currentFragment);
-			replaceFragment(fragment, currentFragment, true);
+			Log.v("ACTIVITY SAVED", "fragment: "+fragment.toString());
+			replaceFragment(fragment, currentFragment, false);
+			//backStackFragment = savedInstanceState
+			//		.getStringArrayList("backStackFragment");
 		} else {
 			// Load first fragment
-			ArrayList<Category> men = prev_screen.getParcelableArrayListExtra("men");
-			ArrayList<Category> women = prev_screen.getParcelableArrayListExtra("women");
+			backStackFragment = new ArrayList<String>();
+
+			ArrayList<Category> men = prev_screen
+					.getParcelableArrayListExtra("men");
+			ArrayList<Category> women = prev_screen
+					.getParcelableArrayListExtra("women");
 
 			fragment = new HomeFragment(this, men, women);
-			addFragment(fragment);
+			addFragment(fragment, "HOME_FRAGMENT");
 		}
 
 		netReceiver = new NetworkCheckReceiver();
@@ -192,10 +185,12 @@ public class MainActivity extends SherlockFragmentActivity {
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
 
-	private void addFragment(Fragment fragment) {
+	private void addFragment(Fragment fragment, String tag) {
 		if (fragment != null) {
 			fragmentManager.beginTransaction()
 					.add(R.id.frame_container, fragment).commit();
+			currentFragment = tag;
+			backStackFragment.add(currentFragment);
 		}
 	}
 
@@ -213,34 +208,43 @@ public class MainActivity extends SherlockFragmentActivity {
 				fragmentManager.beginTransaction()
 						.replace(R.id.frame_container, fragment, tag).commit();
 			}
+			if(!backStackFragment.get(backStackFragment.size()-1).matches(currentFragment)){
+				backStackFragment.add(currentFragment);
+			}
 		}
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-
+		outState.putStringArrayList("backstackFragment", backStackFragment);
 		outState.putString("currentFragment", currentFragment);
 		fragmentManager.putFragment(outState, currentFragment, fragment);
+
 	}
 
 	private void displayView(int position) {
-		String fragmentName = null;
+		String fragmentName = "";
 		switch (position) {
 		case 0:
-			ArrayList<Category> men = getIntent().getParcelableArrayListExtra("men");
-			ArrayList<Category> women = getIntent().getParcelableArrayListExtra("women");
+			ArrayList<Category> men = getIntent().getParcelableArrayListExtra(
+					"men");
+			ArrayList<Category> women = getIntent()
+					.getParcelableArrayListExtra("women");
 
 			fragment = new HomeFragment(this, men, women);
 			fragmentName = "HOME_FRAGMENT";
 			break;
 		case 1:
-			fragment = new CategoryFragment("Men",this);
+			fragment = new CategoryFragment("Men", this);
 			fragmentName = "CATEGORY_FRAGMENT";
 			break;
-
+		case 2:
+			fragment = new CategoryFragment("Women", this);
+			fragmentName = "CATEGORY_FRAGMENT";
+			break;
 		case 3:
-			fragment = new MapFragment();
+			fragment = new CustomMapFragment();
 			fragmentName = "MAP_FRAGMENT";
 			break;
 		default:
@@ -261,6 +265,19 @@ public class MainActivity extends SherlockFragmentActivity {
 			// display view for selected nav drawer item
 			displayView(position);
 		}
+	}
+
+	@Override
+	public void onBackPressed() {
+//		if (backStackFragment.size()>1) {
+//			backStackFragment.remove(backStackFragment.size() - 1);
+//			Log.v("BACK", backStackFragment.get(backStackFragment.size()-1));
+////			fragmentManager.beginTransaction()
+////			.replace(R.id.frame_container, fragmentManager.findFragmentByTag(backStackFragment.get(backStackFragment.size()-1)), backStackFragment.get(backStackFragment.size()-1)).commit();
+////		} else{
+////			finish();
+//		}
+		super.onBackPressed();
 	}
 
 	@Override

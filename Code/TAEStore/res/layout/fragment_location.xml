@@ -20,7 +20,8 @@
             android:layout_toLeftOf="@+id/btn_search"
             android:background="#FFFFFF"
             android:hint="Store&apos;s name..."
-            android:inputType="text" >
+            android:inputType="text"
+            android:imeOptions="actionSearch" >
 
             <requestFocus />
         </EditText>
@@ -46,12 +47,11 @@
             android:src="@drawable/ic_action_search" />
     </RelativeLayout>
 
-    <fragment
+    <RelativeLayout
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/custom_bar"
-        class="com.google.android.gms.maps.SupportMapFragment" />
+        android:layout_below="@id/custom_bar" />
 
     <ImageButton
         android:id="@+id/btn_to_list"
@@ -59,8 +59,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/map"
-        android:layout_marginRight="23dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
         android:background="@null"
         android:src="@drawable/ic_list_view" />
 

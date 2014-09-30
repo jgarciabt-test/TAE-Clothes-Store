@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.Log;
 
 import com.tae.store.R;
 import com.tae.store.fragments.SlidePageFragment;
@@ -43,7 +42,6 @@ public class SlidePagerAdapter extends FragmentStatePagerAdapter {
         list.add(new SlidePageFragment(resourceId, true));
         for(int i=0;i<num_pages;i++){
         	list.add(new SlidePageFragment(categories.get(i).getUrl_pic(),false));
-        	Log.v("HOME", categories.get(i).getUrl_pic());
         }
         num_pages++;
     }

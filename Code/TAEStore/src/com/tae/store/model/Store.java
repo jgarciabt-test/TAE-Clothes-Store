@@ -14,6 +14,7 @@ public class Store implements Parcelable{
 	private String openingHours;
 	private double latitude;
 	private double longitude;
+	private double distance = -1;
 	
 	public Store(){
 	}
@@ -102,6 +103,14 @@ public class Store implements Parcelable{
 		this.longitude = longitude;
 	}
 	
+	public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
+
 	private Store(Parcel in){
 		id = in.readString();
 		name = in.readString();
@@ -112,6 +121,7 @@ public class Store implements Parcelable{
 		openingHours = in.readString();
 		latitude =in.readDouble();
 		longitude = in.readDouble();
+		distance = in.readDouble();
 	}
 
 	@Override
@@ -130,6 +140,7 @@ public class Store implements Parcelable{
 		out.writeString(openingHours);
 		out.writeDouble(latitude);
 		out.writeDouble(longitude);
+		out.writeDouble(distance);
 	}
 	public static final Parcelable.Creator<Store> CREATOR = new Parcelable.Creator<Store>() {
         public Store createFromParcel(Parcel in) {

@@ -5,12 +5,8 @@
 <fullyQualifiedTypeName name="android.os.Parcel"/>
 <fullyQualifiedTypeName name="com.google.android.gms.internal.ci"/>
 <fullyQualifiedTypeName name="android.widget.BaseAdapter"/>
-<fullyQualifiedTypeName name="android.view.LayoutInflater"/>
 <fullyQualifiedTypeName name="com.tae.store.adapters.StoreListAdapter"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="com.tae.store.model.Store"/>
-<fullyQualifiedTypeName name="com.tae.store.fragments.MapFragment"/>
-<fullyQualifiedTypeName name="android.widget.ImageButton"/>
 <fullyQualifiedTypeName name="com.tae.store.fragments.StoreListFragment"/>
 <fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="com.actionbarsherlock.app.SherlockFragment"/>
@@ -20,9 +16,22 @@
 <fullyQualifiedTypeName name="com.tae.store.R"/>
 <fullyQualifiedTypeName name="com.tae.store.R.layout"/>
 <fullyQualifiedTypeName name="android.widget.Button"/>
-<fullyQualifiedTypeName name="com.tae.store.MainActivity"/>
 <fullyQualifiedTypeName name="com.tae.store.fragments.StoreFragment"/>
 <fullyQualifiedTypeName name="com.tae.store.fragments.ProductListFragment"/>
 <fullyQualifiedTypeName name="android.widget.TextView"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="com.google.android.gms.maps.SupportMapFragment"/>
+<fullyQualifiedTypeName name="com.tae.store.MainActivity"/>
+<fullyQualifiedTypeName name="android.widget.ImageButton"/>
+<fullyQualifiedTypeName name="com.tae.store.fragments.MapFragment"/>
+<fullyQualifiedTypeName name="com.tae.store.helpers.LocationTracker"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="android.location.Geocoder"/>
+<fullyQualifiedTypeName name="android.location.Address"/>
+<fullyQualifiedTypeName name="com.google.android.gms.maps.model.LatLng"/>
+<fullyQualifiedTypeName name="android.widget.EditText"/>
 <fullyQualifiedTypeName name="com.tae.store.R.id"/>
+<fullyQualifiedTypeName name="com.tae.store.R.drawable"/>
+<fullyQualifiedTypeName name="com.google.android.gms.maps.GoogleMap.OnMarkerClickListener"/>
+<fullyQualifiedTypeName name="android.view.LayoutInflater"/>
 </qualifiedTypeNameHistroy>

@@ -11,6 +11,9 @@ public class NetworkUtil {
     public static int TYPE_NOT_CONNECTED = 0;
      
      
+    /*
+     * 
+     */
     public static int getConnectivityStatus(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,8 +21,7 @@ import com.tae.store.utilities.MainCategories;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.PageIndicator;
 
-public class HomeFragment extends SherlockFragment implements
-		OnPageChangeListener {
+public class HomeFragment extends SherlockFragment {
 
 	private Context context;
 	private int currentSelectedFragmentPosition = 0;
@@ -52,8 +49,6 @@ public class HomeFragment extends SherlockFragment implements
 			getActivity(), new GestureDetector.SimpleOnGestureListener() {
 				@Override
 				public boolean onSingleTapConfirmed(MotionEvent e) {
-					Log.v("PAGER", "Men - Pressed: "
-							+ currentSelectedFragmentPosition);
 					MainActivity.replaceFragment(new CategoryFragment("Men",
 							context), "CATEGORY_FRAGMENT", true);
 					return false;
@@ -65,9 +60,7 @@ public class HomeFragment extends SherlockFragment implements
 			getActivity(), new GestureDetector.SimpleOnGestureListener() {
 				@Override
 				public boolean onSingleTapConfirmed(MotionEvent e) {
-
 					int i = mPagerMen.getCurrentItem();
-					Log.v("PAGER", "Men - Pressed: " + i);
 					switch (i) {
 					case 0:
 						MainActivity.replaceFragment(new CategoryFragment(
@@ -89,9 +82,7 @@ public class HomeFragment extends SherlockFragment implements
 			getActivity(), new GestureDetector.SimpleOnGestureListener() {
 				@Override
 				public boolean onSingleTapConfirmed(MotionEvent e) {
-
 					int i = mPagerWomen.getCurrentItem();
-					Log.v("PAGER", "Women - Pressed: " + i);
 					switch (i) {
 					case 0:
 						MainActivity.replaceFragment(new CategoryFragment(
@@ -110,7 +101,6 @@ public class HomeFragment extends SherlockFragment implements
 			});
 
 	public HomeFragment() {
-		context = getActivity();
 	}
 
 	public HomeFragment(Context context, ArrayList<Category> menCategories,
@@ -126,6 +116,15 @@ public class HomeFragment extends SherlockFragment implements
 
 		ViewGroup rootView = (ViewGroup) inflater.inflate(
 				R.layout.fragment_home, container, false);
+		
+		if(context == null){
+			context = getActivity();
+		}
+		
+		if(savedInstanceState != null){
+			menCategories = savedInstanceState.getParcelableArrayList("menCategories");
+			womenCategories = savedInstanceState.getParcelableArrayList("womenCategories");
+		}
 
 		mAdapterOffers = new SlidePagerAdapter(getChildFragmentManager(),
 				MainCategories.OFFERS, menCategories);
@@ -162,8 +161,6 @@ public class HomeFragment extends SherlockFragment implements
 			}
 		});
 
-		mIndicatorOffers.setOnPageChangeListener(this);
-
 		mPagerMen.setOnTouchListener(new OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				tapGestureDetectorMen.onTouchEvent(event);
@@ -178,26 +175,16 @@ public class HomeFragment extends SherlockFragment implements
 			}
 		});
 
-		//mIndicatorMen.setOnPageChangeListener(this);
-
 		return rootView;
 	}
 
 	@Override
-	public void onPageScrollStateChanged(int arg0) {
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		
+		outState.putParcelableArrayList("menCategories", menCategories);
+		outState.putParcelableArrayList("womenCategories", womenCategories);
 	}
 
-	@Override
-	public void onPageScrolled(int arg0, float arg1, int arg2) {
-	}
-
-	@Override
-	public void onPageSelected(int arg0) {
-		currentSelectedFragmentPosition = arg0;
-	}
-
-	public int getCurrentSelectedFragmentPosition() {
-		return currentSelectedFragmentPosition;
-	}
 
 }

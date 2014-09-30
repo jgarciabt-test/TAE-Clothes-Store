@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ListView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
@@ -19,18 +18,8 @@ public class StoreListFragment extends SherlockListFragment {
 
 	private ArrayList<Store> list;
 
-	public StoreListFragment() {
-		list = new ArrayList<Store>();
-	}
-
-	// TODO Just for testing
-	private void populate() {
-
-		for (int i = 0; i < 10; i++) {
-			list.add(new Store("", "TAE Store", "25 Brondesbury Rd", "NW6 6TT",
-					"London", "00011122233", "Mon - Sat 10:00 - 20:00",
-					12.0000000, 12.0000000));
-		}
+	public StoreListFragment(ArrayList<Store> list) {
+		this.list = list;
 	}
 
 	@Override
@@ -42,7 +31,7 @@ public class StoreListFragment extends SherlockListFragment {
 
 		if (savedInstanceState == null
 				|| !savedInstanceState.containsKey("list")) {
-			populate();
+			//populate();
 		} else {
 			list = savedInstanceState.getParcelableArrayList("list");
 		}

@@ -4,14 +4,12 @@ import org.json.JSONArray;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.google.android.gms.cast.Cast.ApplicationConnectionResult;
 import com.tae.store.R;
 import com.tae.store.app.AppController;
 
