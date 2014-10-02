@@ -7,3 +7,5 @@
 1412178738051	Rename resource 'bag_item.xml'
 1412178749542	Rename resource 'bag_item2.xml'
 1412198683571	Copy compilation unit
+1412243515676	Rename field 'product_list'
+1412243638489	Rename method 'makeRequest'

@@ -9,6 +9,7 @@ public class ServerUrl {
 	public static final String GET_ALL_CATEGORIES ="get_all_categories.php";
 	public static final String GET_ALL_STORES = "get_all_stores.php";
 	public static final String GET_ALL_PIC_PROD = "get_all_pic_prod.php?prod_id=";
+	public static final String GET_ALL_SIZE_PROD = "get_all_size_prod.php?prod_id=";
 	public static final String IMG = "img/";
 
 }

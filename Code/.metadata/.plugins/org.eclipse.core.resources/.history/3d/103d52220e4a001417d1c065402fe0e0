@@ -1,0 +1,7 @@
+package com.tae.store.helpers;
+
+import android.database.sqlite.SQLiteOpenHelper;
+
+public class DatabaseHandler extends SQLiteOpenHelper {
+
+}

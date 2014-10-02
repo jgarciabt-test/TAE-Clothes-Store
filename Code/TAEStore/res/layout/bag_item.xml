@@ -5,7 +5,7 @@
     android:orientation="vertical" >
     
     <ImageView
-        android:id="@+id/iv_category"
+        android:id="@+id/iv_bag_pic"
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:layout_marginLeft="10dp"
@@ -18,8 +18,8 @@
         android:id="@+id/txt_bag_size"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_catName"
-        android:layout_toRightOf="@+id/iv_category"
+        android:layout_below="@+id/txt_bag_name"
+        android:layout_toRightOf="@+id/iv_bag_pic"
         android:layout_marginLeft="27dp"
         android:layout_marginTop="10dp"
         android:text="Size S" 
@@ -27,11 +27,11 @@
         android:textSize="18sp"/>
     
     <TextView
-        android:id="@+id/txt_catPrice"
+        android:id="@+id/txt_bag_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_bag_size"
-        android:layout_toRightOf="@+id/iv_category"
+        android:layout_toRightOf="@+id/iv_bag_pic"
         android:layout_marginLeft="27dp"
         android:layout_marginTop="10dp"
         android:text="From 25" 
@@ -39,11 +39,11 @@
         android:textSize="18sp"/>
 
     <TextView
-        android:id="@+id/txt_catName"
+        android:id="@+id/txt_bag_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txt_catPrice"
-        android:layout_alignTop="@+id/iv_category"
+        android:layout_alignLeft="@+id/txt_bag_price"
+        android:layout_alignTop="@+id/iv_bag_pic"
         android:layout_marginTop="10dp"
         android:text="Trousers"
         android:textSize="24sp" />

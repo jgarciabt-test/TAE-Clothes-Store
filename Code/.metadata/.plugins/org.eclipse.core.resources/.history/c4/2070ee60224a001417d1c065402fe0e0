@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <ImageView
+        android:id="@+id/iv_bag_pic"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/example" />
+
+        <TextView
+        android:id="@+id/txt_bag_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_bag_name"
+        android:layout_toRightOf="@+id/iv_bag_pic"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="10dp"
+        android:text="Size S" 
+        android:textColor="#888888"
+        android:textSize="18sp"/>
+    
+    <TextView
+        android:id="@+id/txt_bag_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_bag_size"
+        android:layout_toRightOf="@+id/iv_bag_pic"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="10dp"
+        android:text="From 25" 
+        android:textColor="#888888"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/txt_bag_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txt_catPrice"
+        android:layout_alignTop="@+id/iv_bag_pic"
+        android:layout_marginTop="10dp"
+        android:text="Trousers"
+        android:textSize="24sp" />
+
+</RelativeLayout>

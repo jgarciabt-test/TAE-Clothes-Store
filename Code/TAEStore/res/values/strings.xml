@@ -20,6 +20,7 @@
     <string name="bag_order_value">Order value:</string>
     <string name="bag_total">TOTAL:</string>
     <string name="msg_added">added to your bag.</string>
+    <string name="pound_symbol">£</string>
     
     <!-- Screen Titles -->
     <string name="screen_store">Store Info</string>

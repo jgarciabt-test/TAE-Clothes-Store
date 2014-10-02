@@ -28,6 +28,7 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.tae.store.adapters.NavDrawerListAdapter;
+import com.tae.store.fragments.BagFragment;
 import com.tae.store.fragments.CategoryFragment;
 import com.tae.store.fragments.CustomMapFragment;
 import com.tae.store.fragments.HomeFragment;
@@ -246,6 +247,10 @@ public class MainActivity extends SherlockFragmentActivity {
 		case 3:
 			fragment = new CustomMapFragment();
 			fragmentName = "MAP_FRAGMENT";
+			break;
+		case 4:
+			fragment = new BagFragment();
+			fragmentName = "BAG_FRAGMENT";
 			break;
 		default:
 			break;
