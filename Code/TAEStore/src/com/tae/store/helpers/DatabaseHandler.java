@@ -46,8 +46,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ KEY_NAME + " varchar(50) NOT NULL," + KEY_DESC
 				+ " text NOT NULL," + KEY_PRICE + " float NOT NULL," + KEY_SIZE
 				+ " varchar(10) NOT NULL," + KEY_OFFER
-				+ " tinyint(1) NOT NULL," + KEY_MAIN_PIC + " varchar(50) NOT NULL"
-				+ ")";
+				+ " tinyint(1) NOT NULL," + KEY_MAIN_PIC
+				+ " varchar(50) NOT NULL" + ")";
 
 		db.execSQL(CREATE_PRODUCT_TABLE);
 	}
@@ -73,6 +73,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		Log.v("DATABASE", "Inserted: " + product.getUrl_pic());
 		db.insert(TABLE_PRODUCTS, null, values);
+		db.close();
+	}
+
+	public void deleteProduct(String productId) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete(TABLE_PRODUCTS, KEY_ID + " = ?", new String[] { productId });
 		db.close();
 	}
 
@@ -104,16 +110,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 					} else {
 						product.setPromoted(false);
 					}
-					Log.v("DATABASE", "Readed: " + cursor.getString(0));
-					Log.v("DATABASE", "Readed: " + cursor.getString(1));
-					Log.v("DATABASE", "Readed: " + cursor.getString(2));
-					Log.v("DATABASE", "Readed: " + cursor.getString(3));
-					Log.v("DATABASE", "Readed: " + cursor.getString(4));
-					Log.v("DATABASE", "Readed: " + cursor.getString(5));
-					Log.v("DATABASE", "Readed: " + cursor.getString(6));
-					
 
-					
 					bagList.add(product);
 				} while (cursor.moveToNext());
 			}
@@ -122,7 +119,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			db.close();
 			return bagList;
 		} catch (Exception e) {
-			Log.e("getProducts", "" + e);
 			e.printStackTrace();
 		}
 		return bagList;

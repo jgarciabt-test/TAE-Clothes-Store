@@ -21,6 +21,9 @@
     <string name="bag_total">TOTAL:</string>
     <string name="msg_added">added to your bag.</string>
     <string name="pound_symbol">£</string>
+    <string name="delete_dialog">Are you sure you want to delete this item from your shopping bag?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     
     <!-- Screen Titles -->
     <string name="screen_store">Store Info</string>
