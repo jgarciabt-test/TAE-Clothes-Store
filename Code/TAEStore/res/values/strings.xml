@@ -13,6 +13,13 @@
     <string name="directions">Directions</string>
     <string name="loading">Loading...</string>
     <string name="error_loading">Unable connect to the server. Please try again later.</string>
+    <string name="size">Size:</string>
+    <string name="bag_title">Shopping Bag</string>
+    <string name="bag_total_header">SHOPPING BAG TOTAL</string>
+    <string name="bag_qty">Total qty:</string>
+    <string name="bag_order_value">Order value:</string>
+    <string name="bag_total">TOTAL:</string>
+    <string name="msg_added">added to your bag.</string>
     
     <!-- Screen Titles -->
     <string name="screen_store">Store Info</string>
@@ -36,5 +43,12 @@
         <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
     </array>
+    <string-array name="size_array">
+        <item>XXL</item>
+        <item>XL</item>
+        <item>L</item>
+        <item>M</item>
+        <item>S</item>
+    </string-array>
     
 </resources>

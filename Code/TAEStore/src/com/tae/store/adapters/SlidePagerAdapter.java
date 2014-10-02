@@ -16,15 +16,16 @@ import com.tae.store.utilities.MainCategories;
  * sequence.
  */
 public class SlidePagerAdapter extends FragmentStatePagerAdapter {
-	
+
 	private int num_pages;
 	private ArrayList<SlidePageFragment> list;
-	
-    public SlidePagerAdapter(FragmentManager fragmentManager, int category, ArrayList<Category> categories) {
-        super(fragmentManager);
-        int resourceId = 0;
-        
-        switch (category) {
+
+	public SlidePagerAdapter(FragmentManager fragmentManager, int category,
+			ArrayList<Category> categories) {
+		super(fragmentManager);
+		int resourceId = 0;
+
+		switch (category) {
 		case MainCategories.OFFERS:
 			resourceId = R.drawable.men;
 			break;
@@ -35,24 +36,24 @@ public class SlidePagerAdapter extends FragmentStatePagerAdapter {
 			resourceId = R.drawable.women;
 			break;
 		}
-        
-        
-        num_pages = categories.size();
-        list = new ArrayList<SlidePageFragment>();
-        list.add(new SlidePageFragment(resourceId, true));
-        for(int i=0;i<num_pages;i++){
-        	list.add(new SlidePageFragment(categories.get(i).getUrl_pic(),false));
-        }
-        num_pages++;
-    }
 
-    @Override
-    public Fragment getItem(int position) {
-        return list.get(position);
-    }
+		num_pages = categories.size();
+		list = new ArrayList<SlidePageFragment>();
+		list.add(new SlidePageFragment(resourceId, true));
+		for (int i = 0; i < num_pages; i++) {
+			list.add(new SlidePageFragment(categories.get(i).getUrl_pic(),
+					false));
+		}
+		num_pages++;
+	}
 
-    @Override
-    public int getCount() {
-        return num_pages;
-    }
+	@Override
+	public Fragment getItem(int position) {
+		return list.get(position);
+	}
+
+	@Override
+	public int getCount() {
+		return num_pages;
+	}
 }

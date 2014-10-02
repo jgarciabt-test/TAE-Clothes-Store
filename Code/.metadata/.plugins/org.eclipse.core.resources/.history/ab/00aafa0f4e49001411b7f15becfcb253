@@ -1,0 +1,31 @@
+package com.tae.store.adapters;
+
+import java.util.ArrayList;
+
+import com.tae.store.model.Product;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+
+public class IdemPagerAdapter extends FragmentStatePagerAdapter {
+
+	public IdemPagerAdapter(FragmentManager fm, ArrayList<Product> products) {
+		super(fm);
+		
+		
+	}
+
+	@Override
+	public Fragment getItem(int arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getCount() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

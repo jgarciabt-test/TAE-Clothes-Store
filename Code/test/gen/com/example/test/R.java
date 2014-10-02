@@ -1115,17 +1115,17 @@ containing a value of this type.
         public static final int icon=0x7f05002a;
         public static final int ifRoom=0x7f05000a;
         public static final int image=0x7f050027;
-        public static final int imageView1=0x7f050048;
         public static final int innerLay=0x7f05003d;
         public static final int listMode=0x7f050001;
         public static final int list_item=0x7f050029;
+        public static final int mainPicture=0x7f050048;
         public static final int middle=0x7f050012;
         public static final int never=0x7f050009;
-        public static final int next=0x7f050047;
+        public static final int next=0x7f050046;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
         public static final int peak_flow=0x7f050045;
-        public static final int prev=0x7f050046;
+        public static final int prev=0x7f050047;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f05002f;
@@ -1207,8 +1207,7 @@ containing a value of this type.
         public static final int abc_search_view=0x7f030016;
         public static final int abc_simple_decor=0x7f030017;
         public static final int activity_main=0x7f030018;
-        public static final int grid_item=0x7f030019;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001a;
+        public static final int support_simple_spinner_dropdown_item=0x7f030019;
     }
     public static final class menu {
         public static final int main=0x7f0c0000;

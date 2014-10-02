@@ -9,9 +9,12 @@ import org.json.JSONObject;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -21,6 +24,7 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.tae.store.MainActivity;
 import com.tae.store.R;
 import com.tae.store.adapters.ProductListAdapter;
 import com.tae.store.app.AppController;
@@ -72,6 +76,16 @@ public class ProductListFragment extends SherlockFragment {
 				android.R.layout.simple_list_item_1, list);
 		GridView grid = (GridView) rootView.findViewById(R.id.grid);
 		grid.setAdapter(adapter);
+		grid.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				//Log.v("ITEM", "pressed: "+position);
+				MainActivity.replaceFragment(new ItemFragment(list.get(position)), "ITEM_DETAIL_FRAGMENT", true);
+			}
+
+	    });
+	
 		return rootView;
 	}
 
