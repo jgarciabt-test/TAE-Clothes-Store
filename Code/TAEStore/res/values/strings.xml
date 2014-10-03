@@ -24,6 +24,7 @@
     <string name="delete_dialog">Are you sure you want to delete this item from your shopping bag?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="checkout">CHECKOUT</string>
     
     <!-- Screen Titles -->
     <string name="screen_store">Store Info</string>

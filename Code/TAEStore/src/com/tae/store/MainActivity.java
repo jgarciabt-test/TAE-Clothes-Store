@@ -3,7 +3,10 @@ package com.tae.store;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.json.JSONException;
+
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -27,15 +30,20 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
 import com.tae.store.adapters.NavDrawerListAdapter;
 import com.tae.store.fragments.BagFragment;
 import com.tae.store.fragments.CategoryFragment;
 import com.tae.store.fragments.CustomMapFragment;
 import com.tae.store.fragments.HomeFragment;
 import com.tae.store.fragments.NoConnectionFragment;
+import com.tae.store.helpers.DatabaseHandler;
 import com.tae.store.model.Category;
 import com.tae.store.model.NavDrawerItem;
 import com.tae.store.utilities.NetworkCheckService;
+import com.tae.store.utilities.PayPalUtil;
 
 @SuppressLint({ "InlinedApi", "NewApi" })
 public class MainActivity extends SherlockFragmentActivity {
@@ -120,13 +128,13 @@ public class MainActivity extends SherlockFragmentActivity {
 		if (savedInstanceState != null) {
 			// Restore the fragment's instance
 			currentFragment = savedInstanceState.getString("currentFragment");
-			Log.v("ACTIVITY SAVED", "Current fragment: "+currentFragment);
+			Log.v("ACTIVITY SAVED", "Current fragment: " + currentFragment);
 			fragment = fragmentManager.getFragment(savedInstanceState,
 					currentFragment);
-			Log.v("ACTIVITY SAVED", "fragment: "+fragment.toString());
+			Log.v("ACTIVITY SAVED", "fragment: " + fragment.toString());
 			replaceFragment(fragment, currentFragment, false);
-			//backStackFragment = savedInstanceState
-			//		.getStringArrayList("backStackFragment");
+			// backStackFragment = savedInstanceState
+			// .getStringArrayList("backStackFragment");
 		} else {
 			// Load first fragment
 			backStackFragment = new ArrayList<String>();
@@ -145,9 +153,16 @@ public class MainActivity extends SherlockFragmentActivity {
 		filter.addAction("statusUpdate");
 		this.registerReceiver(netReceiver, filter);
 
+		// Network status
 		Intent intent = new Intent(getApplicationContext(),
 				NetworkCheckService.class);
 		startService(intent);
+
+		// PayPal configuration
+		Intent paypalIntent = new Intent(this, PayPalService.class);
+		paypalIntent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,
+				PayPalUtil.config);
+		startService(paypalIntent);
 
 	}
 
@@ -209,7 +224,8 @@ public class MainActivity extends SherlockFragmentActivity {
 				fragmentManager.beginTransaction()
 						.replace(R.id.frame_container, fragment, tag).commit();
 			}
-			if(!backStackFragment.get(backStackFragment.size()-1).matches(currentFragment)){
+			if (!backStackFragment.get(backStackFragment.size() - 1).matches(
+					currentFragment)) {
 				backStackFragment.add(currentFragment);
 			}
 		}
@@ -274,21 +290,49 @@ public class MainActivity extends SherlockFragmentActivity {
 
 	@Override
 	public void onBackPressed() {
-//		if (backStackFragment.size()>1) {
-//			backStackFragment.remove(backStackFragment.size() - 1);
-//			Log.v("BACK", backStackFragment.get(backStackFragment.size()-1));
-////			fragmentManager.beginTransaction()
-////			.replace(R.id.frame_container, fragmentManager.findFragmentByTag(backStackFragment.get(backStackFragment.size()-1)), backStackFragment.get(backStackFragment.size()-1)).commit();
-////		} else{
-////			finish();
-//		}
+		// if (backStackFragment.size()>1) {
+		// backStackFragment.remove(backStackFragment.size() - 1);
+		// Log.v("BACK", backStackFragment.get(backStackFragment.size()-1));
+		// // fragmentManager.beginTransaction()
+		// // .replace(R.id.frame_container,
+		// fragmentManager.findFragmentByTag(backStackFragment.get(backStackFragment.size()-1)),
+		// backStackFragment.get(backStackFragment.size()-1)).commit();
+		// // } else{
+		// // finish();
+		// }
 		super.onBackPressed();
 	}
 
 	@Override
 	protected void onDestroy() {
 		this.unregisterReceiver(netReceiver);
+		stopService(new Intent(this, PayPalService.class));
+
 		super.onDestroy();
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Log.i("PayPal", "onActivityResult: " + requestCode + " : " + resultCode);
+		String TAG = "PayPal";
+		if (resultCode == Activity.RESULT_OK) {
+			PaymentConfirmation confirm = data
+					.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+			if (confirm != null) {
+				DatabaseHandler db = new DatabaseHandler(this);
+				db.deleteAll();
+
+				Toast.makeText(getApplicationContext(),
+						"PaymentConfirmation info received from PayPal",
+						Toast.LENGTH_LONG).show();
+
+				((BagFragment) fragment).updateSreen();
+			}
+		} else if (resultCode == Activity.RESULT_CANCELED) {
+			// Show the user that this got canceled
+		} else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
+			// Check the docs ;)
+		}
 	}
 
 	class NetworkCheckReceiver extends BroadcastReceiver {

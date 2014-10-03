@@ -1,24 +1,34 @@
 package com.tae.store.fragments;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.actionbarsherlock.app.SherlockListFragment;
+import com.paypal.android.sdk.payments.PayPalItem;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalPaymentDetails;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.tae.store.MainActivity;
 import com.tae.store.R;
 import com.tae.store.adapters.BagListAdapter;
 import com.tae.store.helpers.DatabaseHandler;
 import com.tae.store.model.Product;
+import com.tae.store.utilities.PayPalUtil;
 
 public class BagFragment extends SherlockListFragment {
 
@@ -26,6 +36,7 @@ public class BagFragment extends SherlockListFragment {
 	private TextView total;
 	private TextView total_order;
 	private AlertDialog aDialog;
+	private Button btnCheckout;
 
 	private DatabaseHandler BAG;
 	private ArrayList<Product> myBag;
@@ -34,7 +45,6 @@ public class BagFragment extends SherlockListFragment {
 	private int position = -1;
 
 	public BagFragment() {
-
 		myBag = new ArrayList<Product>();
 	}
 
@@ -44,13 +54,19 @@ public class BagFragment extends SherlockListFragment {
 
 		ViewGroup rootGroup = (ViewGroup) inflater.inflate(
 				R.layout.fragment_bag, null, false);
+		BAG = new DatabaseHandler(getActivity().getBaseContext());
 
 		qty = (TextView) rootGroup.findViewById(R.id.txt_bag_qty);
 		total_order = (TextView) rootGroup.findViewById(R.id.txt_bag_order);
 		total = (TextView) rootGroup.findViewById(R.id.txt_bag_main_total);
+		btnCheckout = (Button) rootGroup.findViewById(R.id.btn_checkout);
 
-		BAG = new DatabaseHandler(getActivity().getBaseContext());
-
+		btnCheckout.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				checkout();
+			}
+		});
 		if (savedInstanceState == null) {
 			if (myBag.isEmpty()) {
 				myBag = BAG.getBag();
@@ -58,9 +74,9 @@ public class BagFragment extends SherlockListFragment {
 		} else {
 			myBag = savedInstanceState.getParcelableArrayList("myBag");
 		}
+
 		adapter = new BagListAdapter(getActivity(), myBag);
 		setListAdapter(adapter);
-
 		updateSreen();
 
 		return rootGroup;
@@ -75,7 +91,8 @@ public class BagFragment extends SherlockListFragment {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+				Vibrator vibrator = (Vibrator) getActivity().getSystemService(
+						Context.VIBRATOR_SERVICE);
 				vibrator.vibrate(200);
 				BagFragment.this.position = position;
 				new AlertDialog.Builder(getActivity())
@@ -96,11 +113,11 @@ public class BagFragment extends SherlockListFragment {
 
 	}
 
-	private void updateSreen() {
+	public void updateSreen() {
 		qty.setText(String.valueOf(myBag.size()));
 		float totalToPay = 0;
-		for(int i=0;i<myBag.size();i++){
-			totalToPay+=myBag.get(i).getPrice();
+		for (int i = 0; i < myBag.size(); i++) {
+			totalToPay += myBag.get(i).getPrice();
 		}
 		total_order.setText(String.valueOf(totalToPay));
 		total.setText(String.valueOf(totalToPay));
@@ -120,4 +137,44 @@ public class BagFragment extends SherlockListFragment {
 		updateSreen();
 	}
 
+	private void checkout() {
+		// PayPalPayment thingToBuy = new PayPalPayment(new BigDecimal("2.00"),
+		// "USD", "Panete", PayPalPayment.PAYMENT_INTENT_SALE);
+
+		// startActivityForResult(intent, PayPalUtil.REQUEST_CODE_PAYMENT);
+
+		// PayPalItem[] items = {};
+		//
+		// for (int i = 0; i < myBag.size(); i++) {
+		// new PayPalItem(myBag.get(i).getName(), 1, new BigDecimal(myBag.get(
+		// i).getPrice()), PayPalUtil.CURRENCY, "Ref Number: "
+		// + myBag.get(i).getId());
+		// }
+		PayPalPayment thingToBuy = getStuffToBuy(PayPalPayment.PAYMENT_INTENT_SALE);
+
+		Intent intent = new Intent(getActivity(), PaymentActivity.class);
+
+		intent.putExtra(PaymentActivity.EXTRA_PAYMENT, thingToBuy);
+
+		startActivityForResult(intent, PayPalUtil.REQUEST_CODE_PAYMENT);
+	}
+
+	private PayPalPayment getStuffToBuy(String paymentIntent) {
+		PayPalItem[] items = new PayPalItem[myBag.size()];
+		for (int i = 0; i < myBag.size(); i++) {
+			items[i] = new PayPalItem(myBag.get(i).getName(), 1, new BigDecimal(myBag.get(
+					i).getPrice()), PayPalUtil.CURRENCY, "Ref Number: "
+					+ myBag.get(i).getId());
+		}
+		
+		BigDecimal subtotal = PayPalItem.getItemTotal(items);
+		BigDecimal shipping = new BigDecimal("7.21");
+		BigDecimal tax = new BigDecimal("4.67");
+		PayPalPaymentDetails paymentDetails = new PayPalPaymentDetails(
+				shipping, subtotal, tax);
+		BigDecimal amount = subtotal.add(shipping).add(tax);
+		PayPalPayment payment = new PayPalPayment(amount, PayPalUtil.CURRENCY,
+				"hipster jeans", paymentIntent);
+		return payment.items(items).paymentDetails(paymentDetails);
+	}
 }

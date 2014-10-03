@@ -1,0 +1,15 @@
+package com.tae.store.utilities;
+
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+
+public class PayPalUtil {
+
+	private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;
+	private static final String CONFIG_CLIENT_ID = "AYHhihBRVUpBAzEa8eW1iMywzluZlETdnCNMtKCl05mOeSvP5AU4bHRSzNXY";
+	private static final String CONFIG_RECEIVER_EMAIL = "galindin_cb-facilitator@hotmail.com";
+	private static final int REQUEST_CODE_PAYMENT = 1;
+
+	private static PayPalConfiguration config = new PayPalConfiguration()
+			.environment(CONFIG_ENVIRONMENT).clientId(CONFIG_CLIENT_ID);
+
+}

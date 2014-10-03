@@ -29,14 +29,40 @@
         android:layout_above="@+id/header2"
         android:layout_alignTop="@id/separator3"
         android:dividerHeight="4dp" />
+    
+        <LinearLayout
+        android:id="@+id/separator4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom2"
+        android:background="#b40909"
+        android:orientation="horizontal" />
 
- 
+    <LinearLayout android:id="@+id/bottom2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        >
+        <Button android:id="@+id/btn_checkout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/checkout"
+            android:background="@drawable/border"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:textColor="#ffffff"/>
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/bottom1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignBottom="@id/separator4"
+        android:layout_marginBottom="5dp"
         android:padding="2dp" >
 
         <TextView
@@ -134,9 +160,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="10dp"
             android:text="@string/bag_total_header"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
     </LinearLayout>
 
 </RelativeLayout>

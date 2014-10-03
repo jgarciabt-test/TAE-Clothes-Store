@@ -123,4 +123,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		}
 		return bagList;
 	}
+
+	public void deleteAll(){
+	
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.execSQL("DELETE FROM " + TABLE_PRODUCTS);	
+	}
 }

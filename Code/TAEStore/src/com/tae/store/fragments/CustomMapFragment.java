@@ -326,7 +326,6 @@ public class CustomMapFragment extends SherlockFragment implements
 		private final View myContentsView;
 
 		public MyInfoWindowAdapter() {
-			// TODO possible cause of crash when change orientation
 			myContentsView = mInflater.inflate(R.layout.custom_marker, null);
 		}
 
