@@ -114,7 +114,8 @@ public class ItemFragment extends SherlockFragment {
 
 		if (orientation == Surface.ROTATION_90
 				|| orientation == Surface.ROTATION_270) {
-			initial_items = 7.5f;
+			//TODO fix it
+			initial_items = 8.5f;
 		} else {
 			initial_items = 4.5f;
 		}

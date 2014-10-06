@@ -3,6 +3,13 @@ package com.tae.store.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+
+
+/**
+* @author      Jose Garcia 
+* @version     1.0                 
+* @since       2014-10-08         
+*/
 public class Category implements Parcelable {
 
 	String id;
@@ -94,16 +101,5 @@ public class Category implements Parcelable {
         url_pic = in.readString();
         lower_price = in.readString();
         main_cat = in.readString();
-	}
-	
-//	private void readFromParcel(Parcel in) {
-//		id = in.readString();
-//		name = in.readString();
-//        url_pic = in.readString();
-//        lower_price = in.readString();
-//        main_cat = in.readString();
-//	}
-	
-
-	
+	}	
 }

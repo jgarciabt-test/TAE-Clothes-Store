@@ -1,0 +1,126 @@
+package com.tae.store.fragments;
+
+import org.brickred.socialauth.Profile;
+import org.brickred.socialauth.android.DialogListener;
+import org.brickred.socialauth.android.SocialAuthAdapter;
+import org.brickred.socialauth.android.SocialAuthAdapter.Provider;
+import org.brickred.socialauth.android.SocialAuthError;
+import org.brickred.socialauth.android.SocialAuthListener;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.SeekBar;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.actionbarsherlock.app.SherlockFragment;
+import com.tae.store.R;
+
+public class LogInFragment extends SherlockFragment {
+
+	SocialAuthAdapter adapter;
+	
+	private EditText etName;
+	private EditText etLastName;
+	private EditText etEmail;
+	private RadioGroup rgGender;
+	private Spinner spCountry;
+	private EditText etAddress;
+	private CheckBox terms;
+	private Button btnSubmit;
+	private Button btnPicture;
+
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+
+		ViewGroup rootView = (ViewGroup) inflater.inflate(
+				R.layout.fragment_login, container, false);
+
+		Button btnFacebook = (Button) rootView
+				.findViewById(R.id.connectWithFbButton);
+
+		btnFacebook.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				adapter = new SocialAuthAdapter(new ResponseListener());
+				adapter.authorize(getActivity(), Provider.FACEBOOK);
+
+			}
+		});
+
+//		Button btnFacebookLogout = (Button) rootView
+//				.findViewById(R.id.disconnectWithFbButton);
+//
+//		btnFacebookLogout.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				adapter.signOut(getActivity().getApplicationContext(), Provider.FACEBOOK.toString());
+//
+//			}
+//		});
+
+		return rootView;
+	}
+
+	private final class ResponseListener implements DialogListener {
+		public void onComplete(Bundle values) {
+			adapter.getUserProfileAsync(new ProfileDataListener());
+
+		}
+
+		@Override
+		public void onBack() {
+			// TODO Auto-generated method stub
+			Toast.makeText(getActivity().getApplicationContext(),
+					"facebook back", Toast.LENGTH_SHORT).show();
+
+		}
+
+		@Override
+		public void onCancel() {
+			// TODO Auto-generated method stub
+			Toast.makeText(getActivity().getApplicationContext(),
+					"facebook cancel", Toast.LENGTH_SHORT).show();
+
+		}
+
+		@Override
+		public void onError(SocialAuthError arg0) {
+			// TODO Auto-generated method stub
+			Toast.makeText(getActivity().getApplicationContext(),
+					"facebook error", Toast.LENGTH_SHORT).show();
+
+		}
+
+	}
+
+	private final class ProfileDataListener implements
+			SocialAuthListener<Profile> {
+
+		@Override
+		public void onError(SocialAuthError arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onExecute(String arg0, Profile arg1) {
+			Toast.makeText(getActivity().getApplicationContext(), " Loged as"+arg1.getFullName(),
+					Toast.LENGTH_SHORT).show();
+
+		}
+	}
+
+}

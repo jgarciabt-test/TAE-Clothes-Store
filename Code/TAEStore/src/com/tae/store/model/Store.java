@@ -3,6 +3,11 @@ package com.tae.store.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/**
+* @author      Jose Garcia 
+* @version     1.0                 
+* @since       2014-10-08         
+*/
 public class Store implements Parcelable{
 	
 	private String id;

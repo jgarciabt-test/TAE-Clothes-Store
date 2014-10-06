@@ -7,6 +7,12 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.widget.Toast;
 
+
+/**
+* @author      Jose Garcia 
+* @version     1.0                 
+* @since       2014-10-08         
+*/
 public class LocationTracker implements LocationListener {
 
 	private final Context mContext;
@@ -27,6 +33,10 @@ public class LocationTracker implements LocationListener {
 		mContext = context;
 	}
 
+	/**
+	 * Try to get the location of the device. If it's possible, store latitude and longitude in class attribute.
+	 *
+	 */
 	public void getLocation() {
 		try {
 			locationManager = (LocationManager) mContext
@@ -75,12 +85,19 @@ public class LocationTracker implements LocationListener {
 		}
 	}
 
+	/**
+	 * Remove all the location updates asociated to the class.
+	 */
 	public void stopGPS() {
 		if (locationManager != null) {
 			locationManager.removeUpdates(this);
 		}
 	}
 
+	/**
+	 * Get the latitude of the device if it's possible.
+	 * @return  Latitude.
+	 */
 	public double getLatitude() {
 		if (location != null) {
 			latitude = location.getLatitude();
@@ -88,6 +105,10 @@ public class LocationTracker implements LocationListener {
 		return latitude;
 	}
 
+	/**
+	 * Get the longitude of the device if it's possible.
+	 * @return  Longitude.
+	 */
 	public double getLongitude() {
 		if (location != null) {
 			longitude = location.getLongitude();
@@ -95,32 +116,28 @@ public class LocationTracker implements LocationListener {
 		return longitude;
 	}
 
+	/**
+	 * Get if it's possible to get the location of the device
+	 * @return  true if it's possible.
+	 */
 	public boolean canGetLocation() {
 		return canGetLocation;
 	}
 
 	@Override
 	public void onLocationChanged(Location location) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onProviderDisabled(String provider) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

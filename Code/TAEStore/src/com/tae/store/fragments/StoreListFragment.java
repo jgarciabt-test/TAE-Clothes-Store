@@ -31,7 +31,7 @@ public class StoreListFragment extends SherlockListFragment {
 
 		if (savedInstanceState == null
 				|| !savedInstanceState.containsKey("list")) {
-			//populate();
+			//TODO check
 		} else {
 			list = savedInstanceState.getParcelableArrayList("list");
 		}

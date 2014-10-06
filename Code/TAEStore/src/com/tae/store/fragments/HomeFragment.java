@@ -2,7 +2,14 @@ package com.tae.store.fragments;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.GestureDetector;
@@ -13,24 +20,34 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 
 import com.actionbarsherlock.app.SherlockFragment;
+import com.android.volley.Response;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.tae.store.MainActivity;
 import com.tae.store.R;
 import com.tae.store.adapters.SlidePagerAdapter;
+import com.tae.store.adapters.SlidePagerAdapterProduct;
+import com.tae.store.app.AppController;
 import com.tae.store.model.Category;
+import com.tae.store.model.Product;
 import com.tae.store.utilities.MainCategories;
+import com.tae.store.utilities.ServerUrl;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.PageIndicator;
 
 public class HomeFragment extends SherlockFragment {
 
-	private Context context;
+
 	private int currentSelectedFragmentPosition = 0;
+	private ProgressDialog pDialog;
 
 	// Offers
 	private PageIndicator mIndicatorOffers;
 	private ViewPager mPagerOffers;
-	// TODO customize
-	private SlidePagerAdapter mAdapterOffers;
+	private SlidePagerAdapterProduct mAdapterOffers;
+	private ArrayList<Product> offers;
 
 	// Men
 	private PageIndicator mIndicatorMen;
@@ -50,7 +67,7 @@ public class HomeFragment extends SherlockFragment {
 				@Override
 				public boolean onSingleTapConfirmed(MotionEvent e) {
 					MainActivity.replaceFragment(new CategoryFragment("Men",
-							context), "CATEGORY_FRAGMENT", true);
+							getActivity()), "CATEGORY_FRAGMENT", true);
 					return false;
 				}
 			});
@@ -63,13 +80,14 @@ public class HomeFragment extends SherlockFragment {
 					int i = mPagerMen.getCurrentItem();
 					switch (i) {
 					case 0:
+						MainActivity.ROOT_CATEGORY = "men";
 						MainActivity.replaceFragment(new CategoryFragment(
-								"Men", context), "CATEGORY_FRAGMENT", true);
+								"Men", getActivity()), "CATEGORY_FRAGMENT", true);
 						break;
 					default:
 						MainActivity.replaceFragment(new ProductListFragment(
 								menCategories.get(i - 1).getId(), menCategories
-										.get(i - 1).getName(), context),
+										.get(i - 1).getName(), getActivity()),
 								"PRODUCT_LIST_FRAGMENT", true);
 						break;
 					}
@@ -86,12 +104,12 @@ public class HomeFragment extends SherlockFragment {
 					switch (i) {
 					case 0:
 						MainActivity.replaceFragment(new CategoryFragment(
-								"Women", context), "CATEGORY_FRAGMENT", true);
+								"Women", getActivity()), "CATEGORY_FRAGMENT", true);
 						break;
 					default:
 						MainActivity.replaceFragment(new ProductListFragment(
 								menCategories.get(i - 1).getId(), menCategories
-										.get(i - 1).getName(), context),
+										.get(i - 1).getName(), getActivity()),
 								"PRODUCT_LIST_FRAGMENT", true);
 						break;
 					}
@@ -104,10 +122,10 @@ public class HomeFragment extends SherlockFragment {
 	}
 
 	public HomeFragment(Context context, ArrayList<Category> menCategories,
-			ArrayList<Category> womenCategories) {
-		this.context = context;
+			ArrayList<Category> womenCategories, ArrayList<Product> offers) {
 		this.menCategories = menCategories;
 		this.womenCategories = womenCategories;
+		this.offers = offers;
 	}
 
 	@Override
@@ -116,18 +134,23 @@ public class HomeFragment extends SherlockFragment {
 
 		ViewGroup rootView = (ViewGroup) inflater.inflate(
 				R.layout.fragment_home, container, false);
-		
-		if(context == null){
-			context = getActivity();
+
+		if (savedInstanceState != null) {
+			menCategories = savedInstanceState
+					.getParcelableArrayList("menCategories");
+			womenCategories = savedInstanceState
+					.getParcelableArrayList("womenCategories");
+			offers = savedInstanceState.getParcelableArrayList("offer");
 		}
-		
-		if(savedInstanceState != null){
-			menCategories = savedInstanceState.getParcelableArrayList("menCategories");
-			womenCategories = savedInstanceState.getParcelableArrayList("womenCategories");
+		if (menCategories == null) {
+			pDialog = new ProgressDialog(getActivity());
+			pDialog.setMessage(getResources().getString(R.string.loading));
+			pDialog.show();
+			makeRequestCategories();
 		}
 
-		mAdapterOffers = new SlidePagerAdapter(getChildFragmentManager(),
-				MainCategories.OFFERS, menCategories);
+		mAdapterOffers = new SlidePagerAdapterProduct(
+				getChildFragmentManager(), offers);
 
 		mPagerOffers = (ViewPager) rootView.findViewById(R.id.vp1);
 		mPagerOffers.setAdapter(mAdapterOffers);
@@ -167,7 +190,7 @@ public class HomeFragment extends SherlockFragment {
 				return false;
 			}
 		});
-		
+
 		mPagerWomen.setOnTouchListener(new OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				tapGestureDetectorWomen.onTouchEvent(event);
@@ -181,10 +204,127 @@ public class HomeFragment extends SherlockFragment {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		
+
 		outState.putParcelableArrayList("menCategories", menCategories);
 		outState.putParcelableArrayList("womenCategories", womenCategories);
+		outState.putParcelableArrayList("offer", offers);
 	}
 
+	private void makeRequestCategories() {
+
+		menCategories =  new ArrayList<Category>();
+		womenCategories  = new ArrayList<Category>();
+		pDialog.show();
+		JsonArrayRequest request = new JsonArrayRequest(ServerUrl.BASE_URL
+				+ ServerUrl.GET_ALL_CATEGORIES, new Listener<JSONArray>() {
+			public void onResponse(JSONArray response) {
+				try {
+					JSONObject obj = response.getJSONObject(0);
+					JSONArray array = (JSONArray) obj.get("categories");
+					for (int i = 0; i < array.length(); i++) {
+						obj = array.getJSONObject(i);
+						Category cat = new Category();
+						cat.setId(obj.getString("cat_id"));
+						cat.setName(obj.getString("cat_name"));
+						cat.setMain_cat(obj.getString("cat_main_cat"));
+						cat.setLower_price(obj.getString("cat_lowest_price"));
+						cat.setUrl_pic(obj.getString("pic_url"));
+						if (cat.getMain_cat().matches("Men")) {
+							menCategories.add(cat);
+						} else {
+							womenCategories.add(cat);
+						}
+					}
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				};
+				makeRequestOffer();
+			}
+		}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				pDialog.dismiss();
+				VolleyLog.d("VOLLEY_ERROR", "Error: " + error.getMessage());
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						getActivity());
+				builder.setMessage(
+						getResources().getString(R.string.error_loading))
+						.setCancelable(false)
+						.setPositiveButton("OK",
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int id) {
+										getActivity().finish();
+									}
+								});
+				AlertDialog alert = builder.create();
+				alert.show();
+			}
+		});
+
+		AppController.getInstance().addToRequestQueue(request);
+	}
+
+	private void makeRequestOffer() {
+
+		offers = new ArrayList<Product>();
+		JsonArrayRequest request = new JsonArrayRequest(ServerUrl.BASE_URL
+				+ ServerUrl.GET_OFFER_PRODUCT, new Listener<JSONArray>() {
+			public void onResponse(JSONArray response) {
+				try {
+					JSONObject obj = response.getJSONObject(0);
+					JSONArray array = (JSONArray) obj.get("products");
+					for (int i = 0; i < array.length(); i++) {
+						obj = array.getJSONObject(i);
+						Product prod = new Product();
+						prod.setId(obj.getString("prod_id"));
+						prod.setName(obj.getString("prod_name"));
+						prod.setDescription(obj.getString("prod_desc"));
+						prod.setDetails(obj.getString("prod_detail"));
+						prod.setPrice(obj.getInt("prod_price"));
+						if (obj.getString("prod_offer") == "1") {
+							prod.setPromoted(true);
+						} else {
+							prod.setPromoted(false);
+						}
+						prod.setUrl_pic(obj.getString("pic_url"));
+						offers.add(prod);
+					}
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				pDialog.dismiss();
+				mAdapterMen.notifyDataSetChanged();
+				mAdapterWomen.notifyDataSetChanged();
+				mAdapterOffers.notifyDataSetChanged(); 
+
+				//startActivity(i);
+			}
+		}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				pDialog.dismiss();
+				VolleyLog.d("VOLLEY_ERROR", "Error: " + error.getMessage());
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						getActivity());
+				builder.setMessage(
+						getResources().getString(R.string.error_loading))
+						.setCancelable(false)
+						.setPositiveButton("OK",
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int id) {
+										getActivity().finish();
+									}
+								});
+				AlertDialog alert = builder.create();
+				alert.show();
+			}
+		});
+
+		AppController.getInstance().addToRequestQueue(request);
+	}
 
 }

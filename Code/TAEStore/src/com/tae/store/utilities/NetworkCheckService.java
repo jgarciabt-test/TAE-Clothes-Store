@@ -4,6 +4,11 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
+/**
+* @author      Jose Garcia 
+* @version     1.0                 
+* @since       2014-10-08         
+*/
 public class NetworkCheckService extends Service {
 
 	String status;

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-     >
+    android:layout_height="wrap_content" >
 
     <TextView
         android:id="@+id/title"
@@ -25,12 +24,12 @@
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
         android:layout_above="@+id/header2"
         android:layout_alignTop="@id/separator3"
+        android:layout_marginTop="2dp"
         android:dividerHeight="4dp" />
-    
-        <LinearLayout
+
+    <LinearLayout
         android:id="@+id/separator4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,23 +37,25 @@
         android:background="#b40909"
         android:orientation="horizontal" />
 
-    <LinearLayout android:id="@+id/bottom2"
+    <LinearLayout
+        android:id="@+id/bottom2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        >
-        <Button android:id="@+id/btn_checkout"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_checkout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/checkout"
             android:background="@drawable/border"
-            android:textStyle="bold"
+            android:text="@string/checkout"
+            android:textColor="#ffffff"
             android:textSize="22sp"
-            android:textColor="#ffffff"/>
+            android:textStyle="bold" />
     </LinearLayout>
 
     <RelativeLayout
@@ -129,6 +130,17 @@
             android:textSize="20sp" />
 
         <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/textView2"
+            android:layout_below="@id/textView2"
+            android:layout_marginTop="10dp"
+            android:text="@string/bag_shipping"
+            android:textColor="#888888"
+            android:textSize="20sp" />
+
+        <TextView
             android:id="@+id/txt_bag_qty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -145,9 +157,18 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
             android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/txt_bag_shipping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/textView4"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:textSize="20sp" />
     </RelativeLayout>
-    
-       <LinearLayout
+
+    <LinearLayout
         android:id="@+id/header2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

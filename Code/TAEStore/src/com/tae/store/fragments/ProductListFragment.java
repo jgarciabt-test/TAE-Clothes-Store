@@ -9,7 +9,6 @@ import org.json.JSONObject;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,7 @@ import com.tae.store.utilities.ServerUrl;
 
 public class ProductListFragment extends SherlockFragment {
 
-	private ArrayList<Product> list;
+	private ArrayList<Product> list = new ArrayList<Product>();
 	private String categoryId;
 	private String categoryTitle;
 	private ProgressDialog pDialog;
@@ -61,13 +60,14 @@ public class ProductListFragment extends SherlockFragment {
 		context = getActivity().getApplicationContext();
 		if (savedInstanceState != null) {
 			list = savedInstanceState.getParcelableArrayList("list");
-		} else {
-			if (list.size() == 0) {
-				pDialog = new ProgressDialog(context);
-				pDialog.setMessage(getResources().getString(R.string.loading));
-				makeRequest();
-			}
 		}
+		
+		if (list.size() == 0) {
+			pDialog = new ProgressDialog(context);
+			pDialog.setMessage(getResources().getString(R.string.loading));
+			makeRequest();
+		}
+		
 
 		TextView txtCategory = (TextView) rootView
 				.findViewById(R.id.txt_product_list_title);
@@ -121,6 +121,7 @@ public class ProductListFragment extends SherlockFragment {
 
 	private void makeRequest() {
 
+		categoryId = MainActivity.PRODUCT;
 		JsonArrayRequest request = new JsonArrayRequest(ServerUrl.BASE_URL
 				+ ServerUrl.GET_ALL_PRODUCTS + categoryId,
 				new Listener<JSONArray>() {

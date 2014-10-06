@@ -2,6 +2,11 @@ package com.tae.store.utilities;
 
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 
+/**
+* @author      Jose Garcia 
+* @version     1.0                 
+* @since       2014-10-08         
+*/
 public class PayPalUtil {
 
 	public static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_SANDBOX;

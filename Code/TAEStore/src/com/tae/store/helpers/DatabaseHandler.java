@@ -11,19 +11,18 @@ import android.util.Log;
 
 import com.tae.store.model.Product;
 
+/**
+* @author      Jose Garcia 
+* @version     1.0                 
+* @since       2014-10-08         
+*/
 public class DatabaseHandler extends SQLiteOpenHelper {
 
-	// All Static variables
-	// Database Version
+
 	private static final int DATABASE_VERSION = 1;
-
-	// Database Name
 	private static final String DATABASE_NAME = "USER_BAG";
-
-	// Contacts table name
 	private static final String TABLE_PRODUCTS = "products";
 
-	// Contacts Table Columns names
 	private static final String KEY_ID = "prod_id";
 	private static final String KEY_NAME = "prod_name";
 	private static final String KEY_DESC = "prod_desc";
@@ -59,6 +58,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
+	/**
+	 * Insert one product on the database
+	 *
+	 * @param product Product to insert on the database.
+	 * @param size Size of the product that the user want to buy
+	 */
 	public void addProduct(Product product, String size) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
@@ -82,6 +87,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.close();
 	}
 
+	/**
+	 * Get all the product that the user has on the bag.
+	 * @return            ArrayList<Product> with all the product of the database.
+	 */
 	public ArrayList<Product> getBag() {
 		try {
 			if (bagList == null) {
@@ -124,6 +133,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		return bagList;
 	}
 
+	/**
+	 * Delete all the content of the database.
+	 */
 	public void deleteAll(){
 	
 		SQLiteDatabase db = this.getWritableDatabase();

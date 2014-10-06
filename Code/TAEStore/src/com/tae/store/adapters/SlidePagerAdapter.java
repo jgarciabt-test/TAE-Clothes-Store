@@ -37,9 +37,11 @@ public class SlidePagerAdapter extends FragmentStatePagerAdapter {
 			break;
 		}
 
-		num_pages = categories.size();
+
 		list = new ArrayList<SlidePageFragment>();
 		list.add(new SlidePageFragment(resourceId, true));
+		if(categories!=null)
+			num_pages = categories.size();
 		for (int i = 0; i < num_pages; i++) {
 			list.add(new SlidePageFragment(categories.get(i).getUrl_pic(),
 					false));
@@ -55,5 +57,10 @@ public class SlidePagerAdapter extends FragmentStatePagerAdapter {
 	@Override
 	public int getCount() {
 		return num_pages;
+	}
+	
+	@Override
+	public int getItemPosition(Object object) {
+	    return POSITION_NONE;
 	}
 }

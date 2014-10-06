@@ -23,7 +23,6 @@ import com.paypal.android.sdk.payments.PayPalItem;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalPaymentDetails;
 import com.paypal.android.sdk.payments.PaymentActivity;
-import com.tae.store.MainActivity;
 import com.tae.store.R;
 import com.tae.store.adapters.BagListAdapter;
 import com.tae.store.helpers.DatabaseHandler;
@@ -35,7 +34,7 @@ public class BagFragment extends SherlockListFragment {
 	private TextView qty;
 	private TextView total;
 	private TextView total_order;
-	private AlertDialog aDialog;
+	private TextView shipping;
 	private Button btnCheckout;
 
 	private DatabaseHandler BAG;
@@ -60,6 +59,7 @@ public class BagFragment extends SherlockListFragment {
 		total_order = (TextView) rootGroup.findViewById(R.id.txt_bag_order);
 		total = (TextView) rootGroup.findViewById(R.id.txt_bag_main_total);
 		btnCheckout = (Button) rootGroup.findViewById(R.id.btn_checkout);
+		shipping = (TextView) rootGroup.findViewById(R.id.txt_bag_shipping);
 
 		btnCheckout.setOnClickListener(new OnClickListener() {
 			@Override
@@ -120,7 +120,10 @@ public class BagFragment extends SherlockListFragment {
 			totalToPay += myBag.get(i).getPrice();
 		}
 		total_order.setText(String.valueOf(totalToPay));
+		shipping.setText(PayPalUtil.SHIPPING);
+		totalToPay += Float.parseFloat(PayPalUtil.SHIPPING);
 		total.setText(String.valueOf(totalToPay));
+		
 	}
 
 	@Override
@@ -133,6 +136,12 @@ public class BagFragment extends SherlockListFragment {
 	public void deleteProduct() {
 		BAG.deleteProduct(myBag.get(position).getId());
 		myBag.remove(position);
+		adapter.notifyDataSetChanged();
+		updateSreen();
+	}
+
+	public void cleanScreen() {
+		myBag.clear();
 		adapter.notifyDataSetChanged();
 		updateSreen();
 	}
@@ -150,6 +159,7 @@ public class BagFragment extends SherlockListFragment {
 		// i).getPrice()), PayPalUtil.CURRENCY, "Ref Number: "
 		// + myBag.get(i).getId());
 		// }
+
 		PayPalPayment thingToBuy = getStuffToBuy(PayPalPayment.PAYMENT_INTENT_SALE);
 
 		Intent intent = new Intent(getActivity(), PaymentActivity.class);
@@ -162,19 +172,20 @@ public class BagFragment extends SherlockListFragment {
 	private PayPalPayment getStuffToBuy(String paymentIntent) {
 		PayPalItem[] items = new PayPalItem[myBag.size()];
 		for (int i = 0; i < myBag.size(); i++) {
-			items[i] = new PayPalItem(myBag.get(i).getName(), 1, new BigDecimal(myBag.get(
-					i).getPrice()), PayPalUtil.CURRENCY, "Ref Number: "
-					+ myBag.get(i).getId());
+			items[i] = new PayPalItem(myBag.get(i).getName()+" SIZE:"+myBag.get(i).getSize(), 1,
+					new BigDecimal(myBag.get(i).getPrice()),
+					PayPalUtil.CURRENCY, "Ref Number: " + myBag.get(i).getId());
 		}
-		
+
 		BigDecimal subtotal = PayPalItem.getItemTotal(items);
 		BigDecimal shipping = new BigDecimal("7.21");
-		BigDecimal tax = new BigDecimal("4.67");
+		BigDecimal tax = new BigDecimal("0.00");
 		PayPalPaymentDetails paymentDetails = new PayPalPaymentDetails(
 				shipping, subtotal, tax);
 		BigDecimal amount = subtotal.add(shipping).add(tax);
+		//TODO Parameters
 		PayPalPayment payment = new PayPalPayment(amount, PayPalUtil.CURRENCY,
-				"hipster jeans", paymentIntent);
+				"TAE Clothes Store", paymentIntent);
 		return payment.items(items).paymentDetails(paymentDetails);
 	}
 }

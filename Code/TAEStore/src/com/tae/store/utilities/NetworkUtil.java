@@ -4,6 +4,11 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
  
+/**
+* @author      Jose Garcia 
+* @version     1.0                 
+* @since       2014-10-08         
+*/
 public class NetworkUtil {
      
     public static int TYPE_WIFI = 1;
@@ -11,8 +16,11 @@ public class NetworkUtil {
     public static int TYPE_NOT_CONNECTED = 0;
      
      
-    /*
-     * 
+    /**
+     * Return if the device is connected to any network  
+     *
+     * @param  context Context.         
+     * @return Network's type as int.
      */
     public static int getConnectivityStatus(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context
@@ -28,7 +36,14 @@ public class NetworkUtil {
         } 
         return TYPE_NOT_CONNECTED;
     }
-     
+    
+    
+    /**
+     * Return if the device is connected to any network  
+     *
+     * @param  context Context.         
+     * @return Network's type as String.
+     */
     public static String getConnectivityStatusString(Context context) {
         int conn = NetworkUtil.getConnectivityStatus(context);
         String status = null;

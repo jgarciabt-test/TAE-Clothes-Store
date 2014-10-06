@@ -1,5 +1,10 @@
 package com.tae.store.model;
 
+/**
+* @author      Jose Garcia 
+* @version     1.0                 
+* @since       2014-10-08         
+*/
 public class NavDrawerItem {
 	
 	private String title;
