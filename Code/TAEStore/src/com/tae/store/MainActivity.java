@@ -36,7 +36,6 @@ import com.tae.store.fragments.BagFragment;
 import com.tae.store.fragments.CategoryFragment;
 import com.tae.store.fragments.CustomMapFragment;
 import com.tae.store.fragments.HomeFragment;
-import com.tae.store.fragments.LogInFragment;
 import com.tae.store.fragments.MyTaeFragment;
 import com.tae.store.fragments.NoConnectionFragment;
 import com.tae.store.helpers.DatabaseHandler;
@@ -181,9 +180,20 @@ public class MainActivity extends SherlockFragmentActivity {
 				mDrawerLayout.openDrawer(mDrawerList);
 			}
 		}
+		if(item.getItemId() == R.id.option_bag){
+			replaceFragment(new BagFragment(), "BAG_FRAGMENT", true);
+		}
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// getMenuInflater().inflate(R.menu.main, menu);
+		getSupportMenuInflater().inflate(R.menu.main, menu);
+
+		return true;
+	}
+	
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// if nav drawer is opened, hide the action items
@@ -273,14 +283,12 @@ public class MainActivity extends SherlockFragmentActivity {
 			fragmentName = "MAP_FRAGMENT";
 			break;
 		case 4:
-			fragment = new BagFragment();
-			fragmentName = "BAG_FRAGMENT";
+
+			fragment = new MyTaeFragment();
+			fragmentName = "MY_TAE_FARGMENT";
 			break;
 		case 6:
-//			fragment = new LogInFragment();
-//			fragmentName = "LOGIN_FRAGMENT";
-			fragment = new MyTaeFragment();
-			fragmentName = "LOGIN_FRAGMENT";
+
 		default:
 			break;
 		}
@@ -341,12 +349,10 @@ public class MainActivity extends SherlockFragmentActivity {
 				((BagFragment) fragment).cleanScreen();
 			}
 		} else if (resultCode == Activity.RESULT_CANCELED) {
-			// Show the user that this got canceled
+			//TODO
 		} else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
-			// Check the docs ;)
+			
 		}
-		
-		
 	}
 
 	class NetworkCheckReceiver extends BroadcastReceiver {

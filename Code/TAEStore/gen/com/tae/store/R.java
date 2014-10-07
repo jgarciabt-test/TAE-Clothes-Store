@@ -10,6 +10,7 @@ package com.tae.store;
 public final class R {
     public static final class array {
         public static final int contries=0x7f0b0003;
+        public static final int distance_units=0x7f0b0004;
         public static final int nav_drawer_icons=0x7f0b0001;
         /**  Right Menu elements 
          */
@@ -1443,41 +1444,42 @@ containing a value of this type.
         public static final int common_signin_btn_text_normal_light=0x7f020088;
         public static final int common_signin_btn_text_pressed_dark=0x7f020089;
         public static final int common_signin_btn_text_pressed_light=0x7f02008a;
-        public static final int counter_bg=0x7f02008b;
-        public static final int example=0x7f02008c;
-        public static final int facebook=0x7f02008d;
-        public static final int gradient_spinner=0x7f02008e;
-        public static final int ic_action_bag=0x7f02008f;
-        public static final int ic_action_call=0x7f020090;
-        public static final int ic_action_directions=0x7f020091;
-        public static final int ic_action_favorite=0x7f020092;
-        public static final int ic_action_favorite_pressed=0x7f020093;
-        public static final int ic_action_location_found=0x7f020094;
-        public static final int ic_action_next_item=0x7f020095;
-        public static final int ic_action_search=0x7f020096;
-        public static final int ic_action_share=0x7f020097;
-        public static final int ic_drawer=0x7f020098;
-        public static final int ic_launcher=0x7f020099;
-        public static final int ic_list_view=0x7f02009a;
-        public static final int ic_plusone_medium_off_client=0x7f02009b;
-        public static final int ic_plusone_small_off_client=0x7f02009c;
-        public static final int ic_plusone_standard_off_client=0x7f02009d;
-        public static final int ic_plusone_tall_off_client=0x7f02009e;
-        public static final int list_item_bg_normal=0x7f02009f;
-        public static final int list_item_bg_pressed=0x7f0200a0;
-        public static final int list_selector=0x7f0200a1;
-        public static final int map_marker=0x7f0200a2;
-        public static final int men=0x7f0200a3;
-        public static final int shape=0x7f0200a4;
-        public static final int star=0x7f0200a5;
-        public static final int vpi__tab_indicator=0x7f0200a6;
-        public static final int vpi__tab_selected_focused_holo=0x7f0200a7;
-        public static final int vpi__tab_selected_holo=0x7f0200a8;
-        public static final int vpi__tab_selected_pressed_holo=0x7f0200a9;
-        public static final int vpi__tab_unselected_focused_holo=0x7f0200aa;
-        public static final int vpi__tab_unselected_holo=0x7f0200ab;
-        public static final int vpi__tab_unselected_pressed_holo=0x7f0200ac;
-        public static final int women=0x7f0200ad;
+        public static final int corner=0x7f02008b;
+        public static final int counter_bg=0x7f02008c;
+        public static final int example=0x7f02008d;
+        public static final int facebook=0x7f02008e;
+        public static final int gradient_spinner=0x7f02008f;
+        public static final int ic_action_bag=0x7f020090;
+        public static final int ic_action_call=0x7f020091;
+        public static final int ic_action_directions=0x7f020092;
+        public static final int ic_action_favorite=0x7f020093;
+        public static final int ic_action_favorite_pressed=0x7f020094;
+        public static final int ic_action_location_found=0x7f020095;
+        public static final int ic_action_next_item=0x7f020096;
+        public static final int ic_action_search=0x7f020097;
+        public static final int ic_action_share=0x7f020098;
+        public static final int ic_drawer=0x7f020099;
+        public static final int ic_launcher=0x7f02009a;
+        public static final int ic_list_view=0x7f02009b;
+        public static final int ic_plusone_medium_off_client=0x7f02009c;
+        public static final int ic_plusone_small_off_client=0x7f02009d;
+        public static final int ic_plusone_standard_off_client=0x7f02009e;
+        public static final int ic_plusone_tall_off_client=0x7f02009f;
+        public static final int list_item_bg_normal=0x7f0200a0;
+        public static final int list_item_bg_pressed=0x7f0200a1;
+        public static final int list_selector=0x7f0200a2;
+        public static final int map_marker=0x7f0200a3;
+        public static final int men=0x7f0200a4;
+        public static final int shape=0x7f0200a5;
+        public static final int star=0x7f0200a6;
+        public static final int vpi__tab_indicator=0x7f0200a7;
+        public static final int vpi__tab_selected_focused_holo=0x7f0200a8;
+        public static final int vpi__tab_selected_holo=0x7f0200a9;
+        public static final int vpi__tab_selected_pressed_holo=0x7f0200aa;
+        public static final int vpi__tab_unselected_focused_holo=0x7f0200ab;
+        public static final int vpi__tab_unselected_holo=0x7f0200ac;
+        public static final int vpi__tab_unselected_pressed_holo=0x7f0200ad;
+        public static final int women=0x7f0200ae;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f040028;
@@ -1519,7 +1521,6 @@ containing a value of this type.
         public static final int abs__textButton=0x7f04001b;
         public static final int abs__title=0x7f040023;
         public static final int abs__up=0x7f040013;
-        public static final int action_settings=0x7f0400a4;
         public static final int bottom=0x7f040003;
         public static final int bottom1=0x7f04004e;
         public static final int bottom2=0x7f04004c;
@@ -1529,6 +1530,7 @@ containing a value of this type.
         public static final int btn_directions=0x7f040090;
         public static final int btn_info=0x7f04009e;
         public static final int btn_location=0x7f04006d;
+        public static final int btn_preferences_logout=0x7f0400ac;
         public static final int btn_retry=0x7f040097;
         public static final int btn_search=0x7f04006c;
         public static final int btn_store_detail_phone=0x7f04008f;
@@ -1540,6 +1542,8 @@ containing a value of this type.
         public static final int counter=0x7f040048;
         public static final int custom_bar=0x7f04006a;
         public static final int disableHome=0x7f040011;
+        public static final int distance_details_block=0x7f0400a9;
+        public static final int distance_details_block_title=0x7f0400a8;
         public static final int drawer_layout=0x7f040094;
         public static final int editTextPasswordToLogin=0x7f040092;
         public static final int editTextUserNameToLogin=0x7f040091;
@@ -1570,6 +1574,8 @@ containing a value of this type.
         public static final int my_tae=0x7f040085;
         public static final int none=0x7f040000;
         public static final int normal=0x7f040005;
+        public static final int numberPicker1=0x7f0400ab;
+        public static final int option_bag=0x7f0400ad;
         public static final int pager1=0x7f040059;
         public static final int pager2=0x7f04005c;
         public static final int pager3=0x7f04005f;
@@ -1602,6 +1608,7 @@ containing a value of this type.
         public static final int showHome=0x7f04000d;
         public static final int showTitle=0x7f04000f;
         public static final int sp_size=0x7f040068;
+        public static final int sp_units=0x7f0400aa;
         public static final int tabMode=0x7f04000b;
         public static final int terrain=0x7f040007;
         public static final int textView1=0x7f040053;
@@ -1622,6 +1629,8 @@ containing a value of this type.
         public static final int txt_catPrice=0x7f040040;
         public static final int txt_category_list_title=0x7f040041;
         public static final int txt_login_status=0x7f040070;
+        public static final int txt_preferences_loged=0x7f0400a7;
+        public static final int txt_preferences_title=0x7f0400a4;
         public static final int txt_prodName=0x7f040099;
         public static final int txt_prodPrice=0x7f04009a;
         public static final int txt_product_list_title=0x7f04009b;
@@ -1640,6 +1649,8 @@ containing a value of this type.
         public static final int txt_store_open=0x7f0400a2;
         public static final int underline=0x7f040002;
         public static final int useLogo=0x7f04000c;
+        public static final int user_details_block=0x7f0400a6;
+        public static final int user_details_block_title=0x7f0400a5;
         public static final int vp1=0x7f04005a;
         public static final int vp2=0x7f04005d;
         public static final int vp3=0x7f040060;
@@ -1700,6 +1711,7 @@ containing a value of this type.
         public static final int splashscreen=0x7f030029;
         public static final int store_item=0x7f03002a;
         public static final int store_list=0x7f03002b;
+        public static final int user_preferences=0x7f03002c;
     }
     public static final class menu {
         public static final int main=0x7f0c0000;
@@ -1769,6 +1781,7 @@ containing a value of this type.
         [CHAR LIMIT=70] 
          */
         public static final int auth_client_using_bad_version_title=0x7f0a0014;
+        public static final int bag_empty=0x7f0a006b;
         public static final int bag_order_value=0x7f0a0038;
         public static final int bag_qty=0x7f0a0037;
         public static final int bag_shipping=0x7f0a0040;
@@ -1869,12 +1882,19 @@ containing a value of this type.
         public static final int msg_added=0x7f0a003a;
         public static final int no=0x7f0a003e;
         public static final int no_connection=0x7f0a002c;
+        public static final int not_logged=0x7f0a006c;
         public static final int opening_hours=0x7f0a0030;
         public static final int or=0x7f0a005f;
         public static final int pound_symbol=0x7f0a003b;
+        public static final int preferences_block_locator=0x7f0a006a;
+        public static final int preferences_block_user=0x7f0a0069;
+        public static final int preferences_distance=0x7f0a0068;
+        public static final int preferences_logged=0x7f0a0066;
+        public static final int preferences_title=0x7f0a0065;
+        public static final int preferences_units=0x7f0a0067;
         /**  Screen Titles 
          */
-        public static final int screen_store=0x7f0a0065;
+        public static final int screen_store=0x7f0a006d;
         public static final int server_error=0x7f0a0062;
         public static final int size=0x7f0a0034;
         public static final int str_address=0x7f0a0056;

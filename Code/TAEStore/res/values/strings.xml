@@ -62,6 +62,16 @@
     <string name="server_error">There was an error trying to connect with the server. Please try again later.</string>
     <string name="user_name_not_register">The user name is not registered.</string>
 	<string name="user_pass_no_match">The User Name and the Passwork does not match.</string>
+	<string name="preferences_title">Preferences</string>
+	<string name="preferences_logged">Logged as:</string>
+	<string name="preferences_units">Distance unit:</string>
+	<string name="preferences_distance">Show stores on the map closer than:</string>
+	<string name="preferences_block_user">User details</string>
+	<string name="preferences_block_locator">Store Locator Preferences</string>
+	<string name="bag_empty">Your bag is empty!</string>
+	<string name="not_logged">You must to be logged to finish the process.</string>
+	
+	
     <!-- Screen Titles -->
     <string name="screen_store">Store Info</string>
 
@@ -73,10 +83,8 @@
         <item> Store Locator</item>
         <item> My TAE</item>
         <item> About</item>
-        <item> Log In</item>
     </array>
     <array name="nav_drawer_icons">
-        <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_launcher</item>
@@ -99,6 +107,11 @@
         <item>Italy</item>
         <item>Germany</item>
         <item>Portugal</item>
+    </string-array>
+    
+        <string-array name="distance_units">
+        <item>Miles</item>
+        <item>Kms</item>
     </string-array>
 
 </resources>

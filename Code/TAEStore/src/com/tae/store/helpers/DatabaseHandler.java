@@ -81,6 +81,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.close();
 	}
 
+	/**
+	 * Delete one product of the database.
+	 * 
+	 * @param productId Id of the product to delete.
+	 */
 	public void deleteProduct(String productId) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.delete(TABLE_PRODUCTS, KEY_ID + " = ?", new String[] { productId });

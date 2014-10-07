@@ -1,0 +1,5 @@
+package com.tae.store.helpers;
+
+public class Preferences {
+
+}

@@ -26,6 +26,12 @@ public class SlidePageFragment extends SherlockFragment {
 		super();
 	}
 	
+	/**
+	 * Constructor
+	 *
+	 * @param resourceId Id of the picture that are going be placed on the ImageView.
+	 * @param mainPic true if is the main picture of the ViewPager
+	 */
 	public SlidePageFragment(int resourceId, boolean mainPic){
 		this.resourceId = resourceId;;
 		this.mainPic = mainPic;

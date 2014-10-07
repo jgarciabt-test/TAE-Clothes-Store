@@ -14,7 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Dialog;
-import android.content.res.Resources;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,27 +27,27 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragment;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.Response.Listener;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.tae.store.MainActivity;
 import com.tae.store.R;
 import com.tae.store.app.AppController;
-import com.tae.store.model.Category;
+import com.tae.store.utilities.SPTags;
 import com.tae.store.utilities.ServerUrl;
 
 public class LogInFragment extends SherlockFragment {
 
-	SocialAuthAdapter adapter;
+	public static SocialAuthAdapter adapter;
 
+	private SharedPreferences preferences;
 	private EditText etName;
 	private EditText etLastName;
 	private EditText etUserName;
@@ -66,15 +66,13 @@ public class LogInFragment extends SherlockFragment {
 	private Dialog dialog;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		ViewGroup rootView = (ViewGroup) inflater.inflate(
-				R.layout.fragment_login, container, false);
+		ViewGroup rootView = (ViewGroup) inflater
+				.inflate(R.layout.fragment_login, container, false);
 
-		Button btnFacebook = (Button) rootView
-				.findViewById(R.id.connectWithFbButton);
-
+		Button btnFacebook = (Button) rootView.findViewById(R.id.connectWithFbButton);
+		preferences = getActivity().getPreferences(MainActivity.MODE_PRIVATE);
 		btnFacebook.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -85,24 +83,9 @@ public class LogInFragment extends SherlockFragment {
 			}
 		});
 
-		// Button btnFacebookLogout = (Button) rootView
-		// .findViewById(R.id.disconnectWithFbButton);
-		//
-		// btnFacebookLogout.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// adapter.signOut(getActivity().getApplicationContext(),
-		// Provider.FACEBOOK.toString());
-		//
-		// }
-		// });
-
 		etName = (EditText) rootView.findViewById(R.id.registration_name);
-		etLastName = (EditText) rootView
-				.findViewById(R.id.registration_last_name);
-		etUserName = (EditText) rootView
-				.findViewById(R.id.registration_user_name);
+		etLastName = (EditText) rootView.findViewById(R.id.registration_last_name);
+		etUserName = (EditText) rootView.findViewById(R.id.registration_user_name);
 		rgGender = (RadioGroup) rootView.findViewById(R.id.registration_gender);
 		spCountry = (Spinner) rootView.findViewById(R.id.registration_country);
 		etAddress = (EditText) rootView.findViewById(R.id.registration_address);
@@ -139,10 +122,8 @@ public class LogInFragment extends SherlockFragment {
 		dialog.setTitle(getActivity().getResources().getString(R.string.log_in));
 
 		// get the Refferences of views
-		editTextUserName = (EditText) dialog
-				.findViewById(R.id.editTextUserNameToLogin);
-		editTextPassword = (EditText) dialog
-				.findViewById(R.id.editTextPasswordToLogin);
+		editTextUserName = (EditText) dialog.findViewById(R.id.editTextUserNameToLogin);
+		editTextPassword = (EditText) dialog.findViewById(R.id.editTextPasswordToLogin);
 
 		Button btnSignIn = (Button) dialog.findViewById(R.id.buttonSignIn);
 
@@ -192,8 +173,7 @@ public class LogInFragment extends SherlockFragment {
 		int index = rgGender.getCheckedRadioButtonId();
 		if (index == -1) {
 			complete = false;
-			Toast.makeText(getActivity(), "Please select 'Gender'...",
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), "Please select 'Gender'...", Toast.LENGTH_LONG).show();
 		}
 
 		// Address
@@ -215,18 +195,17 @@ public class LogInFragment extends SherlockFragment {
 
 		if (!terms.isChecked()) {
 			complete = false;
-			Toast.makeText(getActivity(),
-					"You need to accept the Terms and...", Toast.LENGTH_LONG)
+			Toast.makeText(getActivity(), "You need to accept the Terms and...", Toast.LENGTH_LONG)
 					.show();
 		}
 
 		return complete;
 	}
 
-	private void makeRequestPassword(String username) {
+	private void makeRequestPassword(final String username) {
 
-		JsonArrayRequest request = new JsonArrayRequest(ServerUrl.BASE_URL
-				+ ServerUrl.LOGIN + username, new Listener<JSONArray>() {
+		JsonArrayRequest request = new JsonArrayRequest(ServerUrl.BASE_URL + ServerUrl.LOGIN
+				+ username, new Listener<JSONArray>() {
 			public void onResponse(JSONArray response) {
 
 				try {
@@ -237,22 +216,28 @@ public class LogInFragment extends SherlockFragment {
 
 					String password = editTextPassword.getText().toString();
 					if (password.equals(storedPassword)) {
-						Toast.makeText(getActivity().getApplicationContext(),
-								"Login Successfull", Toast.LENGTH_LONG).show();
+						Toast.makeText(getActivity(), "Login Successfull",
+								Toast.LENGTH_LONG).show();
+						
+						SharedPreferences.Editor editor = preferences.edit();
+						editor.putBoolean(SPTags.TAE_LOGIN, true).commit();
+						editor.putBoolean(SPTags.LOGGED, true).commit();
+						editor.putString(SPTags.NAME, username).commit();
+						MyTaeFragment.replaceFragment(new PreferencesFragment(), "PREFERENCES_FRAGMENT");
 						dialog.dismiss();
 					} else {
 
-						Toast.makeText(getActivity().getApplicationContext(),
-								getActivity().getResources().getString(
-										R.string.user_pass_no_match),
+						Toast.makeText(
+								getActivity().getApplicationContext(),
+								getActivity().getResources().getString(R.string.user_pass_no_match),
 								Toast.LENGTH_LONG).show();
 					}
 
 				} catch (JSONException e) {
 					e.printStackTrace();
-					Toast.makeText(getActivity().getApplicationContext(),
-							getActivity().getResources().getString(
-									R.string.user_name_not_register),
+					Toast.makeText(
+							getActivity().getApplicationContext(),
+							getActivity().getResources().getString(R.string.user_name_not_register),
 							Toast.LENGTH_LONG).show();
 				}
 
@@ -261,11 +246,9 @@ public class LogInFragment extends SherlockFragment {
 			@Override
 			public void onErrorResponse(VolleyError error) {
 				dialog.dismiss();
-				Toast.makeText(
-						getActivity().getApplicationContext(),
-						getActivity().getResources().getString(
-								R.string.server_error), Toast.LENGTH_LONG)
-						.show();
+				Toast.makeText(getActivity().getApplicationContext(),
+						getActivity().getResources().getString(R.string.server_error),
+						Toast.LENGTH_LONG).show();
 				VolleyLog.d("VOLLEY_ERROR", "Error: " + error.getMessage());
 			}
 		});
@@ -275,25 +258,22 @@ public class LogInFragment extends SherlockFragment {
 
 	private void makeRequestRegister() {
 
-		StringRequest postRequest = new StringRequest(Request.Method.POST,
-				ServerUrl.BASE_URL + ServerUrl.REGISTER_USER,
-				new Response.Listener<String>() {
-					@Override
-					public void onResponse(String response) {
-						// response
-						Log.v("Response", response);
-						Toast.makeText(getActivity(), "User registered",
-								Toast.LENGTH_SHORT).show();
-					}
-				}, new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-						// error
-						Toast.makeText(getActivity(), "There was an error",
-								Toast.LENGTH_SHORT).show();
-						Log.d("Error.Response", error.toString());
-					}
-				}) {
+		StringRequest postRequest = new StringRequest(Request.Method.POST, ServerUrl.BASE_URL
+				+ ServerUrl.REGISTER_USER, new Response.Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				// response
+				Log.v("Response", response);
+				Toast.makeText(getActivity(), "User registered", Toast.LENGTH_SHORT).show();
+			}
+		}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				// error
+				Toast.makeText(getActivity(), "There was an error", Toast.LENGTH_SHORT).show();
+				Log.d("Error.Response", error.toString());
+			}
+		}) {
 			@Override
 			protected Map<String, String> getParams() {
 				Map<String, String> params = new HashMap<String, String>();
@@ -312,8 +292,7 @@ public class LogInFragment extends SherlockFragment {
 				params.put("usr_pc", etPostCode.getText().toString());
 				params.put("usr_city", etCity.getText().toString());
 				params.put("usr_pass", etPass.getText().toString());
-				params.put("usr_country", spCountry.getSelectedItem()
-						.toString());
+				params.put("usr_country", spCountry.getSelectedItem().toString());
 				params.put("usr_user_name", etUserName.getText().toString());
 
 				return params;
@@ -332,43 +311,51 @@ public class LogInFragment extends SherlockFragment {
 		@Override
 		public void onBack() {
 			// TODO Auto-generated method stub
-			Toast.makeText(getActivity().getApplicationContext(),
-					"facebook back", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity().getApplicationContext(), "facebook back",
+					Toast.LENGTH_SHORT).show();
 
 		}
 
 		@Override
 		public void onCancel() {
 			// TODO Auto-generated method stub
-			Toast.makeText(getActivity().getApplicationContext(),
-					"facebook cancel", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity().getApplicationContext(), "facebook cancel",
+					Toast.LENGTH_SHORT).show();
 
 		}
 
 		@Override
 		public void onError(SocialAuthError arg0) {
 			// TODO Auto-generated method stub
-			Toast.makeText(getActivity().getApplicationContext(),
-					"facebook error", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity().getApplicationContext(), "facebook error",
+					Toast.LENGTH_SHORT).show();
 
 		}
 
 	}
 
-	private final class ProfileDataListener implements
-			SocialAuthListener<Profile> {
+	private final class ProfileDataListener implements SocialAuthListener<Profile> {
 
 		@Override
 		public void onError(SocialAuthError arg0) {
-			// TODO Auto-generated method stub
+			preferences = getActivity().getPreferences(MainActivity.MODE_PRIVATE);
+			SharedPreferences.Editor editor = preferences.edit();
+			editor.putBoolean(SPTags.FB_LOGIN, false).commit();
 
 		}
 
 		@Override
 		public void onExecute(String arg0, Profile arg1) {
-			Toast.makeText(getActivity().getApplicationContext(),
-					" Loged as" + arg1.getFullName(), Toast.LENGTH_SHORT)
-					.show();
+			
+			SharedPreferences.Editor editor = preferences.edit();
+			editor.putBoolean(SPTags.FB_LOGIN, true).commit();
+			editor.putBoolean(SPTags.LOGGED, true).commit();
+			editor.putString(SPTags.NAME, arg1.getFullName()).commit();
+
+			MyTaeFragment.replaceFragment(new PreferencesFragment(), "PREFERENCES_FRAGMENT");
+
+			Toast.makeText(getActivity().getApplicationContext(), " Loged as" + arg1.getFullName(),
+					Toast.LENGTH_SHORT).show();
 
 		}
 	}

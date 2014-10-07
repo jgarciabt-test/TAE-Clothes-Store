@@ -1,0 +1,16 @@
+package com.tae.store.helpers;
+
+import android.content.SharedPreferences;
+
+public class Preferences {
+
+	
+    private void SavePreferences(String key, String value) {
+        SharedPreferences preferences = getPreferences(this.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+	
+	
+}

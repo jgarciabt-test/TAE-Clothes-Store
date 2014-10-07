@@ -1,0 +1,150 @@
+package com.tae.store.fragments;
+
+import org.brickred.socialauth.Profile;
+import org.brickred.socialauth.android.DialogListener;
+import org.brickred.socialauth.android.SocialAuthAdapter;
+import org.brickred.socialauth.android.SocialAuthAdapter.Provider;
+import org.brickred.socialauth.android.SocialAuthError;
+import org.brickred.socialauth.android.SocialAuthListener;
+
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.NumberPicker;
+import android.widget.NumberPicker.OnValueChangeListener;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.actionbarsherlock.app.SherlockFragment;
+import com.tae.store.MainActivity;
+import com.tae.store.R;
+
+public class PreferencesFragment extends SherlockFragment {
+
+	private SharedPreferences preferences;
+	private Spinner spUnit;
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.user_preferences, container,
+				false);
+
+		NumberPicker np = (NumberPicker) rootView.findViewById(R.id.numberPicker1);
+		preferences = getActivity().getPreferences(MainActivity.MODE_PRIVATE);
+		
+		spUnit = (Spinner) rootView.findViewById(R.id.sp_units);
+		
+
+		spUnit.setSelection(preferences.getInt("unit", 0));
+
+		
+		spUnit.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				// TODO Auto-generated method stub
+				SharedPreferences.Editor editor = preferences.edit();
+				editor.putInt("unit", spUnit.getSelectedItemPosition()).commit();
+			}
+			
+		});
+		
+		
+		//
+		np.setMinValue(1);
+		np.setMaxValue(100);
+		np.setValue(preferences.getInt("distance", 6));
+		np.setWrapSelectorWheel(false);
+
+		np.setOnValueChangedListener(new OnValueChangeListener() {	
+			@Override
+			public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+				SharedPreferences.Editor editor = preferences.edit();
+				editor.putInt("distance", newVal).commit();
+			}
+		});
+		
+		Button btnLogOut = (Button) rootView.findViewById(R.id.btn_preferences_logout);
+		btnLogOut.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				SharedPreferences.Editor editor = preferences.edit();
+
+				if (preferences.getBoolean("FacebookLogin", false)) {
+					editor.putBoolean("FacebookLogin", false).commit();
+					if (LogInFragment.adapter == null) {
+						LogInFragment.adapter = new SocialAuthAdapter(new ResponseListener());
+						LogInFragment.adapter.authorize(getActivity(), Provider.FACEBOOK);
+					}
+					LogInFragment.adapter.signOut(getActivity(), Provider.FACEBOOK.toString());
+				} else {
+					editor.putBoolean("TAELogin", false).commit();
+				}
+				editor.putBoolean("Logged", false).commit();
+				MyTaeFragment.replaceFragment(new LogInFragment(), "LOGIN_FRAGMENT");
+
+			}
+		});
+
+		return rootView;
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		// TODO
+		super.onSaveInstanceState(outState);
+	}
+
+	private final class ResponseListener implements DialogListener {
+		public void onComplete(Bundle values) {
+			LogInFragment.adapter.getUserProfileAsync(new ProfileDataListener());
+
+		}
+
+		@Override
+		public void onBack() {
+			// TODO Auto-generated method stub
+			Toast.makeText(getActivity().getApplicationContext(), "facebook back",
+					Toast.LENGTH_SHORT).show();
+
+		}
+
+		@Override
+		public void onCancel() {
+			// TODO Auto-generated method stub
+			Toast.makeText(getActivity().getApplicationContext(), "facebook cancel",
+					Toast.LENGTH_SHORT).show();
+
+		}
+
+		@Override
+		public void onError(SocialAuthError arg0) {
+			// TODO Auto-generated method stub
+			Toast.makeText(getActivity().getApplicationContext(), "facebook error",
+					Toast.LENGTH_SHORT).show();
+
+		}
+
+	}
+
+	private final class ProfileDataListener implements SocialAuthListener<Profile> {
+
+		@Override
+		public void onError(SocialAuthError arg0) {
+		}
+
+		@Override
+		public void onExecute(String arg0, Profile arg1) {
+
+		}
+	}
+
+}

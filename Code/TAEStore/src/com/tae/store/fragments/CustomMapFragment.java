@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -48,11 +49,12 @@ import com.tae.store.R;
 import com.tae.store.app.AppController;
 import com.tae.store.helpers.LocationTracker;
 import com.tae.store.model.Store;
+import com.tae.store.utilities.SPTags;
 import com.tae.store.utilities.ServerUrl;
 
-public class CustomMapFragment extends SherlockFragment implements
-		OnInfoWindowClickListener {
+public class CustomMapFragment extends SherlockFragment implements OnInfoWindowClickListener {
 
+	public SharedPreferences preferences;
 	private ViewGroup rootView;
 	private GoogleMap googleMap;
 	private ImageButton btnToList;
@@ -71,14 +73,23 @@ public class CustomMapFragment extends SherlockFragment implements
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		mapFragment = SupportMapFragment.newInstance();
-		FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+		FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager()
+				.beginTransaction();
 		fragmentTransaction.add(R.id.map, mapFragment);
 		fragmentTransaction.commit();
-		
+
+		if (locationTracker == null) {
+			locationTracker = new LocationTracker(getActivity());
+		}
+		locationTracker.getLocation();
+		if (locationTracker.canGetLocation()) {
+			currentLocation = new LatLng(locationTracker.getLatitude(),
+					locationTracker.getLongitude());
+		}
+
 		mInflater = inflater;
 		if (rootView != null) {
 			ViewGroup parent = (ViewGroup) rootView.getParent();
@@ -87,8 +98,7 @@ public class CustomMapFragment extends SherlockFragment implements
 			}
 		}
 
-		rootView = (ViewGroup) inflater.inflate(R.layout.fragment_location,
-				container, false);
+		rootView = (ViewGroup) inflater.inflate(R.layout.fragment_location, container, false);
 
 		if (savedInstanceState != null) {
 			list = savedInstanceState.getParcelableArrayList("list");
@@ -101,17 +111,16 @@ public class CustomMapFragment extends SherlockFragment implements
 			}
 		}
 
-		//setUpMap();
+		// setUpMap();
 		this.savedInstanceState = savedInstanceState;
-		
 
 		// To list listener
 		btnToList = (ImageButton) rootView.findViewById(R.id.btn_to_list);
 		btnToList.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				MainActivity.replaceFragment(new StoreListFragment(list),
-						"STORE_LIST_FRAGMENT", true);
+				MainActivity.replaceFragment(new StoreListFragment(list), "STORE_LIST_FRAGMENT",
+						true);
 			}
 		});
 
@@ -135,50 +144,60 @@ public class CustomMapFragment extends SherlockFragment implements
 			}
 		});
 
-		et_search
-				.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-					@Override
-					public boolean onEditorAction(TextView v, int actionId,
-							KeyEvent event) {
-						if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-							if (!et_search.getText().toString().matches("")) {
-								searchPlace(et_search.getText().toString());
-							}
-							return true;
-						}
-						return false;
+		et_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+					if (!et_search.getText().toString().matches("")) {
+						searchPlace(et_search.getText().toString());
 					}
-				});
+					return true;
+				}
+				return false;
+			}
+		});
 
 		return rootView;
 	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		
+
 		super.onViewCreated(view, savedInstanceState);
-		
+
 		getView().addOnLayoutChangeListener(new OnLayoutChangeListener() {
-			
+
 			@Override
-			public void onLayoutChange(View v, int left, int top, int right,
-					int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-				
-				if(mapFragment.getMap() != null)
-				{
+			public void onLayoutChange(View v, int left, int top, int right, int bottom,
+					int oldLeft, int oldTop, int oldRight, int oldBottom) {
+
+				if (mapFragment.getMap() != null) {
 					setUpMap();
 					getView().removeOnLayoutChangeListener(this);
 				}
-				
+
 			}
 		});
-		
+
 	}
 
 	private void makeRequest() {
+		String URL;
+		preferences = getActivity().getPreferences(getActivity().MODE_PRIVATE);
+		int radius = preferences.getInt(SPTags.DISTANCE, -1);
+		
+		if(preferences.getInt(SPTags.UNIT, 0)==1){
+			radius*=0.62137;
+		}
+		
+		if (locationTracker.canGetLocation() && radius != -1) {
+			URL = ServerUrl.BASE_URL + ServerUrl.GET_CLOSER_STORES + "lat="
+					+ currentLocation.latitude + "&lng=" + currentLocation.longitude + "&radius="+radius;
+		} else {
+			URL = ServerUrl.BASE_URL + ServerUrl.GET_ALL_STORES;
+		}
 
-		JsonArrayRequest request = new JsonArrayRequest(ServerUrl.BASE_URL
-				+ ServerUrl.GET_ALL_STORES, new Listener<JSONArray>() {
+		JsonArrayRequest request = new JsonArrayRequest(URL, new Listener<JSONArray>() {
 			public void onResponse(JSONArray response) {
 
 				try {
@@ -196,6 +215,9 @@ public class CustomMapFragment extends SherlockFragment implements
 						sto.setOpeningHours(obj.getString("sto_opening"));
 						sto.setLatitude(obj.getDouble("sto_lat"));
 						sto.setLongitude(obj.getDouble("sto_lng"));
+						if (locationTracker.canGetLocation()) {
+							sto.setDistance(obj.getDouble("distance"));
+						}
 						list.add(sto);
 					}
 
@@ -216,12 +238,11 @@ public class CustomMapFragment extends SherlockFragment implements
 
 		AppController.getInstance().addToRequestQueue(request);
 	}
-	
-	
+
 	private void setUpMap() {
 
 		if (googleMap == null) {
-			
+
 			googleMap = mapFragment.getMap();
 
 			googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -231,7 +252,7 @@ public class CustomMapFragment extends SherlockFragment implements
 			googleMap.getUiSettings().setZoomGesturesEnabled(true);
 			googleMap.getUiSettings().setCompassEnabled(true);
 			googleMap.setOnInfoWindowClickListener(this);
-			
+
 			if (savedInstanceState != null) {
 				getCurrentLocation();
 				setMarkers();
@@ -265,6 +286,7 @@ public class CustomMapFragment extends SherlockFragment implements
 		Store store = null;
 		Location storeLocation = new Location("Store");
 		Location userLocation = null;
+		preferences = getActivity().getPreferences(getActivity().MODE_PRIVATE);
 
 		if (locationTracker.canGetLocation()) {
 			userLocation = new Location("User");
@@ -277,15 +299,17 @@ public class CustomMapFragment extends SherlockFragment implements
 			if (locationTracker.canGetLocation()) {
 				storeLocation.setLatitude(store.getLatitude());
 				storeLocation.setLongitude(store.getLongitude());
-				// TODO Mi or KM
-				list.get(i).setDistance(
-						storeLocation.distanceTo(userLocation) / 1000);
+
+				if (preferences.getInt(SPTags.UNIT, 0) == 1) { // KM
+					list.get(i).setDistance(storeLocation.distanceTo(userLocation) / 1000);
+				} else { // Mi
+					list.get(i).setDistance(storeLocation.distanceTo(userLocation) / 1609);
+				}
+
 			}
 			MarkerOptions m = new MarkerOptions()
-					.position(
-							new LatLng(store.getLatitude(), store
-									.getLongitude())).title(store.getName())
-					.snippet(store.getAddress() + ", " + store.getCity());
+					.position(new LatLng(store.getLatitude(), store.getLongitude()))
+					.title(store.getName()).snippet(store.getAddress() + ", " + store.getCity());
 
 			m.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker));
 			googleMap.addMarker(m);
@@ -302,17 +326,16 @@ public class CustomMapFragment extends SherlockFragment implements
 					locationTracker.getLongitude());
 			moveCamera(currentLocation);
 		} else {
-			Toast.makeText(getActivity(), "GPS possition is not available",
-					Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity(), "GPS possition is not available", Toast.LENGTH_SHORT)
+					.show();
 		}
 	}
 
 	private void moveCamera(LatLng position) {
-		CameraPosition cameraPosition = new CameraPosition.Builder()
-				.target(position).zoom(13).build();
+		CameraPosition cameraPosition = new CameraPosition.Builder().target(position).zoom(13)
+				.build();
 
-		googleMap.animateCamera(CameraUpdateFactory
-				.newCameraPosition(cameraPosition));
+		googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 	}
 
 	@Override
@@ -332,8 +355,8 @@ public class CustomMapFragment extends SherlockFragment implements
 		@Override
 		public View getInfoContents(Marker marker) {
 
-			TextView txtName = (TextView) myContentsView
-					.findViewById(R.id.txt_store_map_name);
+			float distance = -1;
+			TextView txtName = (TextView) myContentsView.findViewById(R.id.txt_store_map_name);
 			TextView txtAddress = (TextView) myContentsView
 					.findViewById(R.id.txt_store_map_address);
 			TextView txtDistance = (TextView) myContentsView
@@ -347,14 +370,28 @@ public class CustomMapFragment extends SherlockFragment implements
 				Location markerLocation = new Location("Marker");
 				markerLocation.setLatitude(marker.getPosition().latitude);
 				markerLocation.setLongitude(marker.getPosition().longitude);
-				// TODO shared preferences to KM or MI
-				float distance = markerLocation.distanceTo(userLocation) / 1000;
-				txtDistance.setText(new DecimalFormat("##.##").format(distance)
-						+ " Mi");
+
+				String unit;
+				if (preferences.getInt(SPTags.UNIT, 0) == 1) {
+					distance = markerLocation.distanceTo(userLocation) / 1000;
+					unit = " KM";
+				} else {
+					distance = markerLocation.distanceTo(userLocation) / 1609;
+					unit = " Mi";
+				}
+				txtDistance.setText(new DecimalFormat("##.##").format(distance) + unit);
 			} else {
-				txtDistance.setText("- mi");
+				if (preferences.getInt(SPTags.UNIT, 0) == 1) {
+					txtDistance.setText("- Km");
+				} else {
+					txtDistance.setText("- Mi");
+				}
 			}
 
+			// int savedDistance = preferences.getInt(SPTags.DISTANCE, -1);
+			// if(!((distance==-1)||(savedDistance!=-1)&&(savedDistance>distance))){
+			// marker.setVisible(false);
+			// }
 			txtName.setText(marker.getTitle());
 			txtAddress.setText(marker.getSnippet());
 
@@ -372,8 +409,8 @@ public class CustomMapFragment extends SherlockFragment implements
 	public void onInfoWindowClick(Marker arg0) {
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getName().matches(arg0.getTitle())) {
-				MainActivity.replaceFragment(new StoreFragment(list.get(i)),
-						"STORE_FRAGMENT", true);
+				MainActivity
+						.replaceFragment(new StoreFragment(list.get(i)), "STORE_FRAGMENT", true);
 				return;
 			}
 		}
