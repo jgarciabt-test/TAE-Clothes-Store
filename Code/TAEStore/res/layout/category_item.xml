@@ -6,10 +6,10 @@
     
     <ImageView
         android:id="@+id/iv_category"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
+        android:layout_width="170dp"
+        android:layout_height="120dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="1dp"
         android:layout_marginBottom="5dp"
         android:contentDescription="@string/app_name"
         android:src="@drawable/example" />
@@ -19,10 +19,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/iv_category"
-        android:layout_marginLeft="27dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
         android:layout_toRightOf="@+id/iv_category"
-        android:text="Trousers"
         android:textSize="20sp" />
 
     <TextView
@@ -31,9 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_catName"
         android:layout_toRightOf="@+id/iv_category"
-        android:layout_marginLeft="27dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:text="From 25" 
         android:textColor="#888888"/>
 
 </RelativeLayout>

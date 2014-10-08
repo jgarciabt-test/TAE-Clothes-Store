@@ -1,5 +1,6 @@
 package com.tae.store.adapters;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -57,7 +58,8 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 
 		Product prod = productList.get(position);
 		txtName.setText(prod.getName());
-		txtPrice.setText(String.valueOf(prod.getPrice()));
+		
+		txtPrice.setText(context.getResources().getString(R.string.pound_symbol) + String.valueOf(new DecimalFormat("##.##").format(prod.getPrice())));
 		Picasso.with(context).load(ServerUrl.BASE_URL + ServerUrl.IMG + prod.getUrl_pic())
 				.placeholder(context.getResources().getDrawable(R.drawable.back)).into(imgIcon);
 

@@ -65,19 +65,15 @@ public class ItemFragment extends SherlockFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		
+
 		ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_item_details, null,
 				false);
 
 		mCarouselContainer = (LinearLayout) rootView.findViewById(R.id.carousel);
 
-		
-		
 		Display display = ((WindowManager) getActivity().getSystemService(
 				getActivity().WINDOW_SERVICE)).getDefaultDisplay();
-
 		int orientation = display.getRotation();
-
 		if (orientation == Surface.ROTATION_90 || orientation == Surface.ROTATION_270) {
 			initial_items = 9.5f;
 		} else {
@@ -122,9 +118,7 @@ public class ItemFragment extends SherlockFragment {
 				.into(mainPicture);
 		return rootView;
 	}
-	
-	
-	
+
 	private void addProduct() {
 		if (BAG == null) {
 			BAG = new DatabaseHandler(getActivity());
@@ -179,6 +173,9 @@ public class ItemFragment extends SherlockFragment {
 			// / Add image view to the carousel container
 			mCarouselContainer.addView(imageItem);
 		}
+		// Just to solve a bug
+		Picasso.with(getActivity()).load(ServerUrl.BASE_URL + ServerUrl.IMG + urlArray.get(0))
+				.into(mainPicture);
 
 	}
 
@@ -242,5 +239,5 @@ public class ItemFragment extends SherlockFragment {
 
 		AppController.getInstance().addToRequestQueue(request);
 	}
-	
+
 }

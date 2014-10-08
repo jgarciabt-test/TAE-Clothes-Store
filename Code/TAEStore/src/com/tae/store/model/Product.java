@@ -18,9 +18,11 @@ public class Product implements Parcelable {
 	private String size;
 	private float price;
 	private String url_pic;
+	private String urlPicOffer;
 
 	public Product() {
 		size = "";
+		urlPicOffer="";
 	}
 
 	public Product(String id, String name, String description, String details,
@@ -32,6 +34,7 @@ public class Product implements Parcelable {
 		this.promoted = promoted;
 		this.price = price;
 		this.url_pic = url_pic;
+		urlPicOffer="";
 		size = "";
 	}
 
@@ -98,6 +101,14 @@ public class Product implements Parcelable {
 	public void setSize(String size) {
 		this.size = size;
 	}
+	
+	public String getUrlPicOffer() {
+		return urlPicOffer;
+	}
+
+	public void setUrlPicOffer(String urlPicOffer) {
+		this.urlPicOffer = urlPicOffer;
+	}
 
 	private Product(Parcel in) {
 		id = in.readString();
@@ -108,6 +119,7 @@ public class Product implements Parcelable {
 		size = in.readString();
 		price = in.readFloat();
 		url_pic = in.readString();
+		urlPicOffer = in.readString();
 	}
 
 	@Override
@@ -125,6 +137,7 @@ public class Product implements Parcelable {
 		out.writeString(size);
 		out.writeFloat(price);
 		out.writeString(url_pic);
+		out.writeString(urlPicOffer);
 
 	}
 

@@ -39,7 +39,6 @@ import com.viewpagerindicator.PageIndicator;
 
 public class HomeFragment extends SherlockFragment {
 
-
 	private int currentSelectedFragmentPosition = 0;
 	private ProgressDialog pDialog;
 
@@ -61,33 +60,40 @@ public class HomeFragment extends SherlockFragment {
 	private SlidePagerAdapter mAdapterWomen;
 	private ArrayList<Category> womenCategories;
 
-	// Gesture detector to determine with screen has been tapped
-	final GestureDetector tapGestureDetectorOffer = new GestureDetector(
-			getActivity(), new GestureDetector.SimpleOnGestureListener() {
+	// Gesture detector to determine which screen has been tapped
+	final GestureDetector tapGestureDetectorOffer = new GestureDetector(getActivity(),
+			new GestureDetector.SimpleOnGestureListener() {
 				@Override
 				public boolean onSingleTapConfirmed(MotionEvent e) {
-					MainActivity.replaceFragment(new CategoryFragment("Men",
-							getActivity()), "CATEGORY_FRAGMENT", true);
+					int i = mPagerOffers.getCurrentItem();
+					switch (i) {
+					case 0:
+						break;
+					default:
+						MainActivity.replaceFragment(new ItemFragment(offers.get(i - 1)),
+								"ITEM_FRAGMENT", true);
+						break;
+					}
 					return false;
 				}
 			});
 
-	// Gesture detector to determine with screen has been tapped
-	final GestureDetector tapGestureDetectorMen = new GestureDetector(
-			getActivity(), new GestureDetector.SimpleOnGestureListener() {
+	// Gesture detector to determine which screen has been tapped
+	final GestureDetector tapGestureDetectorMen = new GestureDetector(getActivity(),
+			new GestureDetector.SimpleOnGestureListener() {
 				@Override
 				public boolean onSingleTapConfirmed(MotionEvent e) {
 					int i = mPagerMen.getCurrentItem();
 					switch (i) {
 					case 0:
 						MainActivity.ROOT_CATEGORY = "Men";
-						MainActivity.replaceFragment(new CategoryFragment(
-								"Men", getActivity()), "CATEGORY_FRAGMENT", true);
+						MainActivity.replaceFragment(new CategoryFragment("Men", getActivity()),
+								"CATEGORY_FRAGMENT", true);
 						break;
 					default:
-						MainActivity.replaceFragment(new ProductListFragment(
-								menCategories.get(i - 1).getId(), menCategories
-										.get(i - 1).getName(), getActivity()),
+						MainActivity.replaceFragment(
+								new ProductListFragment(menCategories.get(i - 1).getId(),
+										menCategories.get(i - 1).getName(), getActivity()),
 								"PRODUCT_LIST_FRAGMENT", true);
 						break;
 					}
@@ -96,21 +102,22 @@ public class HomeFragment extends SherlockFragment {
 				}
 			});
 
-	final GestureDetector tapGestureDetectorWomen = new GestureDetector(
-			getActivity(), new GestureDetector.SimpleOnGestureListener() {
+	// Gesture detector to determine which screen has been tapped
+	final GestureDetector tapGestureDetectorWomen = new GestureDetector(getActivity(),
+			new GestureDetector.SimpleOnGestureListener() {
 				@Override
 				public boolean onSingleTapConfirmed(MotionEvent e) {
 					int i = mPagerWomen.getCurrentItem();
 					switch (i) {
 					case 0:
 						MainActivity.ROOT_CATEGORY = "Women";
-						MainActivity.replaceFragment(new CategoryFragment(
-								"Women", getActivity()), "CATEGORY_FRAGMENT", true);
+						MainActivity.replaceFragment(new CategoryFragment("Women", getActivity()),
+								"CATEGORY_FRAGMENT", true);
 						break;
 					default:
-						MainActivity.replaceFragment(new ProductListFragment(
-								menCategories.get(i - 1).getId(), menCategories
-										.get(i - 1).getName(), getActivity()),
+						MainActivity.replaceFragment(
+								new ProductListFragment(menCategories.get(i - 1).getId(),
+										menCategories.get(i - 1).getName(), getActivity()),
 								"PRODUCT_LIST_FRAGMENT", true);
 						break;
 					}
@@ -130,17 +137,13 @@ public class HomeFragment extends SherlockFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		ViewGroup rootView = (ViewGroup) inflater.inflate(
-				R.layout.fragment_home, container, false);
+		ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
 
 		if (savedInstanceState != null) {
-			menCategories = savedInstanceState
-					.getParcelableArrayList("menCategories");
-			womenCategories = savedInstanceState
-					.getParcelableArrayList("womenCategories");
+			menCategories = savedInstanceState.getParcelableArrayList("menCategories");
+			womenCategories = savedInstanceState.getParcelableArrayList("womenCategories");
 			offers = savedInstanceState.getParcelableArrayList("offer");
 		}
 		if (menCategories == null) {
@@ -150,32 +153,28 @@ public class HomeFragment extends SherlockFragment {
 			makeRequestCategories();
 		}
 
-		mAdapterOffers = new SlidePagerAdapterProduct(
-				getChildFragmentManager(), offers);
+		mAdapterOffers = new SlidePagerAdapterProduct(getChildFragmentManager(), offers);
 
 		mPagerOffers = (ViewPager) rootView.findViewById(R.id.vp1);
 		mPagerOffers.setAdapter(mAdapterOffers);
 
-		mIndicatorOffers = (CirclePageIndicator) rootView
-				.findViewById(R.id.indicator1);
+		mIndicatorOffers = (CirclePageIndicator) rootView.findViewById(R.id.indicator1);
 		mIndicatorOffers.setViewPager(mPagerOffers);
 
-		mAdapterMen = new SlidePagerAdapter(getChildFragmentManager(),
-				MainCategories.MEN, menCategories);
+		mAdapterMen = new SlidePagerAdapter(getChildFragmentManager(), MainCategories.MEN,
+				menCategories);
 		mPagerMen = (ViewPager) rootView.findViewById(R.id.vp2);
 		mPagerMen.setAdapter(mAdapterMen);
 
-		mIndicatorMen = (CirclePageIndicator) rootView
-				.findViewById(R.id.indicator2);
+		mIndicatorMen = (CirclePageIndicator) rootView.findViewById(R.id.indicator2);
 		mIndicatorMen.setViewPager(mPagerMen);
 
-		mAdapterWomen = new SlidePagerAdapter(getChildFragmentManager(),
-				MainCategories.WOMEN, womenCategories);
+		mAdapterWomen = new SlidePagerAdapter(getChildFragmentManager(), MainCategories.WOMEN,
+				womenCategories);
 		mPagerWomen = (ViewPager) rootView.findViewById(R.id.vp3);
 		mPagerWomen.setAdapter(mAdapterWomen);
 
-		mIndicatorWomen = (CirclePageIndicator) rootView
-				.findViewById(R.id.indicator3);
+		mIndicatorWomen = (CirclePageIndicator) rootView.findViewById(R.id.indicator3);
 		mIndicatorWomen.setViewPager(mPagerWomen);
 
 		mPagerOffers.setOnTouchListener(new OnTouchListener() {
@@ -213,8 +212,8 @@ public class HomeFragment extends SherlockFragment {
 
 	private void makeRequestCategories() {
 
-		menCategories =  new ArrayList<Category>();
-		womenCategories  = new ArrayList<Category>();
+		menCategories = new ArrayList<Category>();
+		womenCategories = new ArrayList<Category>();
 		pDialog.show();
 		JsonArrayRequest request = new JsonArrayRequest(ServerUrl.BASE_URL
 				+ ServerUrl.GET_ALL_CATEGORIES, new Listener<JSONArray>() {
@@ -239,7 +238,7 @@ public class HomeFragment extends SherlockFragment {
 
 				} catch (JSONException e) {
 					e.printStackTrace();
-				};
+				}
 				makeRequestOffer();
 			}
 		}, new Response.ErrorListener() {
@@ -247,18 +246,14 @@ public class HomeFragment extends SherlockFragment {
 			public void onErrorResponse(VolleyError error) {
 				pDialog.dismiss();
 				VolleyLog.d("VOLLEY_ERROR", "Error: " + error.getMessage());
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						getActivity());
-				builder.setMessage(
-						getResources().getString(R.string.error_loading))
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setMessage(getResources().getString(R.string.error_loading))
 						.setCancelable(false)
-						.setPositiveButton("OK",
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int id) {
-										getActivity().finish();
-									}
-								});
+						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								getActivity().finish();
+							}
+						});
 				AlertDialog alert = builder.create();
 				alert.show();
 			}
@@ -289,7 +284,7 @@ public class HomeFragment extends SherlockFragment {
 						} else {
 							prod.setPromoted(false);
 						}
-						prod.setUrl_pic(obj.getString("pic_url"));
+						prod.setUrlPicOffer(obj.getString("pic_url"));
 						offers.add(prod);
 					}
 
@@ -299,27 +294,22 @@ public class HomeFragment extends SherlockFragment {
 				pDialog.dismiss();
 				mAdapterMen.notifyDataSetChanged();
 				mAdapterWomen.notifyDataSetChanged();
-				mAdapterOffers.notifyDataSetChanged(); 
+				mAdapterOffers.notifyDataSetChanged();
 
-				//startActivity(i);
 			}
 		}, new Response.ErrorListener() {
 			@Override
 			public void onErrorResponse(VolleyError error) {
 				pDialog.dismiss();
 				VolleyLog.d("VOLLEY_ERROR", "Error: " + error.getMessage());
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						getActivity());
-				builder.setMessage(
-						getResources().getString(R.string.error_loading))
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				builder.setMessage(getResources().getString(R.string.error_loading))
 						.setCancelable(false)
-						.setPositiveButton("OK",
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int id) {
-										getActivity().finish();
-									}
-								});
+						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								getActivity().finish();
+							}
+						});
 				AlertDialog alert = builder.create();
 				alert.show();
 			}

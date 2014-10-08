@@ -185,14 +185,15 @@ public class CustomMapFragment extends SherlockFragment implements OnInfoWindowC
 		String URL;
 		preferences = getActivity().getPreferences(getActivity().MODE_PRIVATE);
 		int radius = preferences.getInt(SPTags.DISTANCE, -1);
-		
-		if(preferences.getInt(SPTags.UNIT, 0)==1){
-			radius*=0.62137;
+
+		if (preferences.getInt(SPTags.UNIT, 0) == 1) {
+			radius *= 0.62137;
 		}
-		
+
 		if (locationTracker.canGetLocation() && radius != -1) {
 			URL = ServerUrl.BASE_URL + ServerUrl.GET_CLOSER_STORES + "lat="
-					+ currentLocation.latitude + "&lng=" + currentLocation.longitude + "&radius="+radius;
+					+ currentLocation.latitude + "&lng=" + currentLocation.longitude + "&radius="
+					+ radius;
 		} else {
 			URL = ServerUrl.BASE_URL + ServerUrl.GET_ALL_STORES;
 		}
@@ -388,10 +389,6 @@ public class CustomMapFragment extends SherlockFragment implements OnInfoWindowC
 				}
 			}
 
-			// int savedDistance = preferences.getInt(SPTags.DISTANCE, -1);
-			// if(!((distance==-1)||(savedDistance!=-1)&&(savedDistance>distance))){
-			// marker.setVisible(false);
-			// }
 			txtName.setText(marker.getTitle());
 			txtAddress.setText(marker.getSnippet());
 

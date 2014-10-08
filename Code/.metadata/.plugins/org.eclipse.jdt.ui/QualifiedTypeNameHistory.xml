@@ -25,7 +25,6 @@
 <fullyQualifiedTypeName name="com.google.android.gms.maps.model.LatLng"/>
 <fullyQualifiedTypeName name="android.widget.EditText"/>
 <fullyQualifiedTypeName name="com.tae.store.R.id"/>
-<fullyQualifiedTypeName name="com.tae.store.R.drawable"/>
 <fullyQualifiedTypeName name="com.google.android.gms.maps.GoogleMap.OnMarkerClickListener"/>
 <fullyQualifiedTypeName name="android.view.LayoutInflater"/>
 <fullyQualifiedTypeName name="android.app.AlertDialog"/>
@@ -36,7 +35,6 @@
 <fullyQualifiedTypeName name="android.view.View.OnLongClickListener"/>
 <fullyQualifiedTypeName name="android.widget.AdapterView.OnItemClickListener"/>
 <fullyQualifiedTypeName name="android.widget.AdapterView.OnItemLongClickListener"/>
-<fullyQualifiedTypeName name="com.tae.store.R"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
 <fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="android.app.Activity"/>
@@ -46,7 +44,6 @@
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="com.paypal.android.sdk.payments.PayPalAuthorization"/>
 <fullyQualifiedTypeName name="android.widget.Button"/>
-<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
 <fullyQualifiedTypeName name="com.paypal.android.sdk.payments.PayPalConfiguration"/>
 <fullyQualifiedTypeName name="java.math.BigDecimal"/>
 <fullyQualifiedTypeName name="com.paypal.android.sdk.payments.PayPalPayment"/>
@@ -57,4 +54,9 @@
 <fullyQualifiedTypeName name="android.support.v4.widget.SearchViewCompatIcs.MySearchView"/>
 <fullyQualifiedTypeName name="android.widget.TextView"/>
 <fullyQualifiedTypeName name="com.tae.store.utilities.PayPalUtil"/>
+<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
+<fullyQualifiedTypeName name="com.tae.store.R.string"/>
+<fullyQualifiedTypeName name="com.tae.store.R"/>
+<fullyQualifiedTypeName name="com.tae.store.R.drawable"/>
+<fullyQualifiedTypeName name="com.tae.store.fragments.ItemFragment"/>
 </qualifiedTypeNameHistroy>

@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,55 +37,48 @@ public class ProductListFragment extends SherlockFragment {
 	private String categoryId;
 	private String categoryTitle;
 	private ProgressDialog pDialog;
-	private Context context;
 	private ProductListAdapter adapter;
 
 	public ProductListFragment() {
 	}
 
-	public ProductListFragment(String categoryId, String categoryTitle,
-			Context context) {
-		this.context = context;
+	public ProductListFragment(String categoryId, String categoryTitle, Context context) {
 		this.categoryId = categoryId;
 		this.categoryTitle = categoryTitle;
 		list = new ArrayList<Product>();
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		ViewGroup rootView = (ViewGroup) inflater.inflate(
-				R.layout.product_list, null, false);
-		
-		context = getActivity().getApplicationContext();
+		ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.product_list, null, false);
+
 		if (savedInstanceState != null) {
 			list = savedInstanceState.getParcelableArrayList("list");
 			categoryTitle = savedInstanceState.getString("categoryTitle");
+			categoryId = savedInstanceState.getString("categoryId");
 		}
-		
+
 		if (list.size() == 0) {
-			pDialog = new ProgressDialog(context);
+			pDialog = new ProgressDialog(getActivity());
 			pDialog.setMessage(getResources().getString(R.string.loading));
+			pDialog.show();
 			makeRequest();
 		}
-		
 
-		TextView txtCategory = (TextView) rootView
-				.findViewById(R.id.txt_product_list_title);
+		TextView txtCategory = (TextView) rootView.findViewById(R.id.txt_product_list_title);
 		txtCategory.setText(categoryTitle);
-		adapter = new ProductListAdapter(getActivity(),
-				android.R.layout.simple_list_item_1, list);
+		adapter = new ProductListAdapter(getActivity(), android.R.layout.simple_list_item_1, list);
 		GridView grid = (GridView) rootView.findViewById(R.id.grid);
 		grid.setAdapter(adapter);
 		grid.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				MainActivity.replaceFragment(new ItemFragment(list.get(position)), "ITEM_DETAIL_FRAGMENT", true);
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				MainActivity.replaceFragment(new ItemFragment(list.get(position)),
+						"ITEM_DETAIL_FRAGMENT", true);
 			}
-	    });
-		
+		});
+
 		return rootView;
 	}
 
@@ -93,74 +87,52 @@ public class ProductListFragment extends SherlockFragment {
 		super.onSaveInstanceState(outState);
 		outState.putParcelableArrayList("list", list);
 		outState.putString("categoryTitle", categoryTitle);
-	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
-	}
-
-	@Override
-	public void onResume() {
-		// Log.v("CYCLE", "OnResume");
-		super.onResume();
-	}
-
-	@Override
-	public void onStart() {
-		// Log.v("CYCLE", "OnStart");
-		super.onStart();
-	}
-
-	@Override
-	public void onStop() {
-		// Log.v("CYCLE", "OnStore");
-		super.onStop();
+		outState.putSerializable("categoryId", categoryId);
 	}
 
 	private void makeRequest() {
 
-		categoryId = MainActivity.PRODUCT;
+		if (categoryId == null) {
+			categoryId = MainActivity.PRODUCT;
+		}
+
 		JsonArrayRequest request = new JsonArrayRequest(ServerUrl.BASE_URL
-				+ ServerUrl.GET_ALL_PRODUCTS + categoryId,
-				new Listener<JSONArray>() {
-					public void onResponse(JSONArray response) {
-
-						try {
-							JSONObject obj = response.getJSONObject(0);
-							JSONArray array = (JSONArray) obj.get("products");
-							for (int i = 0; i < array.length(); i++) {
-								obj = array.getJSONObject(i);
-								Product prod = new Product();
-								prod.setId(obj.getString("prod_id"));
-								prod.setName(obj.getString("prod_name"));
-								prod.setDescription(obj.getString("prod_desc"));
-								prod.setDetails(obj.getString("prod_detail"));
-								prod.setPrice(obj.getInt("prod_price"));
-								if (obj.getString("prod_offer") == "1") {
-									prod.setPromoted(true);
-								} else {
-									prod.setPromoted(false);
-								}
-								prod.setUrl_pic(obj.getString("pic_url"));
-								list.add(prod);
-							}
-
-						} catch (JSONException e) {
-							e.printStackTrace();
+				+ ServerUrl.GET_ALL_PRODUCTS + categoryId, new Listener<JSONArray>() {
+			public void onResponse(JSONArray response) {
+				try {
+					JSONObject obj = response.getJSONObject(0);
+					JSONArray array = (JSONArray) obj.get("products");
+					for (int i = 0; i < array.length(); i++) {
+						obj = array.getJSONObject(i);
+						Product prod = new Product();
+						prod.setId(obj.getString("prod_id"));
+						prod.setName(obj.getString("prod_name"));
+						prod.setDescription(obj.getString("prod_desc"));
+						prod.setDetails(obj.getString("prod_detail"));
+						prod.setPrice(Float.parseFloat(obj.getString("prod_price")));
+						if (obj.getString("prod_offer") == "1") {
+							prod.setPromoted(true);
+						} else {
+							prod.setPromoted(false);
 						}
+						prod.setUrl_pic(obj.getString("pic_url"));
+						list.add(prod);
+					}
 
-						adapter.notifyDataSetChanged();
-						pDialog.dismiss();
-					}
-				}, new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-						pDialog.dismiss();
-						VolleyLog.d("VOLLEY_ERROR",
-								"Error: " + error.getMessage());
-					}
-				});
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
+				adapter.notifyDataSetChanged();
+				pDialog.dismiss();
+			}
+		}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				pDialog.dismiss();
+				VolleyLog.d("VOLLEY_ERROR", "Error: " + error.getMessage());
+			}
+		});
 
 		AppController.getInstance().addToRequestQueue(request);
 	}

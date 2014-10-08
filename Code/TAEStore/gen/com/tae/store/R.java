@@ -1472,15 +1472,16 @@ containing a value of this type.
         public static final int map_marker=0x7f0200a4;
         public static final int men=0x7f0200a5;
         public static final int shape=0x7f0200a6;
-        public static final int star=0x7f0200a7;
-        public static final int vpi__tab_indicator=0x7f0200a8;
-        public static final int vpi__tab_selected_focused_holo=0x7f0200a9;
-        public static final int vpi__tab_selected_holo=0x7f0200aa;
-        public static final int vpi__tab_selected_pressed_holo=0x7f0200ab;
-        public static final int vpi__tab_unselected_focused_holo=0x7f0200ac;
-        public static final int vpi__tab_unselected_holo=0x7f0200ad;
-        public static final int vpi__tab_unselected_pressed_holo=0x7f0200ae;
-        public static final int women=0x7f0200af;
+        public static final int special_offers=0x7f0200a7;
+        public static final int star=0x7f0200a8;
+        public static final int vpi__tab_indicator=0x7f0200a9;
+        public static final int vpi__tab_selected_focused_holo=0x7f0200aa;
+        public static final int vpi__tab_selected_holo=0x7f0200ab;
+        public static final int vpi__tab_selected_pressed_holo=0x7f0200ac;
+        public static final int vpi__tab_unselected_focused_holo=0x7f0200ad;
+        public static final int vpi__tab_unselected_holo=0x7f0200ae;
+        public static final int vpi__tab_unselected_pressed_holo=0x7f0200af;
+        public static final int women=0x7f0200b0;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f040028;
@@ -1868,6 +1869,7 @@ containing a value of this type.
         public static final int directions=0x7f0a0031;
         public static final int error_loading=0x7f0a0033;
         public static final int facebook=0x7f0a005a;
+        public static final int from=0x7f0a0070;
         public static final int hello_world=0x7f0a0029;
         public static final int loading=0x7f0a0032;
         /**  Location client code resources (prefix with location_client) 
@@ -1892,7 +1894,7 @@ containing a value of this type.
         public static final int preferences_units=0x7f0a0067;
         /**  Screen Titles 
          */
-        public static final int screen_store=0x7f0a0070;
+        public static final int screen_store=0x7f0a0071;
         public static final int server_error=0x7f0a0062;
         public static final int share_body=0x7f0a006d;
         public static final int share_subjet=0x7f0a006e;

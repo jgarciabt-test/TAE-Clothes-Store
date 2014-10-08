@@ -1,5 +1,6 @@
 package com.tae.store.adapters;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -18,8 +19,13 @@ import com.tae.store.utilities.ServerUrl;
 
 public class CategoryListAdapter extends BaseAdapter {
 
+	/** Context of the app */
 	Context context;
+	
+	/** ArrayList with all the Category objects*/
 	ArrayList<Category> categoryList;
+	
+	/** LayoutInflater */
 	private LayoutInflater mInflater;
 
 	public CategoryListAdapter(Context context, ArrayList<Category> rowItem) {
@@ -57,7 +63,10 @@ public class CategoryListAdapter extends BaseAdapter {
 		Category cat = categoryList.get(position);
 		txtName.setText(cat.getName());
 		
-		txtPrice.setText("From " + cat.getLower_price());
+		//Just to put the output properly
+		float aux = Float.parseFloat(cat.getLower_price());
+		
+		txtPrice.setText(context.getResources().getString(R.string.from) + new DecimalFormat("##.##").format(aux));
 		Picasso.with(context).load(ServerUrl.BASE_URL + ServerUrl.IMG + cat.getUrl_pic())
 				.placeholder(context.getResources().getDrawable(R.drawable.back)).into(imgIcon);
 
@@ -65,6 +74,9 @@ public class CategoryListAdapter extends BaseAdapter {
 
 	}
 
+	/** 
+	 * Clear the ArrayList and call notofyDataSetChanged()
+	 */
 	public void clearAdapter() {
 		categoryList.clear();
 		notifyDataSetChanged();

@@ -24,7 +24,7 @@
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/vp1"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="170dp"
                 android:layout_marginTop="5dp" 
                />
 
@@ -52,7 +52,7 @@
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/vp2"
                 android:layout_width="match_parent"
-                android:layout_height="160dp" 
+                android:layout_height="170dp" 
                 android:layout_marginTop="5dp" />
 
             <com.viewpagerindicator.CirclePageIndicator
@@ -79,7 +79,7 @@
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/vp3"
                 android:layout_width="match_parent"
-                android:layout_height="160dp"
+                android:layout_height="170dp"
                 android:layout_marginTop="5dp"  />
 
             <com.viewpagerindicator.CirclePageIndicator

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.tae.store.R;
 import com.tae.store.fragments.SlidePageFragment;
 import com.tae.store.model.Product;
 
@@ -25,7 +26,7 @@ public class SlidePagerAdapterProduct extends FragmentStatePagerAdapter {
 
 
 		list = new ArrayList<SlidePageFragment>();
-	//	list.add(new SlidePageFragment(R.drawable.ic_launcher, true));
+		list.add(new SlidePageFragment(R.drawable.special_offers, true));
 		if(offers!=null)
 			num_pages = offers.size();
 		for (int i = 0; i < num_pages; i++) {
