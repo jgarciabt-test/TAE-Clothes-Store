@@ -10,7 +10,6 @@
         android:layout_width="130dp"
         android:layout_height="170dp"
         android:layout_marginTop="10dp"
-        android:contentDescription="Des"
         android:layout_gravity="center_horizontal" />
 
     <TextView

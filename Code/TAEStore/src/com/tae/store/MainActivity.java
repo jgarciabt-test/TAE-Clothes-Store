@@ -301,10 +301,15 @@ public class MainActivity extends SherlockFragmentActivity {
 	@Override
 	public void onBackPressed() {
 		if (backStackFragment.size() > 1) {
+			Log.v("BACK", "Current fragment before remove: "+currentFragment);
+			Log.v("BACK", backStackFragment.toString());
 			backStackFragment.remove(backStackFragment.size() - 1);
 
 			currentFragment = backStackFragment.get(backStackFragment.size() - 1);
 			fragment = fragmentManager.findFragmentByTag(currentFragment);
+			
+			Log.v("BACK", "Current fragment after remove: "+currentFragment);
+			Log.v("BACK", backStackFragment.toString());
 		} else {
 			finish();
 		}

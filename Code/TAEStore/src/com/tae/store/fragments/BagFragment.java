@@ -146,10 +146,10 @@ public class BagFragment extends SherlockListFragment {
 		for (int i = 0; i < myBag.size(); i++) {
 			totalToPay += myBag.get(i).getPrice();
 		}
-		total_order.setText(String.valueOf(totalToPay));
-		shipping.setText(PayPalUtil.SHIPPING);
+		total_order.setText(getActivity().getResources().getString(R.string.pound_symbol)+String.valueOf(totalToPay));
+		shipping.setText(getActivity().getResources().getString(R.string.pound_symbol)+PayPalUtil.SHIPPING);
 		totalToPay += Float.parseFloat(PayPalUtil.SHIPPING);
-		total.setText(String.valueOf(totalToPay));
+		total.setText(getActivity().getResources().getString(R.string.pound_symbol)+String.valueOf(totalToPay));
 
 	}
 
@@ -186,7 +186,7 @@ public class BagFragment extends SherlockListFragment {
 		PayPalItem[] items = new PayPalItem[myBag.size()];
 		for (int i = 0; i < myBag.size(); i++) {
 			items[i] = new PayPalItem(myBag.get(i).getName() + " SIZE:" + myBag.get(i).getSize(),
-					1, new BigDecimal(myBag.get(i).getPrice()), PayPalUtil.CURRENCY, "Ref Number: "
+					1, new BigDecimal(String.valueOf(myBag.get(i).getPrice())), PayPalUtil.CURRENCY, "Ref Number: "
 							+ myBag.get(i).getId());
 		}
 

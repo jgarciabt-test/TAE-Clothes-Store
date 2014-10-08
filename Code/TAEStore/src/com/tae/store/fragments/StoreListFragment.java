@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,7 +98,7 @@ public class StoreListFragment extends SherlockListFragment {
 		} else {
 			URL = ServerUrl.BASE_URL + ServerUrl.GET_ALL_STORES;
 		}
-
+		Log.v("URL", URL);
 		JsonArrayRequest request = new JsonArrayRequest(URL, new Listener<JSONArray>() {
 			public void onResponse(JSONArray response) {
 

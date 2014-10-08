@@ -45,7 +45,7 @@ public class StoreFragment extends SherlockFragment {
 
 		txtName.setText(store.getName());
 		txtAddress.setText(store.getAddress());
-		txtPostCity.setText(store.getPostCode() + "," + store.getCity());
+		txtPostCity.setText(store.getPostCode() + ", " + store.getCity());
 		txtOpening.setText(store.getOpeningHours());
 
 		btnPhone.setText(store.getPhone());

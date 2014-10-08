@@ -16,6 +16,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -198,6 +199,7 @@ public class CustomMapFragment extends SherlockFragment implements OnInfoWindowC
 			URL = ServerUrl.BASE_URL + ServerUrl.GET_ALL_STORES;
 		}
 
+		Log.v("URL", URL);
 		JsonArrayRequest request = new JsonArrayRequest(URL, new Listener<JSONArray>() {
 			public void onResponse(JSONArray response) {
 

@@ -2,7 +2,8 @@ package com.tae.store.utilities;
 
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 
-/**
+/** Class with parameters to customize the payment with PayPal. Includes the API KEY and the shipping costs.
+ * 
 * @author      Jose Garcia 
 * @version     1.0                 
 * @since       2014-10-08         

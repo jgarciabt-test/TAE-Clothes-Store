@@ -41,13 +41,23 @@ import com.tae.store.utilities.ServerUrl;
 
 public class ItemFragment extends SherlockFragment {
 
+	/** Product that the will be displayed on this fragment */
 	private Product product;
+	/** ArrayList with the URL (String) of the images of the product */
 	private ArrayList<String> urlArray;
+	/** ArrayList with all the Sizes (String) that the user can choose for this product */
 	private ArrayList<String> sizeArray;
+	/** ArrayAdapter for the spinner  */
 	private ArrayAdapter<String> sizeAdapter;
+	/** ImageView where the main picture will be placed*/
 	private ImageView mainPicture;
+	/** Spinner where the user will select the size in case of add to the bag */
 	private Spinner spSize;
+	
+	/** LinearLayout where all the images will be displayed */
 	private LinearLayout mCarouselContainer;
+	
+	/** Float */
 	private float initial_items = 4.5f;
 	private ProgressDialog pDialog;
 
@@ -57,6 +67,12 @@ public class ItemFragment extends SherlockFragment {
 
 	}
 
+	/** Description of myMethod(int a, String b)
+	 * 
+	 * @param a			Description of a
+	 * @param b			Description of b
+	 * @return			Description of c
+	 */
 	public ItemFragment(Product product) {
 		this.product = product;
 		urlArray = new ArrayList<String>();
@@ -70,6 +86,8 @@ public class ItemFragment extends SherlockFragment {
 				false);
 
 		mCarouselContainer = (LinearLayout) rootView.findViewById(R.id.carousel);
+		mainPicture = (ImageView) rootView.findViewById(R.id.iv_item_detail_page);
+		spSize = (Spinner) rootView.findViewById(R.id.sp_size);
 
 		Display display = ((WindowManager) getActivity().getSystemService(
 				getActivity().WINDOW_SERVICE)).getDefaultDisplay();
@@ -98,8 +116,6 @@ public class ItemFragment extends SherlockFragment {
 			setCarousel();
 		}
 
-		mainPicture = (ImageView) rootView.findViewById(R.id.iv_item_detail_page);
-		spSize = (Spinner) rootView.findViewById(R.id.sp_size);
 		sizeAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,
 				sizeArray);
 		spSize.setAdapter(sizeAdapter);

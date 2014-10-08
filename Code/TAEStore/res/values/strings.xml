@@ -89,12 +89,12 @@
         <item> Share</item>
     </array>
     <array name="nav_drawer_icons">
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
-        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_home</item>
+        <item>@drawable/ic_men</item>
+        <item>@drawable/ic_women</item>
+        <item>@drawable/ic_locator</item>
+        <item>@drawable/map_marker</item>
+        <item>@drawable/ic_share</item>
     </array>
 
     <string-array name="size_array">
