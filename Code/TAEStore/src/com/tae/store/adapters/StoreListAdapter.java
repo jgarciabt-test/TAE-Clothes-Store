@@ -20,11 +20,13 @@ public class StoreListAdapter extends BaseAdapter {
 	private Context context;
 	private ArrayList<Store> storeList;
 	private LayoutInflater mInflater;
+	private String unit;
 	
-	public StoreListAdapter(Context context, ArrayList<Store> storeList){
+	public StoreListAdapter(Context context, ArrayList<Store> storeList, String unit){
 		mInflater = (LayoutInflater) context
 				.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		this.storeList = storeList;
+		this.unit = unit;
 	}
 	
 	@Override
@@ -58,7 +60,7 @@ public class StoreListAdapter extends BaseAdapter {
         txtName.setText(store.getName());
         txtAddress.setText(store.getAddress()+","+store.getPostCode());
         txtOpening.setText(store.getOpeningHours());
-        txtDistance.setText(new DecimalFormat("##.##").format(store.getDistance())+" Mi");
+        txtDistance.setText(new DecimalFormat("##.##").format(store.getDistance())+unit);
 
         return convertView;
 

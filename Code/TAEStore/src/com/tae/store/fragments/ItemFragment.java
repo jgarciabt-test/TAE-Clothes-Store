@@ -6,7 +6,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -62,14 +64,25 @@ public class ItemFragment extends SherlockFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		
+		ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_item_details, null,
+				false);
 
-		ViewGroup rootView = (ViewGroup) inflater.inflate(
-				R.layout.fragment_item_details, null, false);
+		mCarouselContainer = (LinearLayout) rootView.findViewById(R.id.carousel);
 
-		mCarouselContainer = (LinearLayout) rootView
-				.findViewById(R.id.carousel);
+		
+		
+		Display display = ((WindowManager) getActivity().getSystemService(
+				getActivity().WINDOW_SERVICE)).getDefaultDisplay();
+
+		int orientation = display.getRotation();
+
+		if (orientation == Surface.ROTATION_90 || orientation == Surface.ROTATION_270) {
+			initial_items = 9.5f;
+		} else {
+			initial_items = 4.5f;
+		}
 
 		if (savedInstanceState == null) {
 			if (urlArray.isEmpty()) {
@@ -89,15 +102,11 @@ public class ItemFragment extends SherlockFragment {
 			setCarousel();
 		}
 
-		mainPicture = (ImageView) rootView
-				.findViewById(R.id.iv_item_detail_page);
+		mainPicture = (ImageView) rootView.findViewById(R.id.iv_item_detail_page);
 		spSize = (Spinner) rootView.findViewById(R.id.sp_size);
-		sizeAdapter = new ArrayAdapter<String>(
-				getActivity(),
-				android.R.layout.simple_spinner_item,
+		sizeAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item,
 				sizeArray);
 		spSize.setAdapter(sizeAdapter);
-		
 
 		Button btnAdd = (Button) rootView.findViewById(R.id.btn_add);
 		btnAdd.setOnClickListener(new OnClickListener() {
@@ -107,32 +116,24 @@ public class ItemFragment extends SherlockFragment {
 			}
 		});
 
-		Display display = ((WindowManager) getActivity().getSystemService(
-				getActivity().WINDOW_SERVICE)).getDefaultDisplay();
-
-		int orientation = display.getRotation();
-
-		if (orientation == Surface.ROTATION_90
-				|| orientation == Surface.ROTATION_270) {
-			//TODO fix it
-			initial_items = 8.5f;
-		} else {
-			initial_items = 4.5f;
-		}
-
 		Picasso.with(getActivity().getApplicationContext())
 				.load(ServerUrl.BASE_URL + ServerUrl.IMG + product.getUrl_pic())
-				.placeholder(R.drawable.ic_launcher).into(mainPicture);
+				.placeholder(getActivity().getResources().getDrawable(R.drawable.back))
+				.into(mainPicture);
 		return rootView;
 	}
-
+	
+	
+	
 	private void addProduct() {
 		if (BAG == null) {
 			BAG = new DatabaseHandler(getActivity());
 		}
 
-		BAG.addProduct(product,spSize.getSelectedItem().toString());
-		Toast.makeText(getActivity(), product.getName()+" "+getResources().getString(R.string.msg_added), Toast.LENGTH_SHORT).show();
+		BAG.addProduct(product, spSize.getSelectedItem().toString());
+		Toast.makeText(getActivity(),
+				product.getName() + " " + getResources().getString(R.string.msg_added),
+				Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
@@ -149,8 +150,7 @@ public class ItemFragment extends SherlockFragment {
 		// Compute the width of a carousel item based on the screen width and
 		// number of initial items.
 		final DisplayMetrics displayMetrics = new DisplayMetrics();
-		getActivity().getWindowManager().getDefaultDisplay()
-				.getMetrics(displayMetrics);
+		getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 		final int imageWidth = (int) (displayMetrics.widthPixels / initial_items);
 
 		// Populate the carousel with items
@@ -162,13 +162,11 @@ public class ItemFragment extends SherlockFragment {
 			// Set the shadow background
 			// imageItem.setBackgroundResource(R.drawable.shadow);
 
-			Picasso.with(getActivity())
-					.load(ServerUrl.BASE_URL + ServerUrl.IMG + urlArray.get(i))
+			Picasso.with(getActivity()).load(ServerUrl.BASE_URL + ServerUrl.IMG + urlArray.get(i))
 					.into(imageItem);
 
 			// Set the size of the image view to the previously computed value
-			imageItem.setLayoutParams(new LinearLayout.LayoutParams(imageWidth,
-					imageWidth));
+			imageItem.setLayoutParams(new LinearLayout.LayoutParams(imageWidth, imageWidth));
 			imageItem.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -187,33 +185,31 @@ public class ItemFragment extends SherlockFragment {
 	private void makeRequestPic() {
 
 		JsonArrayRequest request = new JsonArrayRequest(ServerUrl.BASE_URL
-				+ ServerUrl.GET_ALL_PIC_PROD + product.getId(),
-				new Listener<JSONArray>() {
-					public void onResponse(JSONArray response) {
+				+ ServerUrl.GET_ALL_PIC_PROD + product.getId(), new Listener<JSONArray>() {
+			public void onResponse(JSONArray response) {
 
-						try {
-							JSONObject obj = response.getJSONObject(0);
-							JSONArray array = (JSONArray) obj.get("pictures");
-							for (int i = 0; i < array.length(); i++) {
-								obj = array.getJSONObject(i);
-								urlArray.add(obj.getString("pic_url"));
-							}
-
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-
-						setCarousel();
-						pDialog.dismiss();
+				try {
+					JSONObject obj = response.getJSONObject(0);
+					JSONArray array = (JSONArray) obj.get("pictures");
+					for (int i = 0; i < array.length(); i++) {
+						obj = array.getJSONObject(i);
+						urlArray.add(obj.getString("pic_url"));
 					}
-				}, new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-						pDialog.dismiss();
-						VolleyLog.d("VOLLEY_ERROR",
-								"Error: " + error.getMessage());
-					}
-				});
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
+				setCarousel();
+				pDialog.dismiss();
+			}
+		}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				pDialog.dismiss();
+				VolleyLog.d("VOLLEY_ERROR", "Error: " + error.getMessage());
+			}
+		});
 
 		AppController.getInstance().addToRequestQueue(request);
 	}
@@ -221,31 +217,30 @@ public class ItemFragment extends SherlockFragment {
 	private void makeRequestSize() {
 
 		JsonArrayRequest request = new JsonArrayRequest(ServerUrl.BASE_URL
-				+ ServerUrl.GET_ALL_SIZE_PROD + product.getId(),
-				new Listener<JSONArray>() {
-					public void onResponse(JSONArray response) {
+				+ ServerUrl.GET_ALL_SIZE_PROD + product.getId(), new Listener<JSONArray>() {
+			public void onResponse(JSONArray response) {
 
-						try {
-							JSONObject obj = response.getJSONObject(0);
-							JSONArray array = (JSONArray) obj.get("sizes");
-							for (int i = 0; i < array.length(); i++) {
-								obj = array.getJSONObject(i);
-								sizeArray.add(obj.getString("size_name"));
-							}
+				try {
+					JSONObject obj = response.getJSONObject(0);
+					JSONArray array = (JSONArray) obj.get("sizes");
+					for (int i = 0; i < array.length(); i++) {
+						obj = array.getJSONObject(i);
+						sizeArray.add(obj.getString("size_name"));
+					}
 
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-						sizeAdapter.notifyDataSetChanged();
-					}
-				}, new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-						VolleyLog.d("VOLLEY_ERROR",
-								"Error: " + error.getMessage());
-					}
-				});
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				sizeAdapter.notifyDataSetChanged();
+			}
+		}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				VolleyLog.d("VOLLEY_ERROR", "Error: " + error.getMessage());
+			}
+		});
 
 		AppController.getInstance().addToRequestQueue(request);
 	}
+	
 }

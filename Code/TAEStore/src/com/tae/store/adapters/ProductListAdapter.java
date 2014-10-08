@@ -22,12 +22,12 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 	private ArrayList<Product> productList;
 	private LayoutInflater mInflater;
 
-	public ProductListAdapter(Context context,int textViewResourceId, ArrayList<Product> productList) {
+	public ProductListAdapter(Context context, int textViewResourceId,
+			ArrayList<Product> productList) {
 		super(context, textViewResourceId, productList);
 		this.context = context;
 		this.productList = productList;
-		mInflater = (LayoutInflater) context
-				.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+		mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 	}
 
 	@Override
@@ -51,18 +51,15 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 			convertView = mInflater.inflate(R.layout.product_item, null);
 		}
 
-		ImageView imgIcon = (ImageView) convertView
-				.findViewById(R.id.iv_product);
-		TextView txtName = (TextView) convertView
-				.findViewById(R.id.txt_prodName);
-		TextView txtPrice = (TextView) convertView
-				.findViewById(R.id.txt_prodPrice);
+		ImageView imgIcon = (ImageView) convertView.findViewById(R.id.iv_product);
+		TextView txtName = (TextView) convertView.findViewById(R.id.txt_prodName);
+		TextView txtPrice = (TextView) convertView.findViewById(R.id.txt_prodPrice);
 
 		Product prod = productList.get(position);
 		txtName.setText(prod.getName());
 		txtPrice.setText(String.valueOf(prod.getPrice()));
-		Picasso.with(context).load(ServerUrl.BASE_URL+ServerUrl.IMG+prod.getUrl_pic())
-				.placeholder(R.drawable.ic_launcher).into(imgIcon);
+		Picasso.with(context).load(ServerUrl.BASE_URL + ServerUrl.IMG + prod.getUrl_pic())
+				.placeholder(context.getResources().getDrawable(R.drawable.back)).into(imgIcon);
 
 		return convertView;
 	}

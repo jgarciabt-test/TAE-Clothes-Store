@@ -17,6 +17,10 @@ public class NoConnectionFragment extends SherlockFragment{
 	private String currentFragment;
 	private Fragment fragment;
 	
+	public NoConnectionFragment(){
+		
+	}
+	
 	public NoConnectionFragment(String currentFragment, Fragment fragment){
 		this.currentFragment = currentFragment;
 		this.fragment = fragment;

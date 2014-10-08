@@ -44,24 +44,11 @@ public class CategoryFragment extends SherlockListFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		ViewGroup rootView = (ViewGroup) inflater.inflate(
-				R.layout.category_list, null, false);
+		ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.category_list, null, false);
 
-//		if (savedInstanceState == null) {
-//			if (list.isEmpty()) {
-//				pDialog = new ProgressDialog(getActivity());
-//				pDialog.setMessage(getResources().getString(R.string.loading));
-//				pDialog.show();
-//				makeRequest();
-//			}
-//		} else {
-//			list = savedInstanceState.getParcelableArrayList("list");
-//		}
-		
-		if(savedInstanceState!=null){
+		if (savedInstanceState != null) {
 			list = savedInstanceState.getParcelableArrayList("list");
 			rootCategory = savedInstanceState.getString("category");
 		}
@@ -71,10 +58,8 @@ public class CategoryFragment extends SherlockListFragment {
 			pDialog.show();
 			makeRequest();
 		}
-		
 
-		TextView rootCat = (TextView) rootView
-				.findViewById(R.id.txt_category_list_title);
+		TextView rootCat = (TextView) rootView.findViewById(R.id.txt_category_list_title);
 		rootCat.setText(rootCategory);
 		adapter = new CategoryListAdapter(getActivity(), list);
 		setListAdapter(adapter);
@@ -95,47 +80,46 @@ public class CategoryFragment extends SherlockListFragment {
 		String catId = list.get(position).getId();
 		String catName = list.get(position).getName();
 		MainActivity.PRODUCT = catId;
-		MainActivity.replaceFragment(new ProductListFragment(catId, catName,
-				getActivity()), "PRODUCT_LIST_FRAGMENT", true);
+		MainActivity.replaceFragment(new ProductListFragment(catId, catName, getActivity()),
+				"PRODUCT_LIST_FRAGMENT", true);
 	}
 
 	private void makeRequest() {
 
-		rootCategory = MainActivity.ROOT_CATEGORY;
+		if (rootCategory == null) {
+			rootCategory = MainActivity.ROOT_CATEGORY;
+		}
 		JsonArrayRequest request = new JsonArrayRequest(ServerUrl.BASE_URL
-				+ ServerUrl.GET_CATEGORIES + rootCategory,
-				new Listener<JSONArray>() {
-					public void onResponse(JSONArray response) {
+				+ ServerUrl.GET_CATEGORIES + rootCategory, new Listener<JSONArray>() {
+			public void onResponse(JSONArray response) {
 
-						try {
-							JSONObject obj = response.getJSONObject(0);
-							JSONArray array = (JSONArray) obj.get("categories");
-							for (int i = 0; i < array.length(); i++) {
-								obj = array.getJSONObject(i);
-								Category cat = new Category();
-								cat.setId(obj.getString("cat_id"));
-								cat.setName(obj.getString("cat_name"));
-								cat.setLower_price(obj
-										.getString("cat_lowest_price"));
-								cat.setUrl_pic(obj.getString("pic_url"));
-								list.add(cat);
-							}
-
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-
-						adapter.notifyDataSetChanged();
-						pDialog.dismiss();
+				try {
+					JSONObject obj = response.getJSONObject(0);
+					JSONArray array = (JSONArray) obj.get("categories");
+					for (int i = 0; i < array.length(); i++) {
+						obj = array.getJSONObject(i);
+						Category cat = new Category();
+						cat.setId(obj.getString("cat_id"));
+						cat.setName(obj.getString("cat_name"));
+						cat.setLower_price(obj.getString("cat_lowest_price"));
+						cat.setUrl_pic(obj.getString("pic_url"));
+						list.add(cat);
 					}
-				}, new Response.ErrorListener() {
-					@Override
-					public void onErrorResponse(VolleyError error) {
-						pDialog.dismiss();
-						VolleyLog.d("VOLLEY_ERROR",
-								"Error: " + error.getMessage());
-					}
-				});
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
+				adapter.notifyDataSetChanged();
+				pDialog.dismiss();
+			}
+		}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				pDialog.dismiss();
+				VolleyLog.d("VOLLEY_ERROR", "Error: " + error.getMessage());
+			}
+		});
 
 		AppController.getInstance().addToRequestQueue(request);
 	}

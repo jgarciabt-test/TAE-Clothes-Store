@@ -69,7 +69,7 @@ public class BagListAdapter extends BaseAdapter {
 				+ new DecimalFormat("##.##").format(prod.getPrice()));
 		txtSize.setText(prod.getSize());
 		Picasso.with(context)
-				.load(ServerUrl.BASE_URL + ServerUrl.IMG + prod.getUrl_pic())
+				.load(ServerUrl.BASE_URL + ServerUrl.IMG + prod.getUrl_pic()).placeholder(context.getResources().getDrawable(R.drawable.back))
 				.into(imgIcon);
 		
 		Log.v("BAG_ADAPTER_PIC", ServerUrl.BASE_URL + ServerUrl.IMG + prod.getUrl_pic());

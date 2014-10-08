@@ -1,0 +1,72 @@
+package com.tae.store.fragments;
+
+import java.util.ArrayList;
+
+import android.app.ProgressDialog;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.tae.store.MainActivity;
+import com.tae.store.R;
+import com.tae.store.adapters.StoreListAdapter;
+import com.tae.store.model.Store;
+import com.tae.store.utilities.SPTags;
+
+public class StoreListFragment extends SherlockListFragment {
+
+	private ArrayList<Store> list = new ArrayList<Store>();
+	private ProgressDialog pDialog;
+
+	public StoreListFragment(ArrayList<Store> list) {
+		this.list = list;
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+
+		ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.store_list,
+				null, false);
+
+		if (savedInstanceState != null){
+			list = savedInstanceState.getParcelableArrayList("list");
+		} 
+		if (list.size() == 0) {
+			pDialog = new ProgressDialog(getActivity());
+			pDialog.setMessage(getResources().getString(R.string.loading));
+			makeRequest();
+		}
+
+		String unit;
+		SharedPreferences preferences = getActivity().getPreferences(getActivity().MODE_PRIVATE);
+		if(preferences.getInt(SPTags.UNIT, 0) ==0){
+			unit = " Mi";
+		} else{
+			unit = " Km";
+		}
+		
+		StoreListAdapter adapter = new StoreListAdapter(getActivity(), list, unit);
+		setListAdapter(adapter);
+		return rootView;
+	}
+
+	
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		
+		MainActivity.replaceFragment(new StoreFragment(list.get(position)), "STORE_FRAGMENT", true);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+
+		outState.putParcelableArrayList("list", list);
+	}
+}

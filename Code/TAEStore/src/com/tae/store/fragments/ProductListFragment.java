@@ -60,6 +60,7 @@ public class ProductListFragment extends SherlockFragment {
 		context = getActivity().getApplicationContext();
 		if (savedInstanceState != null) {
 			list = savedInstanceState.getParcelableArrayList("list");
+			categoryTitle = savedInstanceState.getString("categoryTitle");
 		}
 		
 		if (list.size() == 0) {
@@ -80,12 +81,10 @@ public class ProductListFragment extends SherlockFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				//Log.v("ITEM", "pressed: "+position);
 				MainActivity.replaceFragment(new ItemFragment(list.get(position)), "ITEM_DETAIL_FRAGMENT", true);
 			}
-
 	    });
-	
+		
 		return rootView;
 	}
 
@@ -93,12 +92,12 @@ public class ProductListFragment extends SherlockFragment {
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putParcelableArrayList("list", list);
+		outState.putString("categoryTitle", categoryTitle);
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-
 	}
 
 	@Override

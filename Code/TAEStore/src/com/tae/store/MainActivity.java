@@ -81,11 +81,9 @@ public class MainActivity extends SherlockFragmentActivity {
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerLayout.openDrawer(Gravity.START);
 		mDrawerLayout.closeDrawer(Gravity.START);
-		
-		
+
 		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
-		navMenuIcons = getResources()
-				.obtainTypedArray(R.array.nav_drawer_icons);
+		navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
 
 		navDrawerItems = new ArrayList<NavDrawerItem>();
 		for (int i = 0; i < navMenuTitles.length; i++) {
@@ -95,8 +93,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		navMenuIcons.recycle();
 
 		mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
-		adapter = new NavDrawerListAdapter(getApplicationContext(),
-				navDrawerItems);
+		adapter = new NavDrawerListAdapter(getApplicationContext(), navDrawerItems);
 		mDrawerList.setAdapter(adapter);
 
 		// Enabling action bar app icon and behaving it as toggle button
@@ -104,11 +101,10 @@ public class MainActivity extends SherlockFragmentActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setIcon(R.drawable.ic_drawer);
-		getSupportActionBar().setBackgroundDrawable(
-				new ColorDrawable(Color.parseColor("#b40909")));
+		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#b40909")));
 
-		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-				R.drawable.ic_drawer, R.string.app_name, R.string.main_menu) {
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer,
+				R.string.app_name, R.string.main_menu) {
 			public void onDrawerClosed(View view) {
 				getActionBar().setTitle("Cadena 1");
 				// calling onPrepareOptionsMenu() to show action bar icons
@@ -131,8 +127,7 @@ public class MainActivity extends SherlockFragmentActivity {
 			// Restore the fragment's instance
 			currentFragment = savedInstanceState.getString("currentFragment");
 			Log.v("Stack", "Current fragment: " + currentFragment);
-			fragment = fragmentManager.getFragment(savedInstanceState,
-					currentFragment);
+			fragment = fragmentManager.getFragment(savedInstanceState, currentFragment);
 			Log.v("Stack", "fragment: " + fragment.toString());
 			replaceFragment(fragment, currentFragment, false);
 			// backStackFragment = savedInstanceState
@@ -141,12 +136,9 @@ public class MainActivity extends SherlockFragmentActivity {
 			// Load first fragment
 			backStackFragment = new ArrayList<String>();
 
-			ArrayList<Category> men = prev_screen
-					.getParcelableArrayListExtra("men");
-			ArrayList<Category> women = prev_screen
-					.getParcelableArrayListExtra("women");
-			ArrayList<Product> offers = prev_screen
-					.getParcelableArrayListExtra("offer");
+			ArrayList<Category> men = prev_screen.getParcelableArrayListExtra("men");
+			ArrayList<Category> women = prev_screen.getParcelableArrayListExtra("women");
+			ArrayList<Product> offers = prev_screen.getParcelableArrayListExtra("offer");
 
 			fragment = new HomeFragment(this, men, women, offers);
 			addFragment(fragment, "HOME_FRAGMENT");
@@ -158,14 +150,12 @@ public class MainActivity extends SherlockFragmentActivity {
 		this.registerReceiver(netReceiver, filter);
 
 		// Network status
-		Intent intent = new Intent(getApplicationContext(),
-				NetworkCheckService.class);
+		Intent intent = new Intent(getApplicationContext(), NetworkCheckService.class);
 		startService(intent);
 
 		// PayPal configuration
 		Intent paypalIntent = new Intent(this, PayPalService.class);
-		paypalIntent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,
-				PayPalUtil.config);
+		paypalIntent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, PayPalUtil.config);
 		startService(paypalIntent);
 
 	}
@@ -180,7 +170,7 @@ public class MainActivity extends SherlockFragmentActivity {
 				mDrawerLayout.openDrawer(mDrawerList);
 			}
 		}
-		if(item.getItemId() == R.id.option_bag){
+		if (item.getItemId() == R.id.option_bag) {
 			replaceFragment(new BagFragment(), "BAG_FRAGMENT", true);
 		}
 		return super.onOptionsItemSelected(item);
@@ -193,7 +183,7 @@ public class MainActivity extends SherlockFragmentActivity {
 
 		return true;
 	}
-	
+
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// if nav drawer is opened, hide the action items
@@ -218,29 +208,25 @@ public class MainActivity extends SherlockFragmentActivity {
 
 	private void addFragment(Fragment fragment, String tag) {
 		if (fragment != null) {
-			fragmentManager.beginTransaction()
-					.add(R.id.frame_container, fragment).commit();
+			fragmentManager.beginTransaction().add(R.id.frame_container, fragment).commit();
 			currentFragment = tag;
 			backStackFragment.add(currentFragment);
 		}
 	}
 
-	static public void replaceFragment(Fragment fragment, String tag,
-			boolean backStack) {
+	static public void replaceFragment(Fragment fragment, String tag, boolean backStack) {
 		if (fragment != null) {
 			currentFragment = tag;
 			MainActivity.fragment = fragment;
 			if (backStack) {
-				fragmentManager.beginTransaction()
-						.replace(R.id.frame_container, fragment, tag)
+				fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, tag)
 						.addToBackStack(null).commit();
 
 			} else {
-				fragmentManager.beginTransaction()
-						.replace(R.id.frame_container, fragment, tag).commit();
+				fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, tag)
+						.commit();
 			}
-			if (!backStackFragment.get(backStackFragment.size() - 1).matches(
-					currentFragment)) {
+			if (!backStackFragment.get(backStackFragment.size() - 1).matches(currentFragment)) {
 				backStackFragment.add(currentFragment);
 			}
 		}
@@ -260,12 +246,9 @@ public class MainActivity extends SherlockFragmentActivity {
 		String fragmentName = "";
 		switch (position) {
 		case 0:
-			ArrayList<Category> men = getIntent().getParcelableArrayListExtra(
-					"men");
-			ArrayList<Category> women = getIntent()
-					.getParcelableArrayListExtra("women");
-			ArrayList<Product> offers = getIntent()
-					.getParcelableArrayListExtra("offer");
+			ArrayList<Category> men = getIntent().getParcelableArrayListExtra("men");
+			ArrayList<Category> women = getIntent().getParcelableArrayListExtra("women");
+			ArrayList<Product> offers = getIntent().getParcelableArrayListExtra("offer");
 
 			fragment = new HomeFragment(this, men, women, offers);
 			fragmentName = "HOME_FRAGMENT";
@@ -287,8 +270,16 @@ public class MainActivity extends SherlockFragmentActivity {
 			fragment = new MyTaeFragment();
 			fragmentName = "MY_TAE_FARGMENT";
 			break;
-		case 6:
+		case 5:
 
+			String shareBody = getResources().getString(R.string.share_body);
+			Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+			sharingIntent.setType("text/plain");
+			sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getResources().getString(R.string.share_subjet));
+			sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+			startActivity(Intent.createChooser(sharingIntent,
+					getResources().getString(R.string.share_with)));
+			return;
 		default:
 			break;
 		}
@@ -299,11 +290,9 @@ public class MainActivity extends SherlockFragmentActivity {
 		mDrawerLayout.closeDrawer(mDrawerList);
 	}
 
-	private class SlideMenuClickListener implements
-			ListView.OnItemClickListener {
+	private class SlideMenuClickListener implements ListView.OnItemClickListener {
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position,
-				long id) {
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			// display view for selected nav drawer item
 			displayView(position);
 		}
@@ -314,8 +303,7 @@ public class MainActivity extends SherlockFragmentActivity {
 		if (backStackFragment.size() > 1) {
 			backStackFragment.remove(backStackFragment.size() - 1);
 
-			currentFragment = backStackFragment
-					.get(backStackFragment.size() - 1);
+			currentFragment = backStackFragment.get(backStackFragment.size() - 1);
 			fragment = fragmentManager.findFragmentByTag(currentFragment);
 		} else {
 			finish();
@@ -343,15 +331,14 @@ public class MainActivity extends SherlockFragmentActivity {
 				db.deleteAll();
 
 				Toast.makeText(getApplicationContext(),
-						"PaymentConfirmation info received from PayPal",
-						Toast.LENGTH_LONG).show();
+						"PaymentConfirmation info received from PayPal", Toast.LENGTH_LONG).show();
 
 				((BagFragment) fragment).cleanScreen();
 			}
 		} else if (resultCode == Activity.RESULT_CANCELED) {
-			//TODO
+			// TODO
 		} else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
-			
+
 		}
 	}
 
@@ -360,28 +347,23 @@ public class MainActivity extends SherlockFragmentActivity {
 		@Override
 		public void onReceive(Context arg0, Intent arg1) {
 			try {
-				// limiting the double value to four decimal places for
-				// consistent display
 				String st = arg1.getStringExtra("networkstatus");
-				if (st.equals("Not connected to Internet")
-						&& (currentFragment != "NO_CONNECTION")) {
-					replaceFragment(new NoConnectionFragment(currentFragment,
-							fragment), "NO_CONNECTION", false);
+				if (st.equals("Not connected to Internet") && (currentFragment != "NO_CONNECTION")) {
+					replaceFragment(new NoConnectionFragment(currentFragment, fragment),
+							"NO_CONNECTION", false);
 				}
 			}
 
 			catch (Exception e) {
 				Log.e("error", e.toString());
-				Toast.makeText(getApplicationContext(),
-						"Exception in reading status data", Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(getApplicationContext(), "Exception in reading status data",
+						Toast.LENGTH_SHORT).show();
 			}
 
 		}
 	}
 
 	public void makeToast(String text) {
-		Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT)
-				.show();
+		Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
 	}
 }

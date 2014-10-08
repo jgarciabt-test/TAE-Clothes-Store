@@ -4,5 +4,5 @@
     android:layout_height="match_parent"
     android:id="@android:id/list"
     android:divider="#000000"
-    android:dividerHeight="4dp" >
+    android:dividerHeight="2dp" >
 </ListView>

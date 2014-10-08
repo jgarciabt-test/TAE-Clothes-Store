@@ -61,7 +61,7 @@ public class SlidePageFragment extends SherlockFragment {
         if(mainPic){
         	picture.setImageDrawable(getResources().getDrawable(resourceId));
         } else{
-        	Picasso.with(getActivity().getApplicationContext()).load(ServerUrl.BASE_URL+ServerUrl.IMG+url).placeholder(R.drawable.ic_launcher).into(picture);
+        	Picasso.with(getActivity().getApplicationContext()).load(ServerUrl.BASE_URL+ServerUrl.IMG+url).placeholder(getActivity().getResources().getDrawable(R.drawable.back)).into(picture);
         }
 
         return rootView;

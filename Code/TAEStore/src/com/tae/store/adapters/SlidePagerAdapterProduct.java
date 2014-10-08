@@ -45,4 +45,9 @@ public class SlidePagerAdapterProduct extends FragmentStatePagerAdapter {
 	public int getCount() {
 		return num_pages;
 	}
+	
+	@Override
+	public int getItemPosition(Object object) {
+	    return POSITION_NONE;
+	}
 }
