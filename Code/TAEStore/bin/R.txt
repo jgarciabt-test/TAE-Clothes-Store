@@ -493,7 +493,6 @@ int id header2 0x7f04004a
 int id homeAsUp 0x7f04000e
 int id hybrid 0x7f040008
 int id icon 0x7f040046
-int id imageView1 0x7f040099
 int id indicator1 0x7f04005b
 int id indicator2 0x7f04005e
 int id indicator3 0x7f040061
@@ -502,6 +501,7 @@ int id iv_category 0x7f04003e
 int id iv_item_detail_page 0x7f040062
 int id iv_product 0x7f040094
 int id iv_slide_pager 0x7f040084
+int id iv_splash 0x7f040099
 int id iv_store_map_logo 0x7f040043
 int id linearLayout1 0x7f040072
 int id listMode 0x7f04000a

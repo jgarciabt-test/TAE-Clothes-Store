@@ -13,6 +13,7 @@ public final class R {
         public static final int distance_units=0x7f0b0004;
         public static final int nav_drawer_icons=0x7f0b0001;
         /**  Right Menu elements 
+ Right Menu elements 
          */
         public static final int nav_drawer_items=0x7f0b0000;
         public static final int size_array=0x7f0b0002;
@@ -1562,7 +1563,6 @@ containing a value of this type.
         public static final int homeAsUp=0x7f04000e;
         public static final int hybrid=0x7f040008;
         public static final int icon=0x7f040046;
-        public static final int imageView1=0x7f040099;
         public static final int indicator1=0x7f04005b;
         public static final int indicator2=0x7f04005e;
         public static final int indicator3=0x7f040061;
@@ -1571,6 +1571,7 @@ containing a value of this type.
         public static final int iv_item_detail_page=0x7f040062;
         public static final int iv_product=0x7f040094;
         public static final int iv_slide_pager=0x7f040084;
+        public static final int iv_splash=0x7f040099;
         public static final int iv_store_map_logo=0x7f040043;
         public static final int linearLayout1=0x7f040072;
         public static final int listMode=0x7f04000a;
@@ -1897,6 +1898,7 @@ containing a value of this type.
         public static final int preferences_title=0x7f0a0065;
         public static final int preferences_units=0x7f0a0067;
         /**  Screen Titles 
+ Screen Titles 
          */
         public static final int screen_store=0x7f0a0071;
         public static final int server_error=0x7f0a0062;

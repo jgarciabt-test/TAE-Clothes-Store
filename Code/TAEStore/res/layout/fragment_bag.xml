@@ -113,7 +113,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="7dp"
             android:text="@string/bag_qty"
             android:textColor="#888888"
             android:textSize="20sp" />
@@ -124,7 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/textView1"
             android:layout_below="@id/textView1"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="7dp"
             android:text="@string/bag_order_value"
             android:textColor="#888888"
             android:textSize="20sp" />
@@ -135,7 +135,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@id/textView2"
             android:layout_below="@id/textView2"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="7dp"
             android:text="@string/bag_shipping"
             android:textColor="#888888"
             android:textSize="20sp" />

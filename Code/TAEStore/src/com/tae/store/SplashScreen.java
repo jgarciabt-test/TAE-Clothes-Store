@@ -6,12 +6,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import roboguice.activity.RoboActivity;
+import roboguice.inject.InjectView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 
-import com.actionbarsherlock.app.SherlockActivity;
 import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
@@ -22,25 +24,44 @@ import com.tae.store.model.Category;
 import com.tae.store.model.Product;
 import com.tae.store.utilities.ServerUrl;
 
-public class SplashScreen extends SherlockActivity {
 
+/** Acts like Splash screen. It does server request */
+public class SplashScreen extends RoboActivity {
+
+	/** Dialog used in case that server connection fails */
 	AlertDialog aDialog;
+	/** Store Category objects passed by the server */
 	private final ArrayList<Category> menCategories = new ArrayList<Category>();
+	/** Store Category objects passed by the server */
 	private final ArrayList<Category> womenCategories = new ArrayList<Category>();
+	/** Store Product object passed by the server */
 	private final ArrayList<Product> offerProducts = new ArrayList<Product>();
+	/** Intent to start <i>MainActivity</i> with the ArrayLists <i>menCategories</i>, <i> womenCategories</i> and <i>offerProducts</i>*/
 	private Intent i;
 	
+	@InjectView(R.id.iv_splash)
+	private ImageView logo;
+
 	
+	/** Create the Activity and do the request to the server
+	 * 
+	 * */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.splashscreen);
-		getSupportActionBar().hide();
+		getActionBar().hide();
 
-		i = new Intent(SplashScreen.this, MainActivity.class);;
-		 makeRequestCategories();
+		logo.setImageDrawable(getResources().getDrawable(R.drawable.app_name_red));
+		i = new Intent(SplashScreen.this, MainActivity.class);
+
+		makeRequestCategories();
 	}
 
+	/** 
+	 * Make a request to the server to get all the categories for Men and Women using volley.
+	 * If the request fails an AlertDialog will be displayed with a message and will close the app
+	 */
 	private void makeRequestCategories() {
 
 		JsonArrayRequest request = new JsonArrayRequest(ServerUrl.BASE_URL
@@ -53,7 +74,7 @@ public class SplashScreen extends SherlockActivity {
 						obj = array.getJSONObject(i);
 						Category cat = new Category();
 						cat.setId(obj.getString("cat_id"));
-						cat.setName(obj.getString("cat_name"));	
+						cat.setName(obj.getString("cat_name"));
 						cat.setMain_cat(obj.getString("cat_main_cat"));
 						cat.setLower_price(obj.getString("cat_lowest_price"));
 						cat.setUrl_pic(obj.getString("pic_url"));
@@ -73,17 +94,14 @@ public class SplashScreen extends SherlockActivity {
 			@Override
 			public void onErrorResponse(VolleyError error) {
 				VolleyLog.d("VOLLEY_ERROR", "Error: " + error.getMessage());
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						SplashScreen.this);
+				AlertDialog.Builder builder = new AlertDialog.Builder(SplashScreen.this);
 				builder.setMessage(getResources().getString(R.string.error_loading))
 						.setCancelable(false)
-						.setPositiveButton("OK",
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int id) {
-										finish();
-									}
-								});
+						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								finish();
+							}
+						});
 				AlertDialog alert = builder.create();
 				alert.show();
 			}
@@ -91,7 +109,11 @@ public class SplashScreen extends SherlockActivity {
 
 		AppController.getInstance().addToRequestQueue(request);
 	}
-	
+
+	/** 
+	 * Make a request to the server to get all the products in offer using volley.
+	 * If the request fails an AlertDialog will be displayed with a message and will close the app
+	 */
 	private void makeRequestOffer() {
 
 		JsonArrayRequest request = new JsonArrayRequest(ServerUrl.BASE_URL
@@ -132,17 +154,14 @@ public class SplashScreen extends SherlockActivity {
 			@Override
 			public void onErrorResponse(VolleyError error) {
 				VolleyLog.d("VOLLEY_ERROR", "Error: " + error.getMessage());
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						SplashScreen.this);
+				AlertDialog.Builder builder = new AlertDialog.Builder(SplashScreen.this);
 				builder.setMessage(getResources().getString(R.string.error_loading))
 						.setCancelable(false)
-						.setPositiveButton("OK",
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int id) {
-										finish();
-									}
-								});
+						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								finish();
+							}
+						});
 				AlertDialog alert = builder.create();
 				alert.show();
 			}

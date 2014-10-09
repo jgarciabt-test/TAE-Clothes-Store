@@ -13,6 +13,6 @@
         android:layout_gravity="center"
         android:adjustViewBounds="true"
         android:contentDescription="@string/app_name"
-        android:scaleType="fitStart" />
+        android:scaleType="fitXY" />
 
 </LinearLayout>

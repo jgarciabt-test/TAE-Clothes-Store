@@ -6,9 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -174,7 +172,7 @@ public class ItemFragment extends SherlockFragment {
 
 			Picasso.with(getActivity()).load(ServerUrl.BASE_URL + ServerUrl.IMG + urlArray.get(i))
 					.into(imageItem);
-
+			
 			// Set the size of the image view to the previously computed value
 			imageItem.setLayoutParams(new LinearLayout.LayoutParams(imageWidth, imageWidth));
 			imageItem.setOnClickListener(new OnClickListener() {

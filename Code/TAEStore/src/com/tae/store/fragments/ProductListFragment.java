@@ -93,7 +93,7 @@ public class ProductListFragment extends SherlockFragment {
 	private void makeRequest() {
 
 		if (categoryId == null) {
-			categoryId = MainActivity.PRODUCT;
+			categoryId = MainActivity.CATEGORY;
 		}
 
 		JsonArrayRequest request = new JsonArrayRequest(ServerUrl.BASE_URL

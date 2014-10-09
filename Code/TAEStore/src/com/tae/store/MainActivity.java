@@ -45,31 +45,58 @@ import com.tae.store.model.Product;
 import com.tae.store.utilities.NetworkCheckService;
 import com.tae.store.utilities.PayPalUtil;
 
+/**
+ * Main activity where all the fragment will be placed. Manage the screen
+ * rotation and the back button feature to allow the user navigate through the
+ * app.
+ * 
+ * @author Jose Garcia
+ * @version 1.0
+ * @since 2014-10-08
+ */
 @SuppressLint({ "InlinedApi", "NewApi" })
 public class MainActivity extends SherlockFragmentActivity {
 
 	// Fragments
 	static public FragmentManager fragmentManager;
+	/** Store the tag of the current fragment showed */
 	static private String currentFragment;
+	/** Store the current fragment showed */
 	static public Fragment fragment;
+	/** Store the fragment's back stack tags */
 	static public ArrayList<String> backStackFragment;
+	/** Store the root category (men or women) */
 	static public String ROOT_CATEGORY;;
-	static public String PRODUCT;
+	/** Store the category ID */
+	static public String CATEGORY;
 
 	// Slide Pager
-	static public HashMap<String, Fragment> fragmentMap;
+	// static public HashMap<String, Fragment> fragmentMap;
 
+	/** Continuous network checker */
 	private NetworkCheckReceiver netReceiver;
 
 	// Slide Menu
+	/** Drawer menu */
 	private DrawerLayout mDrawerLayout;
+	/** List where the menu elements will be placed */
 	private ListView mDrawerList;
+	/**  */
 	private ActionBarDrawerToggle mDrawerToggle;
+	/** Adapter for the menu elements */
 	private NavDrawerListAdapter adapter;
+	/** Array to store the titles of the menu's elements */
 	private String[] navMenuTitles;
+	/** Array to store the icons of the menu's elements */
 	private TypedArray navMenuIcons;
+	/** Array to store <i>NavDraweItem</i> for the menu */
 	private ArrayList<NavDrawerItem> navDrawerItems;
 
+	/**
+	 * Create the menu, customize the action bar and launch the services for
+	 * PayPal and Network Checker.
+	 * 
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -106,36 +133,29 @@ public class MainActivity extends SherlockFragmentActivity {
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer,
 				R.string.app_name, R.string.main_menu) {
 			public void onDrawerClosed(View view) {
-				getActionBar().setTitle("Cadena 1");
-				// calling onPrepareOptionsMenu() to show action bar icons
+				getActionBar().setTitle("");
 				invalidateOptionsMenu();
 			}
 
-			// TODO check
 			public void onDrawerOpened(View drawerView) {
-				getActionBar().setTitle("Cadena 2");
-				// calling onPrepareOptionsMenu() to hide action bar icons
+				getActionBar().setTitle("");
 				invalidateOptionsMenu();
 			}
-
 		};
-
 		mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
 
 		fragmentManager = getSupportFragmentManager();
 		if (savedInstanceState != null) {
 			// Restore the fragment's instance
 			currentFragment = savedInstanceState.getString("currentFragment");
-			Log.v("Stack", "Current fragment: " + currentFragment);
+			// Log.v("Stack", "Current fragment: " + currentFragment);
 			fragment = fragmentManager.getFragment(savedInstanceState, currentFragment);
-			Log.v("Stack", "fragment: " + fragment.toString());
+			// Log.v("Stack", "fragment: " + fragment.toString());
 			replaceFragment(fragment, currentFragment, false);
-			// backStackFragment = savedInstanceState
-			// .getStringArrayList("backStackFragment");
 		} else {
 			// Load first fragment
 			backStackFragment = new ArrayList<String>();
-
+			// Get the data previously requested to the server, from the intent
 			ArrayList<Category> men = prev_screen.getParcelableArrayListExtra("men");
 			ArrayList<Category> women = prev_screen.getParcelableArrayListExtra("women");
 			ArrayList<Product> offers = prev_screen.getParcelableArrayListExtra("offer");
@@ -144,6 +164,7 @@ public class MainActivity extends SherlockFragmentActivity {
 			addFragment(fragment, "HOME_FRAGMENT");
 		}
 
+		// Create the network checker
 		netReceiver = new NetworkCheckReceiver();
 		IntentFilter filter = new IntentFilter();
 		filter.addAction("statusUpdate");
@@ -160,6 +181,10 @@ public class MainActivity extends SherlockFragmentActivity {
 
 	}
 
+	/**
+	 * Manage the actions to perform when the user press one icon on the action
+	 * bar.
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -178,34 +203,35 @@ public class MainActivity extends SherlockFragmentActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// getMenuInflater().inflate(R.menu.main, menu);
 		getSupportMenuInflater().inflate(R.menu.main, menu);
-
 		return true;
 	}
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		// if nav drawer is opened, hide the action items
-		// boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-		// menu.findItem(R.id.option1).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
-		// Sync the toggle state after onRestoreInstanceState has occurred.
 		mDrawerToggle.syncState();
 	}
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-		// Pass any configuration change to the drawer toggles
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
 
+	/**
+	 * Add one fragment to the activity.
+	 * 
+	 * @param fragment
+	 *            Fragment that will be added.
+	 * @param tag
+	 *            Tag associated to the fragment.
+	 */
 	private void addFragment(Fragment fragment, String tag) {
 		if (fragment != null) {
 			fragmentManager.beginTransaction().add(R.id.frame_container, fragment).commit();
@@ -214,6 +240,18 @@ public class MainActivity extends SherlockFragmentActivity {
 		}
 	}
 
+	/**
+	 * Replace the current fragment with the fragment passed as parameter. This
+	 * method is static to allow other fragment change themselves. Add to
+	 * <i>backStackFragment<i> the tag passed as parameter.
+	 * 
+	 * @param fragment
+	 *            Fragment that will be displayed.
+	 * @param tag
+	 *            Tag associated to the fragment.
+	 * @param backStack
+	 *            True if the fragment will be added to the back stack.
+	 */
 	static public void replaceFragment(Fragment fragment, String tag, boolean backStack) {
 		if (fragment != null) {
 			currentFragment = tag;
@@ -238,10 +276,17 @@ public class MainActivity extends SherlockFragmentActivity {
 		outState.putStringArrayList("backstackFragment", backStackFragment);
 		outState.putString("currentFragment", currentFragment);
 		fragmentManager.putFragment(outState, currentFragment, fragment);
-		Log.v("Stack", "onSaveInstance: " + currentFragment);
-
+		// Log.v("Stack", "onSaveInstance: " + currentFragment);
 	}
 
+	/**
+	 * Change the fragment displayed on the activity according the parameter
+	 * received. This method is called each time that the user press a button on
+	 * the menu.
+	 * 
+	 * @param position
+	 *            Position of the element tapped on the menu.
+	 */
 	public void displayView(int position) {
 		String fragmentName = "";
 		switch (position) {
@@ -271,11 +316,12 @@ public class MainActivity extends SherlockFragmentActivity {
 			fragmentName = "MY_TAE_FARGMENT";
 			break;
 		case 5:
-
+			// Share
 			String shareBody = getResources().getString(R.string.share_body);
 			Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
 			sharingIntent.setType("text/plain");
-			sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getResources().getString(R.string.share_subjet));
+			sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,
+					getResources().getString(R.string.share_subjet));
 			sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
 			startActivity(Intent.createChooser(sharingIntent,
 					getResources().getString(R.string.share_with)));
@@ -290,30 +336,43 @@ public class MainActivity extends SherlockFragmentActivity {
 		mDrawerLayout.closeDrawer(mDrawerList);
 	}
 
+	/**
+	 * Private class that implements OnItemClickListener interface for the menu.
+	 * 
+	 * @author Jose Garcia
+	 * @version 1.0
+	 * @since 2014-10-08
+	 */
 	private class SlideMenuClickListener implements ListView.OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			// display view for selected nav drawer item
 			displayView(position);
 		}
 	}
 
+	/**
+	 * This method is called each time that the user press back button. Remove
+	 * the last element of <i>backStackFragment</i> or finish the app if there's
+	 * not elements to remove.
+	 */
 	@Override
 	public void onBackPressed() {
 		if (backStackFragment.size() > 1) {
-			Log.v("BACK", "Current fragment before remove: "+currentFragment);
-			Log.v("BACK", backStackFragment.toString());
+			// Log.v("BACK", "Current fragment before remove: " +
+			// currentFragment);
+			// Log.v("BACK", backStackFragment.toString());
 			backStackFragment.remove(backStackFragment.size() - 1);
 
 			currentFragment = backStackFragment.get(backStackFragment.size() - 1);
 			fragment = fragmentManager.findFragmentByTag(currentFragment);
-			
-			Log.v("BACK", "Current fragment after remove: "+currentFragment);
-			Log.v("BACK", backStackFragment.toString());
+
+			// Log.v("BACK", "Current fragment after remove: " +
+			// currentFragment);
+			// Log.v("BACK", backStackFragment.toString());
 		} else {
 			finish();
 		}
-		Log.v("Stack", "onBackPressed: " + currentFragment);
+		// Log.v("Stack", "onBackPressed: " + currentFragment);
 		super.onBackPressed();
 	}
 
@@ -325,9 +384,15 @@ public class MainActivity extends SherlockFragmentActivity {
 		super.onDestroy();
 	}
 
+	/**
+	 * This method manage the action to perform according the parameters
+	 * received when <i>StartActivityForResult</i> is called. It's needed
+	 * override this method to manage the response given by PayPal.
+	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.i("PayPal", "onActivityResult: " + requestCode + " : " + resultCode);
+		// Log.i("PayPal", "onActivityResult: " + requestCode + " : " +
+		// resultCode);
 		if (resultCode == Activity.RESULT_OK) {
 			PaymentConfirmation confirm = data
 					.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
@@ -341,12 +406,21 @@ public class MainActivity extends SherlockFragmentActivity {
 				((BagFragment) fragment).cleanScreen();
 			}
 		} else if (resultCode == Activity.RESULT_CANCELED) {
-			// TODO
+
 		} else if (resultCode == PaymentActivity.RESULT_EXTRAS_INVALID) {
 
 		}
 	}
 
+	/**
+	 * BroadcastReveiver that, in case there's not Internet, display the
+	 * respective fragment to alert to the user that he needs an Internet
+	 * connection to continue using the app.
+	 * 
+	 * @author Jose Garcia
+	 * @version 1.0
+	 * @since 2014-10-08
+	 */
 	class NetworkCheckReceiver extends BroadcastReceiver {
 
 		@Override
@@ -366,9 +440,5 @@ public class MainActivity extends SherlockFragmentActivity {
 			}
 
 		}
-	}
-
-	public void makeToast(String text) {
-		Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
 	}
 }

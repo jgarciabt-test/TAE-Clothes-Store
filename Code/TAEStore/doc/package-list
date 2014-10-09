@@ -1,0 +1,10 @@
+com.actionbarsherlock
+com.google.android.gms
+com.tae.store
+com.tae.store.adapters
+com.tae.store.app
+com.tae.store.fragments
+com.tae.store.helpers
+com.tae.store.model
+com.tae.store.utilities
+com.viewpagerindicator

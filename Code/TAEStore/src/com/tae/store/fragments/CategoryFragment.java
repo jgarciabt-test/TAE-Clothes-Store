@@ -79,7 +79,7 @@ public class CategoryFragment extends SherlockListFragment {
 		super.onListItemClick(l, v, position, id);
 		String catId = list.get(position).getId();
 		String catName = list.get(position).getName();
-		MainActivity.PRODUCT = catId;
+		MainActivity.CATEGORY = catId;
 		MainActivity.replaceFragment(new ProductListFragment(catId, catName, getActivity()),
 				"PRODUCT_LIST_FRAGMENT", true);
 	}
