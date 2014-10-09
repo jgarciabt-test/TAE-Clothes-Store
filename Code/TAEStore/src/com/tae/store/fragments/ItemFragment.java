@@ -37,39 +37,54 @@ import com.tae.store.helpers.DatabaseHandler;
 import com.tae.store.model.Product;
 import com.tae.store.utilities.ServerUrl;
 
+/**
+ * Fragment where the product is display with more detail. The user can add it
+ * to the bag from this fragment.
+ * 
+ * @author Jose Garcia
+ * @version 1.0
+ * @since 2014-10-08
+ */
 public class ItemFragment extends SherlockFragment {
 
 	/** Product that the will be displayed on this fragment */
 	private Product product;
 	/** ArrayList with the URL (String) of the images of the product */
 	private ArrayList<String> urlArray;
-	/** ArrayList with all the Sizes (String) that the user can choose for this product */
+	/**
+	 * ArrayList with all the Sizes (String) that the user can choose for this
+	 * product
+	 */
 	private ArrayList<String> sizeArray;
-	/** ArrayAdapter for the spinner  */
+	/** ArrayAdapter for the spinner */
 	private ArrayAdapter<String> sizeAdapter;
-	/** ImageView where the main picture will be placed*/
+	/** ImageView where the main picture will be placed */
 	private ImageView mainPicture;
 	/** Spinner where the user will select the size in case of add to the bag */
 	private Spinner spSize;
-	
+
 	/** LinearLayout where all the images will be displayed */
 	private LinearLayout mCarouselContainer;
-	
-	/** Float */
+
+	/** Float that indicate the number of pic. preview */
 	private float initial_items = 4.5f;
+	/** Progress dialog */
 	private ProgressDialog pDialog;
 
 	private DatabaseHandler BAG;
 
+	/**
+	 * Empty constructor.
+	 */
 	public ItemFragment() {
 
 	}
 
-	/** Description of myMethod(int a, String b)
+	/**
+	 * Constructor.
 	 * 
-	 * @param a			Description of a
-	 * @param b			Description of b
-	 * @return			Description of c
+	 * @param product
+	 *            Product that will be displayed on the fragment
 	 */
 	public ItemFragment(Product product) {
 		this.product = product;
@@ -87,6 +102,8 @@ public class ItemFragment extends SherlockFragment {
 		mainPicture = (ImageView) rootView.findViewById(R.id.iv_item_detail_page);
 		spSize = (Spinner) rootView.findViewById(R.id.sp_size);
 
+		// Calculate the number of elements that will be displayed on the
+		// carousel depending of the orientation
 		Display display = ((WindowManager) getActivity().getSystemService(
 				getActivity().WINDOW_SERVICE)).getDefaultDisplay();
 		int orientation = display.getRotation();
@@ -133,6 +150,9 @@ public class ItemFragment extends SherlockFragment {
 		return rootView;
 	}
 
+	/**
+	 * Add one product to the bag
+	 */
 	private void addProduct() {
 		if (BAG == null) {
 			BAG = new DatabaseHandler(getActivity());
@@ -153,7 +173,10 @@ public class ItemFragment extends SherlockFragment {
 		outState.putStringArrayList("sizeArray", sizeArray);
 	}
 
-	public void setCarousel() {
+	/**
+	 * Set up the carousel with the all the images of the product.
+	 */
+	private void setCarousel() {
 
 		// Compute the width of a carousel item based on the screen width and
 		// number of initial items.
@@ -166,13 +189,9 @@ public class ItemFragment extends SherlockFragment {
 		for (int i = 0; i < urlArray.size(); ++i) {
 			// Create new ImageView
 			imageItem = new ImageView(getActivity());
-
-			// Set the shadow background
-			// imageItem.setBackgroundResource(R.drawable.shadow);
-
 			Picasso.with(getActivity()).load(ServerUrl.BASE_URL + ServerUrl.IMG + urlArray.get(i))
 					.into(imageItem);
-			
+
 			// Set the size of the image view to the previously computed value
 			imageItem.setLayoutParams(new LinearLayout.LayoutParams(imageWidth, imageWidth));
 			imageItem.setOnClickListener(new OnClickListener() {
@@ -193,6 +212,10 @@ public class ItemFragment extends SherlockFragment {
 
 	}
 
+	/**
+	 * Make a server request to get all the pictures of one product. After get
+	 * the picture will call <i>setCarousel()</i>
+	 */
 	private void makeRequestPic() {
 
 		JsonArrayRequest request = new JsonArrayRequest(ServerUrl.BASE_URL
@@ -225,6 +248,9 @@ public class ItemFragment extends SherlockFragment {
 		AppController.getInstance().addToRequestQueue(request);
 	}
 
+	/**
+	 * Make a request to get all the size of the product.
+	 */
 	private void makeRequestSize() {
 
 		JsonArrayRequest request = new JsonArrayRequest(ServerUrl.BASE_URL

@@ -31,19 +31,41 @@ import com.tae.store.model.Store;
 import com.tae.store.utilities.SPTags;
 import com.tae.store.utilities.ServerUrl;
 
+/**
+ * Fragment that list all the stores in a range.
+ * 
+ * @author Jose Garcia
+ * @version 1.0
+ * @since 2014-10-08
+ */
 public class StoreListFragment extends SherlockListFragment {
 
+	/** ArrayList with all the Store objects. */
 	private ArrayList<Store> list = new ArrayList<Store>();
+	/** Progress dialog. */
 	private ProgressDialog pDialog;
+	/** Shared Preferences. */
 	private SharedPreferences preferences;
+	/** LocationTracker */
 	private LocationTracker locationTracker;
+	/** Device current location. */
 	private LatLng currentLocation;
+	/** StoreListAdapter. */
 	private StoreListAdapter adapter;
 
-	public StoreListFragment(){
-		
+	/**
+	 * Empty constructor.
+	 */
+	public StoreListFragment() {
+
 	}
-	
+
+	/**
+	 * Constructor
+	 * 
+	 * @param list
+	 *            ArrayList with Store objects.
+	 */
 	public StoreListFragment(ArrayList<Store> list) {
 		this.list = list;
 	}
@@ -56,7 +78,7 @@ public class StoreListFragment extends SherlockListFragment {
 		if (savedInstanceState != null) {
 			list = savedInstanceState.getParcelableArrayList("list");
 		}
-		if (list.size() == 0) {
+		if (list.size() == 0) { // If there's not stores..
 			pDialog = new ProgressDialog(getActivity());
 			pDialog.setMessage(getResources().getString(R.string.loading));
 			locationTracker = new LocationTracker(getActivity());
@@ -66,7 +88,7 @@ public class StoreListFragment extends SherlockListFragment {
 				currentLocation = new LatLng(locationTracker.getLatitude(),
 						locationTracker.getLongitude());
 			}
-			makeRequest();
+			makeRequest(); // Make a new request
 		}
 
 		String unit;
@@ -82,6 +104,10 @@ public class StoreListFragment extends SherlockListFragment {
 		return rootView;
 	}
 
+	/**
+	 * Make a server request to get all the stores depending user's preferences
+	 * and GPS availability
+	 */
 	private void makeRequest() {
 		String URL;
 		preferences = getActivity().getPreferences(getActivity().MODE_PRIVATE);
@@ -128,7 +154,7 @@ public class StoreListFragment extends SherlockListFragment {
 				}
 				pDialog.dismiss();
 				adapter.notifyDataSetChanged();
-				
+
 			}
 		}, new Response.ErrorListener() {
 			@Override

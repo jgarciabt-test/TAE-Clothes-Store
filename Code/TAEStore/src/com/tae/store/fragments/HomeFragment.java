@@ -37,9 +37,14 @@ import com.tae.store.utilities.ServerUrl;
 import com.viewpagerindicator.CirclePageIndicator;
 import com.viewpagerindicator.PageIndicator;
 
+/** Fragment that implements the home screen.
+ * 
+ * @author Jose Garcia
+ * @version 1.0
+ * @since 2014-10-08
+ */
 public class HomeFragment extends SherlockFragment {
 
-	private int currentSelectedFragmentPosition = 0;
 	private ProgressDialog pDialog;
 
 	// Offers
@@ -60,7 +65,9 @@ public class HomeFragment extends SherlockFragment {
 	private SlidePagerAdapter mAdapterWomen;
 	private ArrayList<Category> womenCategories;
 
-	// Gesture detector to determine which screen has been tapped
+	/**
+	 * Gesture detector to determine which screen has been tapped
+	 */
 	final GestureDetector tapGestureDetectorOffer = new GestureDetector(getActivity(),
 			new GestureDetector.SimpleOnGestureListener() {
 				@Override
@@ -78,7 +85,9 @@ public class HomeFragment extends SherlockFragment {
 				}
 			});
 
-	// Gesture detector to determine which screen has been tapped
+	 /**
+	  * Gesture detector to determine which screen has been tapped
+	  */
 	final GestureDetector tapGestureDetectorMen = new GestureDetector(getActivity(),
 			new GestureDetector.SimpleOnGestureListener() {
 				@Override
@@ -102,7 +111,9 @@ public class HomeFragment extends SherlockFragment {
 				}
 			});
 
-	// Gesture detector to determine which screen has been tapped
+	/**
+	 *  Gesture detector to determine which screen has been tapped
+	 */
 	final GestureDetector tapGestureDetectorWomen = new GestureDetector(getActivity(),
 			new GestureDetector.SimpleOnGestureListener() {
 				@Override
@@ -128,7 +139,14 @@ public class HomeFragment extends SherlockFragment {
 
 	public HomeFragment() {
 	}
-
+	
+	/**Constructor.
+	 * 
+	 * @param context Application context.
+	 * @param menCategories ArrayList with Category objects.
+	 * @param womenCategories ArrayList with Category objects.
+	 * @param offers ArrayList with Product objects.
+	 */
 	public HomeFragment(Context context, ArrayList<Category> menCategories,
 			ArrayList<Category> womenCategories, ArrayList<Product> offers) {
 		this.menCategories = menCategories;
@@ -153,6 +171,8 @@ public class HomeFragment extends SherlockFragment {
 			makeRequestCategories();
 		}
 
+		
+		//OFFERS
 		mAdapterOffers = new SlidePagerAdapterProduct(getChildFragmentManager(), offers);
 
 		mPagerOffers = (ViewPager) rootView.findViewById(R.id.vp1);
@@ -161,6 +181,7 @@ public class HomeFragment extends SherlockFragment {
 		mIndicatorOffers = (CirclePageIndicator) rootView.findViewById(R.id.indicator1);
 		mIndicatorOffers.setViewPager(mPagerOffers);
 
+		//MEN
 		mAdapterMen = new SlidePagerAdapter(getChildFragmentManager(), MainCategories.MEN,
 				menCategories);
 		mPagerMen = (ViewPager) rootView.findViewById(R.id.vp2);
@@ -169,6 +190,7 @@ public class HomeFragment extends SherlockFragment {
 		mIndicatorMen = (CirclePageIndicator) rootView.findViewById(R.id.indicator2);
 		mIndicatorMen.setViewPager(mPagerMen);
 
+		//WOMEN
 		mAdapterWomen = new SlidePagerAdapter(getChildFragmentManager(), MainCategories.WOMEN,
 				womenCategories);
 		mPagerWomen = (ViewPager) rootView.findViewById(R.id.vp3);
@@ -177,6 +199,7 @@ public class HomeFragment extends SherlockFragment {
 		mIndicatorWomen = (CirclePageIndicator) rootView.findViewById(R.id.indicator3);
 		mIndicatorWomen.setViewPager(mPagerWomen);
 
+		//OFFER
 		mPagerOffers.setOnTouchListener(new OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				tapGestureDetectorOffer.onTouchEvent(event);
@@ -184,13 +207,15 @@ public class HomeFragment extends SherlockFragment {
 			}
 		});
 
+		//MEN
 		mPagerMen.setOnTouchListener(new OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				tapGestureDetectorMen.onTouchEvent(event);
 				return false;
 			}
 		});
-
+		
+		//WOMEN
 		mPagerWomen.setOnTouchListener(new OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
 				tapGestureDetectorWomen.onTouchEvent(event);
@@ -210,6 +235,9 @@ public class HomeFragment extends SherlockFragment {
 		outState.putParcelableArrayList("offer", offers);
 	}
 
+	/**
+	 * Make a server request to get all the categories.
+	 */
 	private void makeRequestCategories() {
 
 		menCategories = new ArrayList<Category>();
@@ -262,6 +290,9 @@ public class HomeFragment extends SherlockFragment {
 		AppController.getInstance().addToRequestQueue(request);
 	}
 
+	/**
+	 * Make a server request to get all the product in offer.
+	 */
 	private void makeRequestOffer() {
 
 		offers = new ArrayList<Product>();

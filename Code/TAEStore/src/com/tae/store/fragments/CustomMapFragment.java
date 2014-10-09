@@ -53,23 +53,43 @@ import com.tae.store.model.Store;
 import com.tae.store.utilities.SPTags;
 import com.tae.store.utilities.ServerUrl;
 
+/**
+ * Map fragment where all the stores are displayed.
+ * 
+ * @author Jose Garcia
+ * @version 1.0
+ * @since 2014-10-08
+ */
 public class CustomMapFragment extends SherlockFragment implements OnInfoWindowClickListener {
 
+	/** SharedPreferences to get the users preferences */
 	public SharedPreferences preferences;
 	private ViewGroup rootView;
 	private GoogleMap googleMap;
+	/** ImageButton to change a List view */
 	private ImageButton btnToList;
+	/** ArrayList with all the Store objects */
 	private ArrayList<Store> list = new ArrayList<Store>();
+	/** Progress dialog */
 	private ProgressDialog pDialog;
+	/** ImageButton to get the device location */
 	private ImageButton btnMyLocation;
+	/** ImageButton to search a location */
 	private ImageButton btnSearch;
+	/** EditText to search a location */
 	private EditText et_search;
+	/** LocationTracker */
 	private LocationTracker locationTracker;
+	/** Device current location */
 	private LatLng currentLocation;
+	/** LayoutInflater */
 	private LayoutInflater mInflater;
 	SupportMapFragment mapFragment;
 	private Object savedInstanceState;
 
+	/**
+	 * Empty constructor.
+	 */
 	public CustomMapFragment() {
 	}
 
@@ -82,6 +102,7 @@ public class CustomMapFragment extends SherlockFragment implements OnInfoWindowC
 		fragmentTransaction.add(R.id.map, mapFragment);
 		fragmentTransaction.commit();
 
+		// Get the device location
 		if (locationTracker == null) {
 			locationTracker = new LocationTracker(getActivity());
 		}
@@ -112,7 +133,6 @@ public class CustomMapFragment extends SherlockFragment implements OnInfoWindowC
 			}
 		}
 
-		// setUpMap();
 		this.savedInstanceState = savedInstanceState;
 
 		// To list listener
@@ -125,7 +145,7 @@ public class CustomMapFragment extends SherlockFragment implements OnInfoWindowC
 			}
 		});
 
-		// To list listener
+		// Device location listener
 		btnMyLocation = (ImageButton) rootView.findViewById(R.id.btn_location);
 		btnMyLocation.setOnClickListener(new OnClickListener() {
 			@Override
@@ -182,6 +202,9 @@ public class CustomMapFragment extends SherlockFragment implements OnInfoWindowC
 
 	}
 
+	/**
+	 * Make a server request to get all the store information.
+	 */
 	private void makeRequest() {
 		String URL;
 		preferences = getActivity().getPreferences(getActivity().MODE_PRIVATE);
@@ -242,6 +265,9 @@ public class CustomMapFragment extends SherlockFragment implements OnInfoWindowC
 		AppController.getInstance().addToRequestQueue(request);
 	}
 
+	/**
+	 * Set up the map.
+	 */
 	private void setUpMap() {
 
 		if (googleMap == null) {
@@ -264,6 +290,12 @@ public class CustomMapFragment extends SherlockFragment implements OnInfoWindowC
 
 	}
 
+	/**
+	 * Look for a specific place like address, city, post code, etc.
+	 * 
+	 * @param address
+	 *            String with the place that we want to look for.
+	 */
 	public void searchPlace(String address) {
 		Geocoder geoCoder = new Geocoder(getActivity());
 
@@ -282,6 +314,10 @@ public class CustomMapFragment extends SherlockFragment implements OnInfoWindowC
 
 	}
 
+	/**
+	 * Set all the markers on the map. According to the users preferences the
+	 * distance will be displayed as Miles or Kilometres.
+	 */
 	public void setMarkers() {
 
 		googleMap.clear();
@@ -291,6 +327,7 @@ public class CustomMapFragment extends SherlockFragment implements OnInfoWindowC
 		Location userLocation = null;
 		preferences = getActivity().getPreferences(getActivity().MODE_PRIVATE);
 
+		// Get the user location
 		if (locationTracker.canGetLocation()) {
 			userLocation = new Location("User");
 			userLocation.setLatitude(currentLocation.latitude);
@@ -303,6 +340,7 @@ public class CustomMapFragment extends SherlockFragment implements OnInfoWindowC
 				storeLocation.setLatitude(store.getLatitude());
 				storeLocation.setLongitude(store.getLongitude());
 
+				// Get the distance
 				if (preferences.getInt(SPTags.UNIT, 0) == 1) { // KM
 					list.get(i).setDistance(storeLocation.distanceTo(userLocation) / 1000);
 				} else { // Mi
@@ -319,6 +357,10 @@ public class CustomMapFragment extends SherlockFragment implements OnInfoWindowC
 		}
 	}
 
+	/**
+	 * Store the current device location on <i>currentLocation</i> if it's
+	 * possible.
+	 */
 	private void getCurrentLocation() {
 		if (locationTracker == null) {
 			locationTracker = new LocationTracker(getActivity());
@@ -334,6 +376,12 @@ public class CustomMapFragment extends SherlockFragment implements OnInfoWindowC
 		}
 	}
 
+	/**
+	 * Move the camera to specific location.
+	 * 
+	 * @param position
+	 *            Position where the camera will be moved.
+	 */
 	private void moveCamera(LatLng position) {
 		CameraPosition cameraPosition = new CameraPosition.Builder().target(position).zoom(13)
 				.build();
@@ -347,6 +395,12 @@ public class CustomMapFragment extends SherlockFragment implements OnInfoWindowC
 		super.onSaveInstanceState(outState);
 	}
 
+	/** Class that implements InfoWindowAdapter to customize map markers.
+	 * 
+	 * @author Jose Garcia
+	 * @version 1.0
+	 * @since 2014-10-08
+	 */
 	public class MyInfoWindowAdapter implements InfoWindowAdapter {
 
 		private final View myContentsView;

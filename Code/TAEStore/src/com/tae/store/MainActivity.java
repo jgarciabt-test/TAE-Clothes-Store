@@ -299,11 +299,11 @@ public class MainActivity extends SherlockFragmentActivity {
 			fragmentName = "HOME_FRAGMENT";
 			break;
 		case 1:
-			fragment = new CategoryFragment("Men", this);
+			fragment = new CategoryFragment("Men");
 			fragmentName = "CATEGORY_FRAGMENT";
 			break;
 		case 2:
-			fragment = new CategoryFragment("Women", this);
+			fragment = new CategoryFragment("Women");
 			fragmentName = "CATEGORY_FRAGMENT";
 			break;
 		case 3:

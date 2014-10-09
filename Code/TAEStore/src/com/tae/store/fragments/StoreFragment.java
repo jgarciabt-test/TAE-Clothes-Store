@@ -14,14 +14,31 @@ import com.actionbarsherlock.app.SherlockFragment;
 import com.tae.store.R;
 import com.tae.store.model.Store;
 
+/**
+ * Fragment that show information about one store
+ * 
+ * @author Jose Garcia
+ * @version 1.0
+ * @since 2014-10-08
+ */
 public class StoreFragment extends SherlockFragment {
 
+	/** Store object */
 	private Store store;
 
+	/**
+	 * Empty constructor.
+	 */
 	public StoreFragment() {
 
 	}
 
+	/**
+	 * Constructor
+	 * 
+	 * @param store
+	 *            Store object that will be displayed.
+	 */
 	public StoreFragment(Store store) {
 		this.store = store;
 	}
@@ -50,23 +67,24 @@ public class StoreFragment extends SherlockFragment {
 
 		btnPhone.setText(store.getPhone());
 		btnPhone.setOnClickListener(new OnClickListener() {
-			
+			// Action call
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + store.getPhone()));
 				startActivity(intent);
-				
+
 			}
 		});
-		
+
 		btnDirection.setOnClickListener(new OnClickListener() {
-			
+			// Action direcctions
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(android.content.Intent.ACTION_VIEW, 
-					    Uri.parse("http://maps.google.com/maps?daddr="+store.getLatitude()+","+store.getLongitude()));
-					startActivity(intent);
-				
+				Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri
+						.parse("http://maps.google.com/maps?daddr=" + store.getLatitude() + ","
+								+ store.getLongitude()));
+				startActivity(intent);
+
 			}
 		});
 

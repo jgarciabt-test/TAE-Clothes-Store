@@ -43,26 +43,50 @@ import com.tae.store.app.AppController;
 import com.tae.store.utilities.SPTags;
 import com.tae.store.utilities.ServerUrl;
 
+/**
+ * Fragment where the user can register or login using a TAE or Facebook
+ * account.
+ * 
+ * @author Jose Garcia
+ * @version 1.0
+ * @since 2014-10-08
+ */
 public class LogInFragment extends SherlockFragment {
 
 	public static SocialAuthAdapter adapter;
 
+	/** SharedPreferences to get the users preferences. */
 	private SharedPreferences preferences;
+	/** EditText to enter the name. */
 	private EditText etName;
+	/** EditText to enter the last name. */
 	private EditText etLastName;
+	/** EditText to enter the user name. */
 	private EditText etUserName;
+	/** EditText to enter the email. */
 	private EditText etEmail;
+	/** RadioGroup to select the gender. */
 	private RadioGroup rgGender;
+	/** Spinner to select the country. */
 	private Spinner spCountry;
+	/** EditText to enter the address. */
 	private EditText etAddress;
+	/** EditText to enter the post code. */
 	private EditText etPostCode;
+	/** EditText to enter the city. */
 	private EditText etCity;
+	/** EditText to enter the password. */
 	private EditText etPass;
+	/** CheckBox for terms and conditions */
 	private CheckBox terms;
+	/** Button to submit the form */
 	private Button btnSubmit;
 
+	/** EditText to enter the name to login. */
 	private EditText editTextUserName;
+	/** EditText to enter the password to login. */
 	private EditText editTextPassword;
+	/** Dialog to login. */
 	private Dialog dialog;
 
 	@Override
@@ -73,15 +97,14 @@ public class LogInFragment extends SherlockFragment {
 
 		Button btnFacebook = (Button) rootView.findViewById(R.id.connectWithFbButton);
 		preferences = getActivity().getPreferences(MainActivity.MODE_PRIVATE);
-		btnFacebook.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				adapter = new SocialAuthAdapter(new ResponseListener());
-				adapter.authorize(getActivity(), Provider.FACEBOOK);
-
-			}
-		});
+		btnFacebook.setOnClickListener(new OnClickListener() { // Login with
+																// Facebook
+					@Override
+					public void onClick(View v) {
+						adapter = new SocialAuthAdapter(new ResponseListener());
+						adapter.authorize(getActivity(), Provider.FACEBOOK);
+					}
+				});
 
 		etName = (EditText) rootView.findViewById(R.id.registration_name);
 		etLastName = (EditText) rootView.findViewById(R.id.registration_last_name);
@@ -96,26 +119,30 @@ public class LogInFragment extends SherlockFragment {
 		terms = (CheckBox) rootView.findViewById(R.id.registration_terms);
 		btnSubmit = (Button) rootView.findViewById(R.id.registration_submit);
 
-		btnSubmit.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (checkFields()) {
-					makeRequestRegister();
-				}
-			}
-		});
+		btnSubmit.setOnClickListener(new OnClickListener() { // Register
+					@Override
+					public void onClick(View v) {
+						if (checkFields()) {
+							makeRequestRegister();
+						}
+					}
+				});
 
 		Button btnTae = (Button) rootView.findViewById(R.id.btn_tae_login);
-		btnTae.setOnClickListener(new OnClickListener() {
+		btnTae.setOnClickListener(new OnClickListener() { // Login with TAE
 			@Override
 			public void onClick(View v) {
-				singIn();
+				signIn();
 			}
 		});
 		return rootView;
 	}
 
-	private void singIn() {
+	/**
+	 * Open a dialog to sign in. When the user write the username and the
+	 * password a request will be make to get the TAE password and compare with it.
+	 */
+	private void signIn() {
 		dialog = new Dialog(getActivity());
 
 		dialog.setContentView(R.layout.login_dialog);
@@ -139,6 +166,11 @@ public class LogInFragment extends SherlockFragment {
 		dialog.show();
 	}
 
+	/**
+	 * Check all the field of the registration form.
+	 * 
+	 * @return True if everything is OK.
+	 */
 	private boolean checkFields() {
 		boolean complete = true;
 
@@ -202,6 +234,11 @@ public class LogInFragment extends SherlockFragment {
 		return complete;
 	}
 
+	/**
+	 * Make a server request to get the password of an user.
+	 * 
+	 * @param username Username of the user.
+	 */
 	private void makeRequestPassword(final String username) {
 
 		JsonArrayRequest request = new JsonArrayRequest(ServerUrl.BASE_URL + ServerUrl.LOGIN
@@ -215,17 +252,19 @@ public class LogInFragment extends SherlockFragment {
 					String storedPassword = obj.getString("password");
 
 					String password = editTextPassword.getText().toString();
-					if (password.equals(storedPassword)) {
-						Toast.makeText(getActivity(), "Login Successfull",
-								Toast.LENGTH_LONG).show();
-						
+					if (password.equals(storedPassword)) { //Login Successful
+						Toast.makeText(getActivity(), "Login Successful", Toast.LENGTH_LONG)
+								.show();
+
+						//Save on preferences login details and start the preferences fragment
 						SharedPreferences.Editor editor = preferences.edit();
 						editor.putBoolean(SPTags.TAE_LOGIN, true).commit();
 						editor.putBoolean(SPTags.LOGGED, true).commit();
 						editor.putString(SPTags.NAME, username).commit();
-						MyTaeFragment.replaceFragment(new PreferencesFragment(), "PREFERENCES_FRAGMENT");
+						MyTaeFragment.replaceFragment(new PreferencesFragment(),
+								"PREFERENCES_FRAGMENT"); 
 						dialog.dismiss();
-					} else {
+					} else { //Password does not match
 
 						Toast.makeText(
 								getActivity().getApplicationContext(),
@@ -233,7 +272,7 @@ public class LogInFragment extends SherlockFragment {
 								Toast.LENGTH_LONG).show();
 					}
 
-				} catch (JSONException e) {
+				} catch (JSONException e) { //The user name is not on the database. User not registered.
 					e.printStackTrace();
 					Toast.makeText(
 							getActivity().getApplicationContext(),
@@ -244,7 +283,7 @@ public class LogInFragment extends SherlockFragment {
 			}
 		}, new Response.ErrorListener() {
 			@Override
-			public void onErrorResponse(VolleyError error) {
+			public void onErrorResponse(VolleyError error) { //Error trying to connect with the server.
 				dialog.dismiss();
 				Toast.makeText(getActivity().getApplicationContext(),
 						getActivity().getResources().getString(R.string.server_error),
@@ -256,6 +295,9 @@ public class LogInFragment extends SherlockFragment {
 		AppController.getInstance().addToRequestQueue(request);
 	}
 
+	/**
+	 * Register the user on the server.
+	 */
 	private void makeRequestRegister() {
 
 		StringRequest postRequest = new StringRequest(Request.Method.POST, ServerUrl.BASE_URL
@@ -310,17 +352,16 @@ public class LogInFragment extends SherlockFragment {
 
 		@Override
 		public void onBack() {
-			// TODO Auto-generated method stub
-			Toast.makeText(getActivity().getApplicationContext(), "facebook back",
-					Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getActivity().getApplicationContext(), "facebook back",
+			//		Toast.LENGTH_SHORT).show();
 
 		}
 
 		@Override
 		public void onCancel() {
 			// TODO Auto-generated method stub
-			Toast.makeText(getActivity().getApplicationContext(), "facebook cancel",
-					Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getActivity().getApplicationContext(), "facebook cancel",
+			//		Toast.LENGTH_SHORT).show();
 
 		}
 
@@ -346,7 +387,8 @@ public class LogInFragment extends SherlockFragment {
 
 		@Override
 		public void onExecute(String arg0, Profile arg1) {
-			
+
+			//Save the data on preferences
 			SharedPreferences.Editor editor = preferences.edit();
 			editor.putBoolean(SPTags.FB_LOGIN, true).commit();
 			editor.putBoolean(SPTags.LOGGED, true).commit();

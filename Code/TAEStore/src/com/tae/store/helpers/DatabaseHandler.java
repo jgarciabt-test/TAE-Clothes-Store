@@ -12,6 +12,8 @@ import android.util.Log;
 import com.tae.store.model.Product;
 
 /**
+ * Database helper where all the product that the user put in the bag are saved.
+ * 
 * @author      Jose Garcia 
 * @version     1.0                 
 * @since       2014-10-08         

@@ -27,9 +27,18 @@ import com.tae.store.MainActivity;
 import com.tae.store.R;
 import com.tae.store.utilities.SPTags;
 
+/**
+ * Fragment where the suer can change some preferences.
+ * 
+ * @author Jose Garcia
+ * @version 1.0
+ * @since 2014-10-08
+ */
 public class PreferencesFragment extends SherlockFragment {
 
+	/** Shared preferences */
 	private SharedPreferences preferences;
+	/** Spinner to select the distance units */
 	private Spinner spUnit;
 
 	@Override
@@ -40,10 +49,11 @@ public class PreferencesFragment extends SherlockFragment {
 		NumberPicker np = (NumberPicker) rootView.findViewById(R.id.numberPicker1);
 		preferences = getActivity().getPreferences(MainActivity.MODE_PRIVATE);
 
+		//Try to put on the spinner the users preference. Default Miles
 		spUnit = (Spinner) rootView.findViewById(R.id.sp_units);
 		spUnit.setSelection(preferences.getInt(SPTags.UNIT, 0));
 		spUnit.setOnItemSelectedListener(new OnItemSelectedListener() {
-
+			// when the user change the selected option in the spinner, this option is saved
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 				SharedPreferences.Editor editor = preferences.edit();
@@ -55,13 +65,14 @@ public class PreferencesFragment extends SherlockFragment {
 			}
 		});
 
-		//
+		// Number picker set up
 		np.setMinValue(1);
 		np.setMaxValue(100);
 		np.setValue(preferences.getInt(SPTags.DISTANCE, 6));
 		np.setWrapSelectorWheel(false);
 
 		np.setOnValueChangedListener(new OnValueChangeListener() {
+			// when the user change the number picker, the value is saved.
 			@Override
 			public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
 				SharedPreferences.Editor editor = preferences.edit();
@@ -79,6 +90,7 @@ public class PreferencesFragment extends SherlockFragment {
 			@Override
 			public void onClick(View v) {
 
+				//Clean all the preferences when the user log out.
 				SharedPreferences.Editor editor = preferences.edit();
 
 				if (preferences.getBoolean(SPTags.FB_LOGIN, false)) {
@@ -114,25 +126,25 @@ public class PreferencesFragment extends SherlockFragment {
 
 		@Override
 		public void onBack() {
-			// TODO Auto-generated method stub
-			Toast.makeText(getActivity().getApplicationContext(), "facebook back",
-					Toast.LENGTH_SHORT).show();
+//			// TODO Auto-generated method stub
+//			Toast.makeText(getActivity().getApplicationContext(), "facebook back",
+//					Toast.LENGTH_SHORT).show();
 
 		}
 
 		@Override
 		public void onCancel() {
-			// TODO Auto-generated method stub
-			Toast.makeText(getActivity().getApplicationContext(), "facebook cancel",
-					Toast.LENGTH_SHORT).show();
+//			// TODO Auto-generated method stub
+//			Toast.makeText(getActivity().getApplicationContext(), "facebook cancel",
+//					Toast.LENGTH_SHORT).show();
 
 		}
 
 		@Override
 		public void onError(SocialAuthError arg0) {
-			// TODO Auto-generated method stub
-			Toast.makeText(getActivity().getApplicationContext(), "facebook error",
-					Toast.LENGTH_SHORT).show();
+//			// TODO Auto-generated method stub
+//			Toast.makeText(getActivity().getApplicationContext(), "facebook error",
+//					Toast.LENGTH_SHORT).show();
 
 		}
 

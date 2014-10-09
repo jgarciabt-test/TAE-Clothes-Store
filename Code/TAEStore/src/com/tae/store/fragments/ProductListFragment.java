@@ -31,17 +31,39 @@ import com.tae.store.app.AppController;
 import com.tae.store.model.Product;
 import com.tae.store.utilities.ServerUrl;
 
+/**
+ * Fragment where all the product of a category will be displayed.
+ * 
+ * @author Jose Garcia
+ * @version 1.0
+ * @since 2014-10-08
+ */
 public class ProductListFragment extends SherlockFragment {
 
+	/** ArrayList with all the Product objects */
 	private ArrayList<Product> list = new ArrayList<Product>();
+	/** String with the category ID of the product */
 	private String categoryId;
+	/** String with the category name */
 	private String categoryTitle;
+	/** Progress dialog */
 	private ProgressDialog pDialog;
+	/** ProductListAdapter */
 	private ProductListAdapter adapter;
 
+	/**
+	 * Empty constructor.
+	 */
 	public ProductListFragment() {
 	}
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param categoryId Category ID .
+	 * @param categoryTitle Category title. 
+	 * @param context Application context.
+	 */
 	public ProductListFragment(String categoryId, String categoryTitle, Context context) {
 		this.categoryId = categoryId;
 		this.categoryTitle = categoryTitle;
@@ -72,6 +94,7 @@ public class ProductListFragment extends SherlockFragment {
 		GridView grid = (GridView) rootView.findViewById(R.id.grid);
 		grid.setAdapter(adapter);
 		grid.setOnItemClickListener(new OnItemClickListener() {
+			//Start new fragment when the user select one product
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				MainActivity.replaceFragment(new ItemFragment(list.get(position)),
@@ -90,6 +113,9 @@ public class ProductListFragment extends SherlockFragment {
 		outState.putSerializable("categoryId", categoryId);
 	}
 
+	/**
+	 * Make a server request to get all the product for one category.
+	 */
 	private void makeRequest() {
 
 		if (categoryId == null) {

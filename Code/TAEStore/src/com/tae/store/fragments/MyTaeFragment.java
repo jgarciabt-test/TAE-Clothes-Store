@@ -13,6 +13,14 @@ import com.tae.store.MainActivity;
 import com.tae.store.R;
 import com.tae.store.utilities.SPTags;
 
+/**
+ * Fragment where the user can login and create an account or change his/her
+ * preferences, depending if the user is logged or no.
+ * 
+ * @author Jose Garcia
+ * @version 1.0
+ * @since 2014-10-08
+ */
 public class MyTaeFragment extends SherlockFragment {
 
 	public static FragmentManager fragmentManagerLogin;
@@ -27,11 +35,13 @@ public class MyTaeFragment extends SherlockFragment {
 
 		SharedPreferences sharedPreferences = getActivity().getPreferences(
 				getActivity().MODE_PRIVATE);
+		// Get the preferences, if the user is logged...
 		if (sharedPreferences.getBoolean(SPTags.LOGGED, false)) {
+			// Start preferences fragment
 			fragmentManagerLogin.beginTransaction().add(R.id.my_tae, new PreferencesFragment())
 					.commit();
-
 		} else {
+			// Start login fragment
 			fragmentManagerLogin.beginTransaction().add(R.id.my_tae, new LogInFragment()).commit();
 		}
 
@@ -47,7 +57,6 @@ public class MyTaeFragment extends SherlockFragment {
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
 	}
 
