@@ -17,20 +17,33 @@ import com.tae.store.R;
 import com.tae.store.model.Category;
 import com.tae.store.utilities.ServerUrl;
 
+
+/**
+ *  Adapter for Category list.
+ * 
+ * @author Jose Garcia 
+ * @version 1.0
+ * @since 2014-10-08
+ */
 public class CategoryListAdapter extends BaseAdapter {
 
-	/** Context of the app */
+	/** Application context. */
 	Context context;
 	
-	/** ArrayList with all the Category objects*/
+	/** ArrayList with all the Category objects. */
 	ArrayList<Category> categoryList;
 	
-	/** LayoutInflater */
+	/** LayoutInflater. */
 	private LayoutInflater mInflater;
 
-	public CategoryListAdapter(Context context, ArrayList<Category> rowItem) {
+	/** Constructor.
+	 * 
+	 * @param context Application context
+	 * @param list ArrayList of Category objects.
+	 */
+	public CategoryListAdapter(Context context, ArrayList<Category> list) {
 		this.context = context;
-		this.categoryList = rowItem;
+		this.categoryList = list;
 		mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 	}
 
@@ -63,7 +76,7 @@ public class CategoryListAdapter extends BaseAdapter {
 		Category cat = categoryList.get(position);
 		txtName.setText(cat.getName());
 		
-		//Just to put the output properly
+		//Just to format the output properly
 		float aux = Float.parseFloat(cat.getLower_price());
 		
 		txtPrice.setText(context.getResources().getString(R.string.from) + new DecimalFormat("##.##").format(aux));
@@ -71,13 +84,12 @@ public class CategoryListAdapter extends BaseAdapter {
 				.placeholder(context.getResources().getDrawable(R.drawable.back)).into(imgIcon);
 
 		return convertView;
-
 	}
 
 	/** 
-	 * Clear the ArrayList and call notofyDataSetChanged()
+	 * Clean the ArrayList and call <i>notofyDataSetChanged</i>.
 	 */
-	public void clearAdapter() {
+	public void cleanAdapter() {
 		categoryList.clear();
 		notifyDataSetChanged();
 	}

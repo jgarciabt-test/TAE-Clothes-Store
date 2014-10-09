@@ -32,20 +32,41 @@ import com.tae.store.model.Product;
 import com.tae.store.utilities.PayPalUtil;
 import com.tae.store.utilities.SPTags;
 
+/**
+ * Fragment that implements the bag feature. All the products displayed on this
+ * fragment are obtained from the local database. This items can be deleted with
+ * a long click, after a confirmation dialog.
+ * 
+ * @author Jose Garcia
+ * @version 1.0
+ * @since 2014-10-08
+ */
 public class BagFragment extends SherlockListFragment {
 
+	/** TextView to display the number of products. */
 	private TextView qty;
+	/** TextView to display the amount of all the products. */
 	private TextView total;
+	/** TextView to display the total amount. */
 	private TextView total_order;
+	/** TextView to display the shipping costs. */
 	private TextView shipping;
+	/** Button to do the checkout. */
 	private Button btnCheckout;
 
+	/** DatabaseHandler. */
 	private DatabaseHandler BAG;
+	/** ArrayList with all the Product objects. */
 	private ArrayList<Product> myBag;
+	/** BagListAdapter. */
 	private BagListAdapter adapter;
 
+	/** Int to determine the position of the object to be deleted. */
 	private int position = -1;
 
+	/**
+	 * Constructor
+	 */
 	public BagFragment() {
 		myBag = new ArrayList<Product>();
 	}
@@ -67,8 +88,10 @@ public class BagFragment extends SherlockListFragment {
 			public void onClick(View v) {
 				SharedPreferences preferences = getActivity().getPreferences(
 						getActivity().MODE_PRIVATE);
-				if (preferences.getBoolean(SPTags.LOGGED, false)) {
-					if (!myBag.isEmpty()) {
+				if (preferences.getBoolean(SPTags.LOGGED, false)) { // If the
+																	// user is
+																	// logged...
+					if (!myBag.isEmpty()) { // If the bag is empty...
 						checkout();
 					} else {
 						AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -82,7 +105,7 @@ public class BagFragment extends SherlockListFragment {
 						AlertDialog alert = builder.create();
 						alert.show();
 					}
-				} else {
+				} else { // If the user is not logged...
 					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 					builder.setMessage(getActivity().getResources().getString(R.string.not_logged))
 							.setCancelable(false)
@@ -117,6 +140,7 @@ public class BagFragment extends SherlockListFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
+		// OnItemLongClickListener for the bag items
 		getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
@@ -125,6 +149,7 @@ public class BagFragment extends SherlockListFragment {
 						Context.VIBRATOR_SERVICE);
 				vibrator.vibrate(200);
 				BagFragment.this.position = position;
+				// Confirmation Dialog
 				new AlertDialog.Builder(getActivity()).setIcon(android.R.drawable.ic_dialog_alert)
 						.setMessage(R.string.delete_dialog)
 						.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -140,16 +165,23 @@ public class BagFragment extends SherlockListFragment {
 
 	}
 
+	/**
+	 * Update the screen according all the products of the bag
+	 * 
+	 */
 	public void updateSreen() {
 		qty.setText(String.valueOf(myBag.size()));
 		float totalToPay = 0;
 		for (int i = 0; i < myBag.size(); i++) {
 			totalToPay += myBag.get(i).getPrice();
 		}
-		total_order.setText(getActivity().getResources().getString(R.string.pound_symbol)+String.valueOf(totalToPay));
-		shipping.setText(getActivity().getResources().getString(R.string.pound_symbol)+PayPalUtil.SHIPPING);
+		total_order.setText(getActivity().getResources().getString(R.string.pound_symbol)
+				+ String.valueOf(totalToPay));
+		shipping.setText(getActivity().getResources().getString(R.string.pound_symbol)
+				+ PayPalUtil.SHIPPING);
 		totalToPay += Float.parseFloat(PayPalUtil.SHIPPING);
-		total.setText(getActivity().getResources().getString(R.string.pound_symbol)+String.valueOf(totalToPay));
+		total.setText(getActivity().getResources().getString(R.string.pound_symbol)
+				+ String.valueOf(totalToPay));
 
 	}
 
@@ -160,6 +192,9 @@ public class BagFragment extends SherlockListFragment {
 		outState.putParcelableArrayList("myBag", myBag);
 	}
 
+	/**
+	 * Delete one product from the list and update the screen
+	 */
 	public void deleteProduct() {
 		BAG.deleteProduct(myBag.get(position).getId());
 		myBag.remove(position);
@@ -167,12 +202,18 @@ public class BagFragment extends SherlockListFragment {
 		updateSreen();
 	}
 
+	/**
+	 * Delete all the product from the screen and clean the bag.
+	 */
 	public void cleanScreen() {
 		myBag.clear();
 		adapter.notifyDataSetChanged();
 		updateSreen();
 	}
 
+	/**
+	 * Start <i>PayPalPayment</i> Activity to complete the checkout.
+	 */
 	private void checkout() {
 
 		PayPalPayment thingToBuy = getStuffToBuy(PayPalPayment.PAYMENT_INTENT_SALE);
@@ -182,12 +223,20 @@ public class BagFragment extends SherlockListFragment {
 		startActivityForResult(intent, PayPalUtil.REQUEST_CODE_PAYMENT);
 	}
 
+	/**
+	 * Get all the products from the bag and process them to complete the
+	 * checkout according PayPal requirements.
+	 * 
+	 * @param paymentIntent
+	 *            Indicate if will be a SALE or a AUTHORITATION.
+	 * @return PayPalPayment object.
+	 */
 	private PayPalPayment getStuffToBuy(String paymentIntent) {
 		PayPalItem[] items = new PayPalItem[myBag.size()];
 		for (int i = 0; i < myBag.size(); i++) {
 			items[i] = new PayPalItem(myBag.get(i).getName() + " SIZE:" + myBag.get(i).getSize(),
-					1, new BigDecimal(String.valueOf(myBag.get(i).getPrice())), PayPalUtil.CURRENCY, "Ref Number: "
-							+ myBag.get(i).getId());
+					1, new BigDecimal(String.valueOf(myBag.get(i).getPrice())),
+					PayPalUtil.CURRENCY, "Ref Number: " + myBag.get(i).getId());
 		}
 
 		BigDecimal subtotal = PayPalItem.getItemTotal(items);
@@ -195,7 +244,7 @@ public class BagFragment extends SherlockListFragment {
 		BigDecimal tax = new BigDecimal("0.00");
 		PayPalPaymentDetails paymentDetails = new PayPalPaymentDetails(shipping, subtotal, tax);
 		BigDecimal amount = subtotal.add(shipping).add(tax);
-		// TODO Parameters
+
 		PayPalPayment payment = new PayPalPayment(amount, PayPalUtil.CURRENCY, "TAE Clothes Store",
 				paymentIntent);
 		return payment.items(items).paymentDetails(paymentDetails);

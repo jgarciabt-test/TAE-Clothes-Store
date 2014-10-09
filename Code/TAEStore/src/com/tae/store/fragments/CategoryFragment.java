@@ -28,18 +28,38 @@ import com.tae.store.app.AppController;
 import com.tae.store.model.Category;
 import com.tae.store.utilities.ServerUrl;
 
+/**
+ * Fragment that implements a list with all the categories of the store. This
+ * categories are obtained from the server.
+ * 
+ * @author Jose Garcia
+ * @version 1.0
+ * @since 2014-10-08
+ */
 public class CategoryFragment extends SherlockListFragment {
 
+	/** String with the root category (men or women) */
 	private String rootCategory;
 
+	/** Progres dialog */
 	private ProgressDialog pDialog;
+	/** CategoryListAdapter */
 	private CategoryListAdapter adapter;
+	/** ArrayList with all the Category objects */
 	private ArrayList<Category> list = new ArrayList<Category>();
 
+	/**
+	 *  Empty constructor.
+	 */
 	public CategoryFragment() {
 	}
 
-	public CategoryFragment(String rootCategory, Context context) {
+	/**
+	 * Constructor
+	 * 
+	 * @param rootCategory String with the root category (men or women)
+	 */
+	public CategoryFragment(String rootCategory) {
 		this.rootCategory = rootCategory;
 	}
 
@@ -84,6 +104,9 @@ public class CategoryFragment extends SherlockListFragment {
 				"PRODUCT_LIST_FRAGMENT", true);
 	}
 
+	/**
+	 * Make a server request to get all the information about categories.
+	 */
 	private void makeRequest() {
 
 		if (rootCategory == null) {

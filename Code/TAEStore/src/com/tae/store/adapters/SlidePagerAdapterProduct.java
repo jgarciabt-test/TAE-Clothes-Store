@@ -11,14 +11,28 @@ import com.tae.store.fragments.SlidePageFragment;
 import com.tae.store.model.Product;
 
 /**
- * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
- * sequence.
+ * Pager adapter that represents N SlidePageFragment objects, in sequence.
+ * 
+ * @author Jose Garcia
+ * @version 1.0
+ * @since 2014-10-08
  */
 public class SlidePagerAdapterProduct extends FragmentStatePagerAdapter {
 
+	/** Number of pages. */
 	private int num_pages;
+	/** ArrayList with all the SlidePageFragment objects. */
 	private ArrayList<SlidePageFragment> list;
 
+	
+	/**
+	 * Constructor.
+	 * 
+	 * @param fragmentManager
+	 *            Fragment manager.
+	 * @param offers
+	 *            ArrayList with Product objects.
+	 */
 	public SlidePagerAdapterProduct(FragmentManager fragmentManager, 
 			ArrayList<Product> offers) {
 		super(fragmentManager);

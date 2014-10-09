@@ -87,7 +87,7 @@ public class HomeFragment extends SherlockFragment {
 					switch (i) {
 					case 0:
 						MainActivity.ROOT_CATEGORY = "Men";
-						MainActivity.replaceFragment(new CategoryFragment("Men", getActivity()),
+						MainActivity.replaceFragment(new CategoryFragment("Men"),
 								"CATEGORY_FRAGMENT", true);
 						break;
 					default:
@@ -111,7 +111,7 @@ public class HomeFragment extends SherlockFragment {
 					switch (i) {
 					case 0:
 						MainActivity.ROOT_CATEGORY = "Women";
-						MainActivity.replaceFragment(new CategoryFragment("Women", getActivity()),
+						MainActivity.replaceFragment(new CategoryFragment("Women"),
 								"CATEGORY_FRAGMENT", true);
 						break;
 					default:

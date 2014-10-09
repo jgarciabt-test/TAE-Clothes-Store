@@ -18,17 +18,31 @@ import com.tae.store.R;
 import com.tae.store.model.Product;
 import com.tae.store.utilities.ServerUrl;
 
+/**
+ *  Adapter for bag's items.
+ * 
+ * @author Jose Garcia 
+ * @version 1.0
+ * @since 2014-10-08
+ */
 public class BagListAdapter extends BaseAdapter {
 
+	/** Application context. */
 	Context context;
+	/** ArrayList with all Product objects. */
 	private ArrayList<Product> productList;
+	/** LayoutInflater */
 	private LayoutInflater mInflater;
 
+	/** Constructor.
+	 * 
+	 * @param context Application context.
+	 * @param productList ArrayList of Product objects
+	 */
 	public BagListAdapter(Context context, ArrayList<Product> productList) {
 		this.context = context;
 		this.productList = productList;
-		mInflater = (LayoutInflater) context
-				.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+		mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 	}
 
 	@Override
@@ -53,34 +67,20 @@ public class BagListAdapter extends BaseAdapter {
 			convertView = mInflater.inflate(R.layout.bag_item, null);
 		}
 
-		ImageView imgIcon = (ImageView) convertView
-				.findViewById(R.id.iv_bag_pic);
-		TextView txtName = (TextView) convertView
-				.findViewById(R.id.txt_bag_name);
-		TextView txtPrice = (TextView) convertView
-				.findViewById(R.id.txt_bag_price);
-		TextView txtSize = (TextView) convertView
-				.findViewById(R.id.txt_bag_size);
+		ImageView imgIcon = (ImageView) convertView.findViewById(R.id.iv_bag_pic);
+		TextView txtName = (TextView) convertView.findViewById(R.id.txt_bag_name);
+		TextView txtPrice = (TextView) convertView.findViewById(R.id.txt_bag_price);
+		TextView txtSize = (TextView) convertView.findViewById(R.id.txt_bag_size);
 
 		Product prod = productList.get(position);
 		txtName.setText(prod.getName());
-		txtPrice.setText(context.getResources()
-				.getString(R.string.pound_symbol)
+		txtPrice.setText(context.getResources().getString(R.string.pound_symbol)
 				+ new DecimalFormat("##.##").format(prod.getPrice()));
 		txtSize.setText(prod.getSize());
-		Picasso.with(context)
-				.load(ServerUrl.BASE_URL + ServerUrl.IMG + prod.getUrl_pic()).placeholder(context.getResources().getDrawable(R.drawable.back))
-				.into(imgIcon);
-		
-		Log.v("BAG_ADAPTER_PIC", ServerUrl.BASE_URL + ServerUrl.IMG + prod.getUrl_pic());
+		Picasso.with(context).load(ServerUrl.BASE_URL + ServerUrl.IMG + prod.getUrl_pic())
+				.placeholder(context.getResources().getDrawable(R.drawable.back)).into(imgIcon);
 
 		return convertView;
 
 	}
-	// TODO clean
-	// public void clearAdapter()
-	// {
-	// categoryList.clear();
-	// notifyDataSetChanged();
-	// }
 }

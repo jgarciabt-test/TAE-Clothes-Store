@@ -47,7 +47,7 @@ import com.tae.store.utilities.PayPalUtil;
 
 /**
  * Main activity where all the fragment will be placed. Manage the screen
- * rotation and the back button feature to allow the user navigate through the
+ * rotation and the back-button feature to allow the user navigate through the
  * app.
  * 
  * @author Jose Garcia

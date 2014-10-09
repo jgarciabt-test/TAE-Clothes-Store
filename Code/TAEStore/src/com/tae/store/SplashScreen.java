@@ -24,8 +24,13 @@ import com.tae.store.model.Category;
 import com.tae.store.model.Product;
 import com.tae.store.utilities.ServerUrl;
 
-
-/** Acts like Splash screen. It does server request */
+/**
+ * Acts like Splash screen. It does server request
+ * 
+ * @author Jose Garcia
+ * @version 1.0
+ * @since 2014-10-08
+ * */
 public class SplashScreen extends RoboActivity {
 
 	/** Dialog used in case that server connection fails */
@@ -36,14 +41,17 @@ public class SplashScreen extends RoboActivity {
 	private final ArrayList<Category> womenCategories = new ArrayList<Category>();
 	/** Store Product object passed by the server */
 	private final ArrayList<Product> offerProducts = new ArrayList<Product>();
-	/** Intent to start <i>MainActivity</i> with the ArrayLists <i>menCategories</i>, <i> womenCategories</i> and <i>offerProducts</i>*/
+	/**
+	 * Intent to start <i>MainActivity</i> with the ArrayLists
+	 * <i>menCategories</i>, <i> womenCategories</i> and <i>offerProducts</i>
+	 */
 	private Intent i;
-	
+
 	@InjectView(R.id.iv_splash)
 	private ImageView logo;
 
-	
-	/** Create the Activity and do the request to the server
+	/**
+	 * Create the Activity and do the request to the server
 	 * 
 	 * */
 	@Override
@@ -58,9 +66,10 @@ public class SplashScreen extends RoboActivity {
 		makeRequestCategories();
 	}
 
-	/** 
-	 * Make a request to the server to get all the categories for Men and Women using volley.
-	 * If the request fails an AlertDialog will be displayed with a message and will close the app
+	/**
+	 * Make a request to the server to get all the categories for Men and Women
+	 * using volley. If the request fails an AlertDialog will be displayed with
+	 * a message and will close the app
 	 */
 	private void makeRequestCategories() {
 
@@ -110,9 +119,10 @@ public class SplashScreen extends RoboActivity {
 		AppController.getInstance().addToRequestQueue(request);
 	}
 
-	/** 
-	 * Make a request to the server to get all the products in offer using volley.
-	 * If the request fails an AlertDialog will be displayed with a message and will close the app
+	/**
+	 * Make a request to the server to get all the products in offer using
+	 * volley. If the request fails an AlertDialog will be displayed with a
+	 * message and will close the app
 	 */
 	private void makeRequestOffer() {
 

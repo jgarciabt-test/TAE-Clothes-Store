@@ -17,12 +17,32 @@ import com.tae.store.R;
 import com.tae.store.model.Product;
 import com.tae.store.utilities.ServerUrl;
 
+/**
+ * Adapter for products list.
+ * 
+ * @author Jose Garcia
+ * @version 1.0
+ * @since 2014-10-08
+ */
 public class ProductListAdapter extends ArrayAdapter<Product> {
 
+	/** Application context. */
 	private Context context;
+	/** ArrayList with all the Product objects */
 	private ArrayList<Product> productList;
+	/** LayoutInflater */
 	private LayoutInflater mInflater;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param context
+	 *            Application context.
+	 * @param textViewResourceId
+	 *            ListView Id.
+	 * @param productList
+	 *            ArrayList with Product objects.
+	 */
 	public ProductListAdapter(Context context, int textViewResourceId,
 			ArrayList<Product> productList) {
 		super(context, textViewResourceId, productList);
@@ -58,8 +78,9 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 
 		Product prod = productList.get(position);
 		txtName.setText(prod.getName());
-		
-		txtPrice.setText(context.getResources().getString(R.string.pound_symbol) + String.valueOf(new DecimalFormat("##.##").format(prod.getPrice())));
+
+		txtPrice.setText(context.getResources().getString(R.string.pound_symbol)
+				+ String.valueOf(new DecimalFormat("##.##").format(prod.getPrice())));
 		Picasso.with(context).load(ServerUrl.BASE_URL + ServerUrl.IMG + prod.getUrl_pic())
 				.placeholder(context.getResources().getDrawable(R.drawable.back)).into(imgIcon);
 
