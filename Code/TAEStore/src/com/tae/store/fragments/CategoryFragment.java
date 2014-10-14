@@ -6,8 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ListFragment;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockListFragment;
 import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
@@ -36,7 +35,7 @@ import com.tae.store.utilities.ServerUrl;
  * @version 1.0
  * @since 2014-10-08
  */
-public class CategoryFragment extends SherlockListFragment {
+public class CategoryFragment extends ListFragment {
 
 	/** String with the root category (men or women) */
 	private String rootCategory;

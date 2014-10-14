@@ -7,6 +7,7 @@ import org.brickred.socialauth.android.SocialAuthAdapter.Provider;
 import org.brickred.socialauth.android.SocialAuthError;
 import org.brickred.socialauth.android.SocialAuthListener;
 
+import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,9 +21,7 @@ import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.tae.store.MainActivity;
 import com.tae.store.R;
 import com.tae.store.utilities.SPTags;
@@ -34,7 +33,7 @@ import com.tae.store.utilities.SPTags;
  * @version 1.0
  * @since 2014-10-08
  */
-public class PreferencesFragment extends SherlockFragment {
+public class PreferencesFragment extends Fragment {
 
 	/** Shared preferences */
 	private SharedPreferences preferences;

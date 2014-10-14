@@ -9,13 +9,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -29,7 +30,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
@@ -39,6 +39,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -60,7 +61,7 @@ import com.tae.store.utilities.ServerUrl;
  * @version 1.0
  * @since 2014-10-08
  */
-public class CustomMapFragment extends SherlockFragment implements OnInfoWindowClickListener {
+public class CustomMapFragment extends Fragment implements OnInfoWindowClickListener {
 
 	/** SharedPreferences to get the users preferences */
 	public SharedPreferences preferences;
@@ -84,7 +85,7 @@ public class CustomMapFragment extends SherlockFragment implements OnInfoWindowC
 	private LatLng currentLocation;
 	/** LayoutInflater */
 	private LayoutInflater mInflater;
-	SupportMapFragment mapFragment;
+	MapFragment mapFragment;
 	private Object savedInstanceState;
 
 	/**
@@ -96,8 +97,8 @@ public class CustomMapFragment extends SherlockFragment implements OnInfoWindowC
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		mapFragment = SupportMapFragment.newInstance();
-		FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager()
+		mapFragment = MapFragment.newInstance();
+		FragmentTransaction fragmentTransaction = getActivity().getFragmentManager()
 				.beginTransaction();
 		fragmentTransaction.add(R.id.map, mapFragment);
 		fragmentTransaction.commit();

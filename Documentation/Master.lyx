@@ -20,9 +20,10 @@
 
 \chead{}
 
-\lfoot[\thepage]{}
 
-\rfoot[]{\thepage}
+\lfoot[\thepage]{}
+\lfoot{\thepage}
+
 
 \cfoot{}
 
@@ -104,15 +105,6 @@
 \end_header
 
 \begin_body
-
-\begin_layout Standard
-\begin_inset CommandInset toc
-LatexCommand tableofcontents
-
-\end_inset
-
-
-\end_layout
 
 \begin_layout Standard
 \begin_inset CommandInset include

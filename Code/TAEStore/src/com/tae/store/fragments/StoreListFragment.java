@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.ListFragment;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.actionbarsherlock.app.SherlockListFragment;
 import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
@@ -38,7 +38,7 @@ import com.tae.store.utilities.ServerUrl;
  * @version 1.0
  * @since 2014-10-08
  */
-public class StoreListFragment extends SherlockListFragment {
+public class StoreListFragment extends ListFragment {
 
 	/** ArrayList with all the Store objects. */
 	private ArrayList<Store> list = new ArrayList<Store>();

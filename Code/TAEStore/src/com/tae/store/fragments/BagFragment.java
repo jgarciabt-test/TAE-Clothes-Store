@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import android.app.AlertDialog;
+import android.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,7 +20,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockListFragment;
 import com.paypal.android.sdk.payments.PayPalItem;
 import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalPaymentDetails;
@@ -41,7 +41,7 @@ import com.tae.store.utilities.SPTags;
  * @version 1.0
  * @since 2014-10-08
  */
-public class BagFragment extends SherlockListFragment {
+public class BagFragment extends ListFragment {
 
 	/** TextView to display the number of products. */
 	private TextView qty;

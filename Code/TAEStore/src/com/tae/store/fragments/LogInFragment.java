@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Dialog;
+import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,7 +30,6 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.Response.Listener;
@@ -51,7 +51,7 @@ import com.tae.store.utilities.ServerUrl;
  * @version 1.0
  * @since 2014-10-08
  */
-public class LogInFragment extends SherlockFragment {
+public class LogInFragment extends Fragment {
 
 	public static SocialAuthAdapter adapter;
 

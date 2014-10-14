@@ -65,11 +65,11 @@
 \begin_body
 
 \begin_layout Section*
-Introduction
+1 Introduction
 \end_layout
 
 \begin_layout Standard
-To design and develop Android based application for a physical cloth store
+To design and develop Android based application for a physical clothes store
  where the main functions will be expose the products and allow the purchase
  process.
  This application will be developed for both smartphones and tablets devices.
@@ -78,7 +78,7 @@ To design and develop Android based application for a physical cloth store
 \end_layout
 
 \begin_layout Section*
-Design Approach
+2 Design Approach
 \end_layout
 
 \begin_layout Subsection*
@@ -90,11 +90,12 @@ Assumptions:
 \end_layout
 
 \begin_layout Itemize
-.
+The client has his own web service (back-end) to manage the information
+ placed on it.
 \end_layout
 
 \begin_layout Standard
-Constraints;
+Constraints:
 \end_layout
 
 \begin_layout Itemize
@@ -162,7 +163,7 @@ Controller This is the module in charge of connect the Model and the View.
 \end_layout
 
 \begin_layout Section*
-System Architecture
+3 System Architecture
 \end_layout
 
 \begin_layout Subsection*
@@ -312,7 +313,7 @@ Remote Database
 \end_layout
 
 \begin_layout Section*
-High-Level Design
+4 High-Level Design
 \end_layout
 
 \begin_layout Subsection*
@@ -593,7 +594,7 @@ Usr_city: It will store the city of the user.
 \end_layout
 
 \begin_layout Section*
-User Interface Design
+5 User Interface Design
 \end_layout
 
 \begin_layout Standard
@@ -633,7 +634,7 @@ Figure
 
 3
 \series default
- List all cloth categories inside a root category (i.e.
+ List all clothes categories inside a root category (i.e.
  men, women, etc.).
  
 \end_layout
@@ -740,7 +741,7 @@ Figure
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename /Users/josemanuelgarciag/Documents/TAE Final Project/Screens/Home.png
-	width 40col%
+	width 38col%
 
 \end_inset
 
@@ -755,7 +756,7 @@ Figure
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename /Users/josemanuelgarciag/Documents/TAE Final Project/Screens/Home 2.png
-	width 40col%
+	width 38col%
 
 \end_inset
 
@@ -806,7 +807,7 @@ Figure 2
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename /Users/josemanuelgarciag/Documents/TAE Final Project/Screens/Category List.png
-	width 40col%
+	width 38col%
 
 \end_inset
 
@@ -821,7 +822,7 @@ Figure 2
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename /Users/josemanuelgarciag/Documents/TAE Final Project/Screens/Item List.png
-	width 40col%
+	width 38col%
 
 \end_inset
 
@@ -872,7 +873,7 @@ Figure 4
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename /Users/josemanuelgarciag/Documents/TAE Final Project/Screens/Item.png
-	width 40col%
+	width 38col%
 
 \end_inset
 
@@ -887,7 +888,7 @@ Figure 4
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename /Users/josemanuelgarciag/Documents/TAE Final Project/Screens/Item Details.png
-	width 40col%
+	width 38col%
 
 \end_inset
 
@@ -938,7 +939,7 @@ Figure 6
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename /Users/josemanuelgarciag/Documents/TAE Final Project/Screens/Store Map.png
-	width 40col%
+	width 38col%
 
 \end_inset
 
@@ -953,7 +954,7 @@ Figure 6
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename /Users/josemanuelgarciag/Documents/TAE Final Project/Screens/Store List.png
-	width 40col%
+	width 38col%
 
 \end_inset
 
@@ -1003,7 +1004,7 @@ Figure 8
 \begin_layout Plain Layout
 \begin_inset Graphics
 	filename /Users/josemanuelgarciag/Documents/TAE Final Project/Screens/Store Info.png
-	width 40col%
+	width 38col%
 
 \end_inset
 

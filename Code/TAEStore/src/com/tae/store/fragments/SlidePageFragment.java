@@ -3,13 +3,13 @@ package com.tae.store.fragments;
 
 
 import android.annotation.SuppressLint;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.squareup.picasso.Picasso;
 import com.tae.store.R;
 import com.tae.store.utilities.ServerUrl;
@@ -22,7 +22,7 @@ import com.tae.store.utilities.ServerUrl;
  * @since 2014-10-08
  */
 @SuppressLint("NewApi")
-public class SlidePageFragment extends SherlockFragment {
+public class SlidePageFragment extends Fragment {
 
 	/** Boolean that indicate if the fragment is the main page of the ViewPAger.*/
 	private boolean mainPic;

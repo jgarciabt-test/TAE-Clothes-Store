@@ -1,5 +1,6 @@
 package com.tae.store.fragments;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.tae.store.R;
 import com.tae.store.model.Store;
 
@@ -21,7 +21,7 @@ import com.tae.store.model.Store;
  * @version 1.0
  * @since 2014-10-08
  */
-public class StoreFragment extends SherlockFragment {
+public class StoreFragment extends Fragment {
 
 	/** Store object */
 	private Store store;

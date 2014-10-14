@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,7 +20,6 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
@@ -43,7 +43,7 @@ import com.viewpagerindicator.PageIndicator;
  * @version 1.0
  * @since 2014-10-08
  */
-public class HomeFragment extends SherlockFragment {
+public class HomeFragment extends Fragment {
 
 	private ProgressDialog pDialog;
 
@@ -173,7 +173,7 @@ public class HomeFragment extends SherlockFragment {
 
 		
 		//OFFERS
-		mAdapterOffers = new SlidePagerAdapterProduct(getChildFragmentManager(), offers);
+		mAdapterOffers = new SlidePagerAdapterProduct(getActivity().getFragmentManager(), offers);
 
 		mPagerOffers = (ViewPager) rootView.findViewById(R.id.vp1);
 		mPagerOffers.setAdapter(mAdapterOffers);
@@ -182,7 +182,7 @@ public class HomeFragment extends SherlockFragment {
 		mIndicatorOffers.setViewPager(mPagerOffers);
 
 		//MEN
-		mAdapterMen = new SlidePagerAdapter(getChildFragmentManager(), MainCategories.MEN,
+		mAdapterMen = new SlidePagerAdapter(getActivity().getFragmentManager(), MainCategories.MEN,
 				menCategories);
 		mPagerMen = (ViewPager) rootView.findViewById(R.id.vp2);
 		mPagerMen.setAdapter(mAdapterMen);
@@ -191,7 +191,7 @@ public class HomeFragment extends SherlockFragment {
 		mIndicatorMen.setViewPager(mPagerMen);
 
 		//WOMEN
-		mAdapterWomen = new SlidePagerAdapter(getChildFragmentManager(), MainCategories.WOMEN,
+		mAdapterWomen = new SlidePagerAdapter(getActivity().getFragmentManager(), MainCategories.WOMEN,
 				womenCategories);
 		mPagerWomen = (ViewPager) rootView.findViewById(R.id.vp3);
 		mPagerWomen.setAdapter(mAdapterWomen);

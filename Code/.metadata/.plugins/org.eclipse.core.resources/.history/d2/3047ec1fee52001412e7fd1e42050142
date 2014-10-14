@@ -1,0 +1,183 @@
+package com.tae.store.fragments;
+
+import java.util.ArrayList;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.app.ProgressDialog;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+
+import com.actionbarsherlock.app.SherlockListFragment;
+import com.android.volley.Response;
+import com.android.volley.Response.Listener;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.google.android.gms.maps.model.LatLng;
+import com.tae.store.MainActivity;
+import com.tae.store.R;
+import com.tae.store.adapters.StoreListAdapter;
+import com.tae.store.app.AppController;
+import com.tae.store.helpers.LocationTracker;
+import com.tae.store.model.Store;
+import com.tae.store.utilities.SPTags;
+import com.tae.store.utilities.ServerUrl;
+
+/**
+ * Fragment that list all the stores in a range.
+ * 
+ * @author Jose Garcia
+ * @version 1.0
+ * @since 2014-10-08
+ */
+public class StoreListFragment extends SherlockListFragment {
+
+	/** ArrayList with all the Store objects. */
+	private ArrayList<Store> list = new ArrayList<Store>();
+	/** Progress dialog. */
+	private ProgressDialog pDialog;
+	/** Shared Preferences. */
+	private SharedPreferences preferences;
+	/** LocationTracker */
+	private LocationTracker locationTracker;
+	/** Device current location. */
+	private LatLng currentLocation;
+	/** StoreListAdapter. */
+	private StoreListAdapter adapter;
+
+	/**
+	 * Empty constructor.
+	 */
+	public StoreListFragment() {
+
+	}
+
+	/**
+	 * Constructor
+	 * 
+	 * @param list
+	 *            ArrayList with Store objects.
+	 */
+	public StoreListFragment(ArrayList<Store> list) {
+		this.list = list;
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+		ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.store_list, null, false);
+
+		if (savedInstanceState != null) {
+			list = savedInstanceState.getParcelableArrayList("list");
+		}
+		if (list.size() == 0) { // If there's not stores..
+			pDialog = new ProgressDialog(getActivity());
+			pDialog.setMessage(getResources().getString(R.string.loading));
+			locationTracker = new LocationTracker(getActivity());
+
+			locationTracker.getLocation();
+			if (locationTracker.canGetLocation()) {
+				currentLocation = new LatLng(locationTracker.getLatitude(),
+						locationTracker.getLongitude());
+			}
+			makeRequest(); // Make a new request
+		}
+
+		String unit;
+		preferences = getActivity().getPreferences(getActivity().MODE_PRIVATE);
+		if (preferences.getInt(SPTags.UNIT, 0) == 0) {
+			unit = " Mi";
+		} else {
+			unit = " Km";
+		}
+
+		adapter = new StoreListAdapter(getActivity(), list, unit);
+		setListAdapter(adapter);
+		return rootView;
+	}
+
+	/**
+	 * Make a server request to get all the stores depending user's preferences
+	 * and GPS availability
+	 */
+	private void makeRequest() {
+		String URL;
+		preferences = getActivity().getPreferences(getActivity().MODE_PRIVATE);
+		int radius = preferences.getInt(SPTags.DISTANCE, -1);
+
+		if (preferences.getInt(SPTags.UNIT, 0) == 1) {
+			radius *= 0.62137;
+		}
+
+		if (locationTracker.canGetLocation() && radius != -1) {
+			URL = ServerUrl.BASE_URL + ServerUrl.GET_CLOSER_STORES + "lat="
+					+ currentLocation.latitude + "&lng=" + currentLocation.longitude + "&radius="
+					+ radius;
+		} else {
+			URL = ServerUrl.BASE_URL + ServerUrl.GET_ALL_STORES;
+		}
+		Log.v("URL", URL);
+		JsonArrayRequest request = new JsonArrayRequest(URL, new Listener<JSONArray>() {
+			public void onResponse(JSONArray response) {
+
+				try {
+					JSONObject obj = response.getJSONObject(0);
+					JSONArray array = (JSONArray) obj.get("stores");
+					for (int i = 0; i < array.length(); i++) {
+						obj = array.getJSONObject(i);
+						Store sto = new Store();
+						sto.setId(obj.getString("sto_id"));
+						sto.setName(obj.getString("sto_name"));
+						sto.setAddress(obj.getString("sto_address"));
+						sto.setPostCode(obj.getString("sto_pc"));
+						sto.setCity(obj.getString("sto_city"));
+						sto.setPhone(obj.getString("sto_phone"));
+						sto.setOpeningHours(obj.getString("sto_opening"));
+						sto.setLatitude(obj.getDouble("sto_lat"));
+						sto.setLongitude(obj.getDouble("sto_lng"));
+						if (locationTracker.canGetLocation()) {
+							sto.setDistance(obj.getDouble("distance"));
+						}
+						list.add(sto);
+					}
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				pDialog.dismiss();
+				adapter.notifyDataSetChanged();
+
+			}
+		}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				pDialog.dismiss();
+				VolleyLog.d("VOLLEY_ERROR", "Error: " + error.getMessage());
+			}
+		});
+
+		AppController.getInstance().addToRequestQueue(request);
+	}
+
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+
+		MainActivity.replaceFragment(new StoreFragment(list.get(position)), "STORE_FRAGMENT", true);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+
+		outState.putParcelableArrayList("list", list);
+	}
+}

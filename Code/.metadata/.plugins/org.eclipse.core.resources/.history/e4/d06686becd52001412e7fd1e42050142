@@ -1,0 +1,30 @@
+package com.tae.store;
+
+
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import com.xtremelabs.robolectric.Robolectric;
+import com.xtremelabs.robolectric.RobolectricTestRunner;
+
+@RunWith(RobolectricTestRunner.class)
+public class BagFragmentTest {
+
+	private MainActivity activity;
+	
+	
+	  @Before
+	  public void setup()  {
+	    activity = new MainActivity();
+	  }
+	
+	  @Test
+	  public void checkActivityNotNull() throws Exception {
+		  String test = "";
+		  assertNotNull(test);
+	  }
+	   
+}

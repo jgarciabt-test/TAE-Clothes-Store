@@ -1,15 +1,13 @@
 package com.tae.store.fragments;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.actionbarsherlock.app.SherlockFragment;
-import com.tae.store.MainActivity;
 import com.tae.store.R;
 import com.tae.store.utilities.SPTags;
 
@@ -21,7 +19,7 @@ import com.tae.store.utilities.SPTags;
  * @version 1.0
  * @since 2014-10-08
  */
-public class MyTaeFragment extends SherlockFragment {
+public class MyTaeFragment extends Fragment {
 
 	public static FragmentManager fragmentManagerLogin;
 

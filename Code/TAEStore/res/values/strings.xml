@@ -80,14 +80,14 @@
     <string name="screen_store">Store Info</string>
 
     <!-- Right Menu elements -->
-    <array name="nav_drawer_items">
+    <string-array name="nav_drawer_items">
         <item> Home</item>
         <item> Men</item>
         <item> Women</item>
         <item> Store Locator</item>
         <item> My TAE</item>
         <item> Share</item>
-    </array>
+    </string-array>
     <array name="nav_drawer_icons">
         <item>@drawable/ic_home</item>
         <item>@drawable/ic_men</item>

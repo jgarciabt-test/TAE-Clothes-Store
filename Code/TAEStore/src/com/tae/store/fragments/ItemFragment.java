@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -24,7 +25,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.android.volley.Response;
 import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
@@ -45,7 +45,7 @@ import com.tae.store.utilities.ServerUrl;
  * @version 1.0
  * @since 2014-10-08
  */
-public class ItemFragment extends SherlockFragment {
+public class ItemFragment extends Fragment {
 
 	/** Product that the will be displayed on this fragment */
 	private Product product;

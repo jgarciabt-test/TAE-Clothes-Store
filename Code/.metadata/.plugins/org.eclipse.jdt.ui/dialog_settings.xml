@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<item value="/Users/josemanuelgarciag/Documents/TAE Final Project/Code/TAEStore/test" key="org.eclipse.jdt.ui.last.external.project"/>
 	<section name="DialogBounds_OverrideMethodDialog">
 		<item value="523" key="DIALOG_WIDTH"/>
-		<item value="111" key="DIALOG_Y_ORIGIN"/>
+		<item value="101" key="DIALOG_Y_ORIGIN"/>
+		<item value="722" key="DIALOG_X_ORIGIN"/>
 		<item value="410" key="DIALOG_HEIGHT"/>
-		<item value="575" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="OptionalMessageDialog.hide.">
@@ -12,6 +13,91 @@
 	</section>
 	<section name="OverrideMethodDialog">
 		<item value="true" key="showtypes"/>
+	</section>
+	<section name="BuildPathsPropertyPage">
+		<item value="3" key="pageIndex"/>
+	</section>
+	<section name="RefactoringWizard.preview">
+		<item value="400" key="height"/>
+		<item value="600" key="width"/>
+	</section>
+	<section name="quick_assist_proposal_size">
+	</section>
+	<section name="ClasspathContainerSelectionPage">
+		<item value="2" key="index"/>
+	</section>
+	<section name="SourceActionDialog.methods">
+		<item value="1" key="VisibilityModifier"/>
+		<item value="false" key="Comments"/>
+		<item value="false" key="SynchronizedModifier"/>
+		<item value="false" key="FinalModifier"/>
+	</section>
+	<section name="javadoc">
+		<item value="false" key="nodeprecatedlist"/>
+		<item value="false" key="notree"/>
+		<item value="true" key="splitindex"/>
+		<item value="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home/bin/javadoc" key="javadoc_command_history"/>
+		<item value="true" key="use"/>
+		<item value="false" key="nonavbar"/>
+		<item value="public" key="access"/>
+		<item value="true" key="version"/>
+		<item value="false" key="nodeprecated"/>
+		<item value="/Users/josemanuelgarciag/Documents/TAE Final Project/Code/TAEStore/doc" key="destdir"/>
+		<item value="true" key="author"/>
+		<item value="" key="docletname"/>
+		<item value="1.6" key="source"/>
+		<item value="false" key="openinbrowser"/>
+		<item value="false" key="noindex"/>
+		<item value="" key="docletpath"/>
+		<item value="/Users/josemanuelgarciag/Documents/TAE Final Project/Code/TAEStore/javadoc.xml" key="antpath"/>
+		<item value="true" key="fromStandard"/>
+		<item value="-bootclasspath /Users/josemanuelgarciag/Documents/Eclipse-Android/sdk/platforms/android-19/android.jar" key="vmparam"/>
+		<section name="projects">
+			<section name="actionbarsherlock">
+				<item value="/Users/josemanuelgarciag/Dropbox/TAE-Training Material/Day7_ActionBar_And_NavigationUI/Code_Samples/ActionBar/Pre-Version/actionbarsherlock/doc" key="destdir"/>
+				<item value="/Users/josemanuelgarciag/Dropbox/TAE-Training Material/Day7_ActionBar_And_NavigationUI/Code_Samples/ActionBar/Pre-Version/actionbarsherlock/javadoc.xml" key="antpath"/>
+				<item value="" key="href"/>
+			</section>
+			<section name="TAEStore">
+				<item value="/Users/josemanuelgarciag/Documents/TAE Final Project/Code/TAEStore/doc" key="destdir"/>
+				<item value="/Users/josemanuelgarciag/Documents/TAE Final Project/Code/TAEStore/javadoc.xml" key="antpath"/>
+				<item value="" key="href"/>
+			</section>
+			<section name="google-play-services_lib">
+				<item value="/Users/josemanuelgarciag/Documents/TAE Final Project/Code/google-play-services_lib/doc" key="destdir"/>
+				<item value="/Users/josemanuelgarciag/Documents/TAE Final Project/Code/google-play-services_lib/javadoc.xml" key="antpath"/>
+				<item value="" key="href"/>
+			</section>
+			<section name="Volley">
+				<item value="/Users/josemanuelgarciag/Dropbox/TAE-Training Material/Day14_External_libs/Code_Samples/Networking_Libs/L_Volley/doc" key="destdir"/>
+				<item value="/Users/josemanuelgarciag/Dropbox/TAE-Training Material/Day14_External_libs/Code_Samples/Networking_Libs/L_Volley/javadoc.xml" key="antpath"/>
+				<item value="" key="href"/>
+			</section>
+			<section name="appcompat_v7">
+				<item value="/Users/josemanuelgarciag/Documents/TAE Final Project/Code/appcompat_v7/doc" key="destdir"/>
+				<item value="/Users/josemanuelgarciag/Documents/TAE Final Project/Code/appcompat_v7/javadoc.xml" key="antpath"/>
+				<item value="" key="href"/>
+			</section>
+			<section name="libraryPger">
+				<item value="/Users/josemanuelgarciag/Dropbox/TAE-Training Material/New_External_Advanced_UI/Part_I_Pagers/ViewPagerIndicator/JakeWharton-Android-ViewPagerIndicator-8cd549f/L_libraryPger/doc" key="destdir"/>
+				<item value="/Users/josemanuelgarciag/Dropbox/TAE-Training Material/New_External_Advanced_UI/Part_I_Pagers/ViewPagerIndicator/JakeWharton-Android-ViewPagerIndicator-8cd549f/L_libraryPger/javadoc.xml" key="antpath"/>
+				<item value="" key="href"/>
+			</section>
+		</section>
+	</section>
+	<section name="NewPackageWizardPage">
+		<item value="false" key="create_package_info_java"/>
+	</section>
+	<section name="org.eclipse.jdt.internal.ui.dialogs.FilteredTypesSelectionDialog">
+		<item value="true" key="ShowStatusLine"/>
+		<item value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#x0A;&lt;History/&gt;" key="History"/>
+		<section name="DialogBoundsSettings">
+			<item value="600" key="DIALOG_WIDTH"/>
+			<item value="-18" key="DIALOG_Y_ORIGIN"/>
+			<item value="-38" key="DIALOG_X_ORIGIN"/>
+			<item value="500" key="DIALOG_HEIGHT"/>
+			<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
+		</section>
 	</section>
 	<section name="org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart">
 		<item value="true" key="group_libraries"/>
@@ -24,31 +110,36 @@
 	</section>
 	<section name="JavaElementSearchActions">
 	</section>
-	<section name="BuildPathsPropertyPage">
-		<item value="2" key="pageIndex"/>
-	</section>
 	<section name="DialogBounds_GetterSetterTreeSelectionDialog">
 		<item value="529" key="DIALOG_WIDTH"/>
 		<item value="-18" key="DIALOG_Y_ORIGIN"/>
-		<item value="639" key="DIALOG_HEIGHT"/>
 		<item value="453" key="DIALOG_X_ORIGIN"/>
+		<item value="639" key="DIALOG_HEIGHT"/>
 		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
+	</section>
+	<section name="org.eclipse.ltk.ui.refactoring.settings">
+		<item value="*" key="patterns"/>
+		<item value="false" key="updateQualifiedNames"/>
+		<item value="1" key="updateSimilarElementsMatchStrategy"/>
+		<item value="false" key="updateTextualMatches"/>
+		<item value="false" key="updateSimilarElements"/>
+	</section>
+	<section name="RenameInformationPopup">
 	</section>
 	<section name="NewClassWizardPage">
 		<item value="false" key="create_constructor"/>
-		<item value="true" key="create_unimplemented"/>
 		<item value="false" key="create_main"/>
-	</section>
-	<section name="quick_assist_proposal_size">
-	</section>
-	<section name="SourceActionDialog.methods">
-		<item value="false" key="Comments"/>
-		<item value="1" key="VisibilityModifier"/>
-		<item value="false" key="SynchronizedModifier"/>
-		<item value="false" key="FinalModifier"/>
+		<item value="true" key="create_unimplemented"/>
 	</section>
 	<section name="AddGetterSetterDialog">
 		<item value="false" key="RemoveFinal"/>
 		<item value="false" key="SortOrdering"/>
+	</section>
+	<section name="JavadocWizardDialog">
+		<item value="600" key="DIALOG_WIDTH"/>
+		<item value="10" key="DIALOG_Y_ORIGIN"/>
+		<item value="582" key="DIALOG_HEIGHT"/>
+		<item value="411" key="DIALOG_X_ORIGIN"/>
+		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
 	</section>
 </section>
