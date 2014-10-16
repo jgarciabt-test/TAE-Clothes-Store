@@ -1,7 +1,0 @@
-package com.tae.store.fragments;
-
-import com.actionbarsherlock.app.SherlockFragment;
-
-public class NoConnectionFragment extends SherlockFragment{
-
-}

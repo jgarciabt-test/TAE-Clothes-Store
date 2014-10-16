@@ -4,8 +4,8 @@
 	<section name="DialogBounds_OverrideMethodDialog">
 		<item value="523" key="DIALOG_WIDTH"/>
 		<item value="101" key="DIALOG_Y_ORIGIN"/>
-		<item value="722" key="DIALOG_X_ORIGIN"/>
 		<item value="410" key="DIALOG_HEIGHT"/>
+		<item value="722" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="OptionalMessageDialog.hide.">
@@ -27,8 +27,8 @@
 		<item value="2" key="index"/>
 	</section>
 	<section name="SourceActionDialog.methods">
-		<item value="1" key="VisibilityModifier"/>
 		<item value="false" key="Comments"/>
+		<item value="1" key="VisibilityModifier"/>
 		<item value="false" key="SynchronizedModifier"/>
 		<item value="false" key="FinalModifier"/>
 	</section>
@@ -53,6 +53,16 @@
 		<item value="true" key="fromStandard"/>
 		<item value="-bootclasspath /Users/josemanuelgarciag/Documents/Eclipse-Android/sdk/platforms/android-19/android.jar" key="vmparam"/>
 		<section name="projects">
+			<section name="ResideMenu">
+				<item value="/Users/josemanuelgarciag/Dropbox/TAE-Training Material/New_External_Advanced_UI/Part1_Menus/AndroidResideMenu-master/ResideMenu/doc" key="destdir"/>
+				<item value="/Users/josemanuelgarciag/Dropbox/TAE-Training Material/New_External_Advanced_UI/Part1_Menus/AndroidResideMenu-master/ResideMenu/javadoc.xml" key="antpath"/>
+				<item value="" key="href"/>
+			</section>
+			<section name="TAEStore_test">
+				<item value="/Users/josemanuelgarciag/Documents/TAE Final Project/Code/TAEStore_test/doc" key="destdir"/>
+				<item value="/Users/josemanuelgarciag/Documents/TAE Final Project/Code/TAEStore_test/javadoc.xml" key="antpath"/>
+				<item value="" key="href"/>
+			</section>
 			<section name="actionbarsherlock">
 				<item value="/Users/josemanuelgarciag/Dropbox/TAE-Training Material/Day7_ActionBar_And_NavigationUI/Code_Samples/ActionBar/Pre-Version/actionbarsherlock/doc" key="destdir"/>
 				<item value="/Users/josemanuelgarciag/Dropbox/TAE-Training Material/Day7_ActionBar_And_NavigationUI/Code_Samples/ActionBar/Pre-Version/actionbarsherlock/javadoc.xml" key="antpath"/>
@@ -94,8 +104,8 @@
 		<section name="DialogBoundsSettings">
 			<item value="600" key="DIALOG_WIDTH"/>
 			<item value="-18" key="DIALOG_Y_ORIGIN"/>
-			<item value="-38" key="DIALOG_X_ORIGIN"/>
 			<item value="500" key="DIALOG_HEIGHT"/>
+			<item value="-38" key="DIALOG_X_ORIGIN"/>
 			<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
 		</section>
 	</section>
@@ -113,23 +123,23 @@
 	<section name="DialogBounds_GetterSetterTreeSelectionDialog">
 		<item value="529" key="DIALOG_WIDTH"/>
 		<item value="-18" key="DIALOG_Y_ORIGIN"/>
-		<item value="453" key="DIALOG_X_ORIGIN"/>
 		<item value="639" key="DIALOG_HEIGHT"/>
+		<item value="453" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
-	</section>
-	<section name="org.eclipse.ltk.ui.refactoring.settings">
-		<item value="*" key="patterns"/>
-		<item value="false" key="updateQualifiedNames"/>
-		<item value="1" key="updateSimilarElementsMatchStrategy"/>
-		<item value="false" key="updateTextualMatches"/>
-		<item value="false" key="updateSimilarElements"/>
-	</section>
-	<section name="RenameInformationPopup">
 	</section>
 	<section name="NewClassWizardPage">
 		<item value="false" key="create_constructor"/>
-		<item value="false" key="create_main"/>
 		<item value="true" key="create_unimplemented"/>
+		<item value="false" key="create_main"/>
+	</section>
+	<section name="RenameInformationPopup">
+	</section>
+	<section name="org.eclipse.ltk.ui.refactoring.settings">
+		<item value="false" key="updateQualifiedNames"/>
+		<item value="*" key="patterns"/>
+		<item value="1" key="updateSimilarElementsMatchStrategy"/>
+		<item value="false" key="updateTextualMatches"/>
+		<item value="false" key="updateSimilarElements"/>
 	</section>
 	<section name="AddGetterSetterDialog">
 		<item value="false" key="RemoveFinal"/>
@@ -138,8 +148,8 @@
 	<section name="JavadocWizardDialog">
 		<item value="600" key="DIALOG_WIDTH"/>
 		<item value="10" key="DIALOG_Y_ORIGIN"/>
-		<item value="582" key="DIALOG_HEIGHT"/>
 		<item value="411" key="DIALOG_X_ORIGIN"/>
+		<item value="582" key="DIALOG_HEIGHT"/>
 		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
 	</section>
 </section>

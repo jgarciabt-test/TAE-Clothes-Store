@@ -1,0 +1,33 @@
+exit
+buttons
+reinstall_app
+reinstall_apps
+buttons
+buttons = query("button)
+buttons
+query("button index:0")
+finish
+exit
+quit
+help
+q
+:q
+quit
+help
+quit
+start_test_server_in_background
+touch("TextView id:'com.tae.store:id/option_bag'")
+then I swipe right
+Then I swipe right
+Then I swipe Right
+Then I swipe "right"
+Then I swipe righ"
+Then I swipe right
+Then I swipe right
+quit
+exit
+Then I swipe right
+Then I swipe right
+exit
+start_test_server_in_background
+exit

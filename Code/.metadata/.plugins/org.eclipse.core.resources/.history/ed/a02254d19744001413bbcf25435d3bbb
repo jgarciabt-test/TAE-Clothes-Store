@@ -1,7 +1,0 @@
-package com.tae.store.model;
-
-import android.os.Parcelable;
-
-public class Product implements Parcelable {
-
-}

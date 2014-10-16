@@ -1,2 +1,2 @@
 eclipse.preferences.version=1
-task-tag-projects-already-scanned=appcompat_v7,TAEStore,actionbarsherlock,google-play-services_lib,DoubleSlidingMenu,ListSamples,libraryPger,Canary-Wharf-GuideAPP,test,Volley,CarouselDemoActivity,PayPalExample,PayPalSDKExample,HottNights,ResideMenu
+task-tag-projects-already-scanned=appcompat_v7,TAEStore,actionbarsherlock,google-play-services_lib,DoubleSlidingMenu,ListSamples,libraryPger,Canary-Wharf-GuideAPP,test,Volley,CarouselDemoActivity,PayPalExample,PayPalSDKExample,ResideMenu,TAEStore_test

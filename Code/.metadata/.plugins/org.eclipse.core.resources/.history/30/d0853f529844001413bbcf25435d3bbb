@@ -1,7 +1,0 @@
-package com.tae.store.adapters;
-
-import android.widget.BaseAdapter;
-
-public class ProductListAdapter extends BaseAdapter{
-
-}

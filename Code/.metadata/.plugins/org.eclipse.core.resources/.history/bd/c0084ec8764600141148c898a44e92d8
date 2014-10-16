@@ -1,9 +1,0 @@
-package com.tae.store.fragments;
-
-import com.actionbarsherlock.app.SherlockListFragment;
-
-public class StoreListFragment extends SherlockListFragment {
-	
-	private ArrayList<Store> list;
-
-}

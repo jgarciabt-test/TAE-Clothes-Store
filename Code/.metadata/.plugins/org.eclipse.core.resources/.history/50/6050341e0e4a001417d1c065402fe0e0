@@ -1,7 +1,0 @@
-package com.tae.store.helpers;
-
-import SQLiteOpenHelper;
-
-public class DatabaseHandler extends SQLiteOpenHelper {
-
-}
