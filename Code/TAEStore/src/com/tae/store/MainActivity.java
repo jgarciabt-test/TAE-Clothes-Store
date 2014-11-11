@@ -86,6 +86,12 @@ public class MainActivity extends Activity {
 	private TypedArray navMenuIcons;
 	/** Array to store <i>NavDraweItem</i> for the menu */
 	private ArrayList<NavDrawerItem> navDrawerItems;
+	
+	private ArrayList<Category> men;
+	
+	private ArrayList<Category> women;
+	
+	private ArrayList<Product> offers; 
 
 	/**
 	 * Create the menu, customize the action bar and launch the services for
@@ -151,9 +157,9 @@ public class MainActivity extends Activity {
 			// Load first fragment
 			backStackFragment = new ArrayList<String>();
 			// Get the data previously requested to the server, from the intent
-			ArrayList<Category> men = prev_screen.getParcelableArrayListExtra("men");
-			ArrayList<Category> women = prev_screen.getParcelableArrayListExtra("women");
-			ArrayList<Product> offers = prev_screen.getParcelableArrayListExtra("offer");
+			men = prev_screen.getParcelableArrayListExtra("men");
+			women = prev_screen.getParcelableArrayListExtra("women");
+			offers = prev_screen.getParcelableArrayListExtra("offer");
 
 			fragment = new HomeFragment(this, men, women, offers);
 			addFragment(fragment, "HOME_FRAGMENT");
@@ -269,7 +275,10 @@ public class MainActivity extends Activity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putStringArrayList("backstackFragment", backStackFragment);
+		Log.v("SAVE", backStackFragment.toString());
 		outState.putString("currentFragment", currentFragment);
+		Log.v("SAVE", currentFragment);
+		Log.v("SAVE", fragment.toString());
 		fragmentManager.putFragment(outState, currentFragment, fragment);
 		// Log.v("Stack", "onSaveInstance: " + currentFragment);
 	}

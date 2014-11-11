@@ -65,6 +65,9 @@ public class CustomMapFragment extends Fragment implements OnInfoWindowClickList
 
 	/** SharedPreferences to get the users preferences */
 	public SharedPreferences preferences;
+	
+	private int radius;
+	
 	private ViewGroup rootView;
 	private GoogleMap googleMap;
 	/** ImageButton to change a List view */
@@ -209,7 +212,7 @@ public class CustomMapFragment extends Fragment implements OnInfoWindowClickList
 	private void makeRequest() {
 		String URL;
 		preferences = getActivity().getPreferences(getActivity().MODE_PRIVATE);
-		int radius = preferences.getInt(SPTags.DISTANCE, -1);
+		radius = preferences.getInt(SPTags.DISTANCE, -1);
 
 		if (preferences.getInt(SPTags.UNIT, 0) == 1) {
 			radius *= 0.62137;
@@ -242,7 +245,7 @@ public class CustomMapFragment extends Fragment implements OnInfoWindowClickList
 						sto.setOpeningHours(obj.getString("sto_opening"));
 						sto.setLatitude(obj.getDouble("sto_lat"));
 						sto.setLongitude(obj.getDouble("sto_lng"));
-						if (locationTracker.canGetLocation()) {
+						if (locationTracker.canGetLocation() && radius != -1) {
 							sto.setDistance(obj.getDouble("distance"));
 						}
 						list.add(sto);
