@@ -86,12 +86,12 @@ public class MainActivity extends Activity {
 	private TypedArray navMenuIcons;
 	/** Array to store <i>NavDraweItem</i> for the menu */
 	private ArrayList<NavDrawerItem> navDrawerItems;
-	
+
 	private ArrayList<Category> men;
-	
+
 	private ArrayList<Category> women;
-	
-	private ArrayList<Product> offers; 
+
+	private ArrayList<Product> offers;
 
 	/**
 	 * Create the menu, customize the action bar and launch the services for
@@ -258,12 +258,14 @@ public class MainActivity extends Activity {
 			currentFragment = tag;
 			MainActivity.fragment = fragment;
 			if (backStack) {
-				fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, tag)
-						.addToBackStack(null).commit();
+				fragmentManager.beginTransaction()
+						.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, R.anim.slide_in_right, R.anim.slide_out_left)
+						.replace(R.id.frame_container, fragment, tag).addToBackStack(null).commit();
 
 			} else {
-				fragmentManager.beginTransaction().replace(R.id.frame_container, fragment, tag)
-						.commit();
+				fragmentManager.beginTransaction()
+						.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
+						.replace(R.id.frame_container, fragment, tag).commit();
 			}
 			if (!backStackFragment.get(backStackFragment.size() - 1).matches(currentFragment)) {
 				backStackFragment.add(currentFragment);
