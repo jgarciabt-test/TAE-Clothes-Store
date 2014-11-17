@@ -250,6 +250,7 @@ public class LogInFragment extends Fragment {
 					JSONArray array = (JSONArray) obj.get("password");
 					obj = array.getJSONObject(0);
 					String storedPassword = obj.getString("password");
+					String storedEmail = obj.getString("email");
 
 					String password = editTextPassword.getText().toString();
 					if (password.equals(storedPassword)) { //Login Successful
@@ -261,6 +262,7 @@ public class LogInFragment extends Fragment {
 						editor.putBoolean(SPTags.TAE_LOGIN, true).commit();
 						editor.putBoolean(SPTags.LOGGED, true).commit();
 						editor.putString(SPTags.NAME, username).commit();
+						editor.putString(SPTags.EMAIL, storedEmail).commit();
 						MyTaeFragment.replaceFragment(new PreferencesFragment(),
 								"PREFERENCES_FRAGMENT"); 
 						dialog.dismiss();

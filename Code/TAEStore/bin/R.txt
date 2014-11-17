@@ -334,6 +334,7 @@ int layout store_list 0x7f030014
 int layout user_preferences 0x7f030015
 int menu main 0x7f0d0000
 int string action_settings 0x7f0b001d
+int string already_registered 0x7f0b0064
 int string app_name 0x7f0b001b
 int string auth_client_needs_enabling_title 0x7f0b0015
 int string auth_client_needs_installation_title 0x7f0b0016
@@ -380,6 +381,12 @@ int string directions 0x7f0b0024
 int string error_loading 0x7f0b0026
 int string facebook 0x7f0b004d
 int string from 0x7f0b0063
+int string gcm_deleted 0x7f0b006a
+int string gcm_error 0x7f0b0068
+int string gcm_message 0x7f0b0067
+int string gcm_recoverable_error 0x7f0b0069
+int string gcm_registered 0x7f0b0065
+int string gcm_unregistered 0x7f0b0066
 int string hello_world 0x7f0b001c
 int string loading 0x7f0b0025
 int string location_client_powered_by_google 0x7f0b001a
@@ -392,6 +399,10 @@ int string no 0x7f0b0031
 int string no_connection 0x7f0b001f
 int string not_logged 0x7f0b005f
 int string opening_hours 0x7f0b0023
+int string options_clear 0x7f0b0072
+int string options_exit 0x7f0b0073
+int string options_register 0x7f0b0070
+int string options_unregister 0x7f0b0071
 int string or 0x7f0b0052
 int string pound_symbol 0x7f0b002e
 int string preferences_block_locator 0x7f0b005d
@@ -400,8 +411,13 @@ int string preferences_distance 0x7f0b005b
 int string preferences_logged 0x7f0b0059
 int string preferences_title 0x7f0b0058
 int string preferences_units 0x7f0b005a
-int string screen_store 0x7f0b0064
+int string screen_store 0x7f0b0074
 int string server_error 0x7f0b0055
+int string server_register_error 0x7f0b006e
+int string server_registered 0x7f0b006c
+int string server_registering 0x7f0b006b
+int string server_unregister_error 0x7f0b006f
+int string server_unregistered 0x7f0b006d
 int string share_body 0x7f0b0060
 int string share_subjet 0x7f0b0061
 int string share_with 0x7f0b0062

@@ -21,6 +21,25 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <!-- GCM requires a Google account. -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <!-- Keeps the processor from sleeping when a message is received. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Creates a custom permission so only this app can receive its messages. -->
+    <permission
+        android:name="com.tae.store.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.tae.store.permission.C2D_MESSAGE" />
+
+    <!-- This app has permission to register and receive data message. -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -34,9 +53,8 @@
         android:allowBackup="true"
         android:configChanges="keyboardHidden|orientation"
         android:icon="@drawable/map_marker"
-        android:label="@string/app_name" 
-        android:theme="@android:style/Theme.Holo.Light.DarkActionBar"
-        >
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
         <activity
             android:name=".SplashScreen"
             android:configChanges="keyboardHidden|orientation"
@@ -62,6 +80,21 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="1494383577483665" />
 
+        <receiver
+            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+
+                <!-- Receives the actual messages. -->
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <!-- Receives the registration id. -->
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.tae.store" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.tae.store.GCMIntentService" />
         <service android:name=".utilities.NetworkCheckService" >
         </service>
         <service

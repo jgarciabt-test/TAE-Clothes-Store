@@ -8,10 +8,10 @@ package com.tae.store.utilities;
 */
 public class ServerUrl {
 	
-	//public static final String BASE_URL = "http://192.168.1.4/TAE_STORE/";
+	public static final String BASE_URL = "http://192.168.1.3/TAE_STORE/";
 	//public static final String BASE_URL = "http://10.0.16.27/TAE_STORE/";
 	//public static final String BASE_URL = "http://169.254.200.36/TAE_STORE/";
-	public static final String BASE_URL = "http://37.187.99.23/tae/jose/TAE_STORE/";
+	//public static final String BASE_URL = "http://37.187.99.23/tae/jose/TAE_STORE/";
 	public static final String GET_CATEGORIES = "get_categories.php?main_category=";
 	public static final String GET_ALL_PRODUCTS = "get_all_products.php?category=";
 	public static final String GET_ALL_CATEGORIES ="get_all_categories.php";
@@ -23,5 +23,14 @@ public class ServerUrl {
 	public static final String REGISTER_USER = "register_user.php";
 	public static final String LOGIN = "login.php?usr_user_name=";
 	public static final String IMG = "img/";
+	
+	
+	//Google Cloud Message
+	public static final String REGISTER_DEVICE = "register_device.php"; 
+	public static final String UPDATE_DEVICE = "update_device.php";
+	public static final String SENDER_ID = "399296684621"; 
+	public static final String TAG = "TAE STORE";
+    public static final String DISPLAY_MESSAGE_ACTION ="com.tae.store.DISPLAY_MESSAGE";
+    public static final String EXTRA_MESSAGE = "message";
 
 }

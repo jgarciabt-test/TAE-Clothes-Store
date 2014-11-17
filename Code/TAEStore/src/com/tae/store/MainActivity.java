@@ -9,10 +9,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -23,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gcm.GCMRegistrar;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
 import com.paypal.android.sdk.payments.PaymentConfirmation;
@@ -39,6 +42,10 @@ import com.tae.store.model.NavDrawerItem;
 import com.tae.store.model.Product;
 import com.tae.store.utilities.NetworkCheckService;
 import com.tae.store.utilities.PayPalUtil;
+import com.tae.store.utilities.SPTags;
+import com.tae.store.utilities.ServerUrl;
+import com.tae.store.utilities.ServerUtilities;
+import com.tae.store.utilities.WakeLocker;
 
 /**
  * Main activity where all the fragment will be placed. Manage the screen
@@ -65,9 +72,10 @@ public class MainActivity extends Activity {
 	/** Store the category ID */
 	static public String CATEGORY;
 
-	// Slide Pager
-	// static public HashMap<String, Fragment> fragmentMap;
-
+	
+	private AsyncTask<Void, Void, Void> mRegisterTask;
+	
+	
 	/** Continuous network checker */
 	private NetworkCheckReceiver netReceiver;
 
@@ -170,6 +178,8 @@ public class MainActivity extends Activity {
 		IntentFilter filter = new IntentFilter();
 		filter.addAction("statusUpdate");
 		this.registerReceiver(netReceiver, filter);
+		
+		registerDevice();
 
 		// Network status
 		Intent intent = new Intent(getApplicationContext(), NetworkCheckService.class);
@@ -384,12 +394,85 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onDestroy() {
-		this.unregisterReceiver(netReceiver);
+		if (mRegisterTask != null) {
+			mRegisterTask.cancel(true);
+		}
+		unregisterReceiver(netReceiver);
+		unregisterReceiver(mHandleMessageReceiver);
+		GCMRegistrar.onDestroy(this);
 		stopService(new Intent(this, PayPalService.class));
 
 		super.onDestroy();
 	}
 
+	
+ 
+	
+	
+	public void registerDevice(){
+		
+		
+		// Make sure the device has the proper dependencies.
+		 GCMRegistrar.checkDevice(this);
+
+		// Make sure the manifest was properly set - comment out this line
+		// while developing the app, then uncomment it when it's ready.
+		GCMRegistrar.checkManifest(this);
+
+		//lblMessage = (TextView) findViewById(R.id.lblMessage);
+		
+		registerReceiver(mHandleMessageReceiver, new IntentFilter(
+				ServerUrl.DISPLAY_MESSAGE_ACTION));
+		
+		
+		// Get GCM registration id
+		final String regId = GCMRegistrar.getRegistrationId(this);
+		
+		SharedPreferences preferences = getPreferences(MainActivity.MODE_PRIVATE);
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.putString(SPTags.GCM_ID, regId).commit();
+		Log.v("GCM", "ID: "+regId);
+		// Check if regid already presents
+		if (regId.equals("")) {
+			// Registration is not present, register now with GCM			
+			GCMRegistrar.register(this, ServerUrl.SENDER_ID);
+		} else {
+			// Device is already registered on GCM
+			if (GCMRegistrar.isRegisteredOnServer(this)) {
+				// Skips registration.				
+				Toast.makeText(getApplicationContext(), "Already registered with GCM", Toast.LENGTH_LONG).show();
+			} else {
+				// Try to register again, but not in the UI thread.
+				// It's also necessary to cancel the thread onDestroy(),
+				// hence the use of AsyncTask instead of a raw thread.
+				final Context context = this;
+				mRegisterTask = new AsyncTask<Void, Void, Void>() {
+
+					@Override
+					protected Void doInBackground(Void... params) {
+						// Register on our server
+						// On server creates a new user
+						ServerUtilities.register(context, "", "", regId);
+						SharedPreferences preferences = getPreferences(MainActivity.MODE_PRIVATE);
+						SharedPreferences.Editor editor = preferences.edit();
+						editor.putString(SPTags.GCM_ID, regId).commit();
+						editor.putBoolean(SPTags.ALL_GCM_DATA, false);
+						return null;
+					}
+
+					@Override
+					protected void onPostExecute(Void result) {
+						mRegisterTask = null;
+					}
+
+				};
+				mRegisterTask.execute(null, null, null);
+			}
+		}
+		
+	}
+	
+	
 	/**
 	 * This method manage the action to perform according the parameters
 	 * received when <i>StartActivityForResult</i> is called. It's needed
@@ -418,6 +501,34 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	
+
+	/**
+	 * Receiving push messages
+	 * */
+	private final BroadcastReceiver mHandleMessageReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			String newMessage = intent.getExtras().getString(ServerUrl.EXTRA_MESSAGE);
+			// Waking up mobile if it is sleeping
+			WakeLocker.acquire(getApplicationContext());
+			
+			/**
+			 * Take appropriate action on this message
+			 * depending upon your app requirement
+			 * For now i am just displaying it on the screen
+			 * */
+			
+			// Showing received message
+			//lblMessage.append(newMessage + "\n");			
+			Toast.makeText(getApplicationContext(), "New Message: " + newMessage, Toast.LENGTH_LONG).show();
+			
+			// Releasing wake lock
+			WakeLocker.release();
+		}
+	};
+	
+	
 	/**
 	 * BroadcastReveiver that, in case there's not Internet, display the
 	 * respective fragment to alert to the user that he needs an Internet

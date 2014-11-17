@@ -770,6 +770,9 @@ containing a value of this type.
     }
     public static final class string {
         public static final int action_settings=0x7f0b001d;
+        /**  GCM 
+         */
+        public static final int already_registered=0x7f0b0064;
         public static final int app_name=0x7f0b001b;
         /**   Title for notification shown when GooglePlayServices needs to be
         enabled for a application to work. [CHAR LIMIT=70] 
@@ -884,6 +887,12 @@ containing a value of this type.
         public static final int error_loading=0x7f0b0026;
         public static final int facebook=0x7f0b004d;
         public static final int from=0x7f0b0063;
+        public static final int gcm_deleted=0x7f0b006a;
+        public static final int gcm_error=0x7f0b0068;
+        public static final int gcm_message=0x7f0b0067;
+        public static final int gcm_recoverable_error=0x7f0b0069;
+        public static final int gcm_registered=0x7f0b0065;
+        public static final int gcm_unregistered=0x7f0b0066;
         public static final int hello_world=0x7f0b001c;
         public static final int loading=0x7f0b0025;
         /**  Location client code resources (prefix with location_client) 
@@ -898,6 +907,10 @@ containing a value of this type.
         public static final int no_connection=0x7f0b001f;
         public static final int not_logged=0x7f0b005f;
         public static final int opening_hours=0x7f0b0023;
+        public static final int options_clear=0x7f0b0072;
+        public static final int options_exit=0x7f0b0073;
+        public static final int options_register=0x7f0b0070;
+        public static final int options_unregister=0x7f0b0071;
         public static final int or=0x7f0b0052;
         public static final int pound_symbol=0x7f0b002e;
         public static final int preferences_block_locator=0x7f0b005d;
@@ -909,8 +922,13 @@ containing a value of this type.
         /**  Screen Titles 
  Screen Titles 
          */
-        public static final int screen_store=0x7f0b0064;
+        public static final int screen_store=0x7f0b0074;
         public static final int server_error=0x7f0b0055;
+        public static final int server_register_error=0x7f0b006e;
+        public static final int server_registered=0x7f0b006c;
+        public static final int server_registering=0x7f0b006b;
+        public static final int server_unregister_error=0x7f0b006f;
+        public static final int server_unregistered=0x7f0b006d;
         public static final int share_body=0x7f0b0060;
         public static final int share_subjet=0x7f0b0061;
         public static final int share_with=0x7f0b0062;
